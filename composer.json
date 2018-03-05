@@ -29,6 +29,11 @@
         "friendsofphp/php-cs-fixer": "^2.10",
         "georgringer/backend-debug": "^1.0"
     },
+    "autoload": {
+        "psr-4": {
+            "Arndtteunissen\\ColumnLayout\\": "Classes/"
+        }
+    },
     "config": {
         "vendor-dir": ".Build/vendor",
         "bin-dir": ".Build/bin"
