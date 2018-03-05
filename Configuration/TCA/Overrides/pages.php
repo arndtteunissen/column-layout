@@ -9,4 +9,4 @@
 
 defined('TYPO3_MODE') || die();
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile('column_layout', 'Configuration/TSConfig/gridsystem.tsconfig', 'Column Layout Gridsystem');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile('column_layout', 'Configuration/TSConfig/column_layout.tsconfig', 'Column Layout Gridsystem');
