@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2018-03-05T10:56:51Z" product-name="column_layout">
+        <header/>
+        <body>
+
+            <trans-unit id="tt_content.tabs.tx_column_layout_column_config">
+                <source>Grid</source>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.label">
+                <source>Column Configuration</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
