@@ -1,0 +1,127 @@
+<T3DataStructure>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.sdef.title</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <row_behaviour>
+                        <TCEforms>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.row_behaviour</label>
+                            <config>
+                                <type>check</type>
+                                <items type="array">
+                                     <numIndex index="1" type="array">
+                                        <numIndex index="0">LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.row_behaviour.end_row</numIndex>
+                                        <numIndex index="1">1</numIndex>
+                                     </numIndex>
+                              </items>
+                            </config>
+                        </TCEforms>
+                    </row_behaviour>
+
+                    <!-- Large -->
+                    <large_columns>
+                        <TCEforms>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.large_columns</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <itemsProcFunc></itemsProcFunc>
+                            </config>
+                        </TCEforms>
+                    </large_columns>
+                    <large_offset>
+                        <TCEforms>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.large_offset</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <itemsProcFunc></itemsProcFunc>
+                            </config>
+                        </TCEforms>
+                    </large_offset>
+                    <large_order>
+                        <TCEforms>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.large_order</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <itemsProcFunc></itemsProcFunc>
+                            </config>
+                        </TCEforms>
+                    </large_order>
+
+                    <!-- Medium -->
+                    <medium_columns>
+                        <TCEforms>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.medium_columns</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <itemsProcFunc></itemsProcFunc>
+                            </config>
+                        </TCEforms>
+                    </medium_columns>
+                    <medium_offset>
+                        <TCEforms>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.medium_offset</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <itemsProcFunc></itemsProcFunc>
+                            </config>
+                        </TCEforms>
+                    </medium_offset>
+                    <medium_order>
+                        <TCEforms>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.medium_order</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <itemsProcFunc></itemsProcFunc>
+                            </config>
+                        </TCEforms>
+                    </medium_order>
+
+                    <!-- Small -->
+                    <small_columns>
+                        <TCEforms>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.small_columns</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <itemsProcFunc></itemsProcFunc>
+                            </config>
+                        </TCEforms>
+                    </small_columns>
+                    <small_offset>
+                        <TCEforms>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.small_offset</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <itemsProcFunc></itemsProcFunc>
+                            </config>
+                        </TCEforms>
+                    </small_offset>
+                    <small_order>
+                        <TCEforms>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.small_order</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <itemsProcFunc></itemsProcFunc>
+                            </config>
+                        </TCEforms>
+                    </small_order>
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>

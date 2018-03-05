@@ -16,7 +16,9 @@ $ll = 'LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:';
         'label' => $ll . 'tt_content.tx_column_layout_column_config.label',
         'config' => [
             'type' => 'flex',
-            'ds' => []
+            'ds' => [
+                'foundation' => 'FILE:EXT:column_layout/Configuration/FlexForms/GridSystems/Foundation.xml'
+            ]
         ]
     ]
 ]);

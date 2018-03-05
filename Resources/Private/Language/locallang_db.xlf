@@ -10,6 +10,16 @@
             <trans-unit id="tt_content.tx_column_layout_column_config.label">
                 <source>Column Configuration</source>
             </trans-unit>
+            
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.sdef.title">
+                <source>Column Configuration</source>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_behaviour">
+                <source>Row Behaviour</source>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_behaviour.end_row">
+                <source>End row after this column</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
