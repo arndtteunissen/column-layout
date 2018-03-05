@@ -10,6 +10,37 @@
             <trans-unit id="extconf.gridsystem.foundation">
                 <source>Foundation</source>
             </trans-unit>
+
+            <trans-unit id="column_layout.sizes.large">
+                <source>Large</source>
+            </trans-unit>
+            <trans-unit id="column_layout.sizes.medium">
+                <source>Medium</source>
+            </trans-unit>
+            <trans-unit id="column_layout.sizes.small">
+                <source>Small</source>
+            </trans-unit>
+
+            <trans-unit id="column_layout.columns.label">
+                <source>Columns</source>
+            </trans-unit>
+            <trans-unit id="column_layout.columns.item_label">
+                <source>%2$s Column %d</source>
+            </trans-unit>
+
+            <trans-unit id="column_layout.offsets.label">
+                <source>Offset</source>
+            </trans-unit>
+            <trans-unit id="column_layout.offsets.item_label">
+                <source>%2$s Offset %d</source>
+            </trans-unit>
+
+            <trans-unit id="column_layout.orders.label">
+                <source>Order</source>
+            </trans-unit>
+            <trans-unit id="column_layout.orders.item_label">
+                <source>%2$s Order %d</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

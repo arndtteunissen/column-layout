@@ -1,0 +1,41 @@
+mod.column_layout {
+    columnsCount = 12
+
+    sizes {
+        large {
+            label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.sizes.large
+            columns = *
+            offsets = *
+            orders = *
+        }
+
+        medium {
+            label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.sizes.medium
+            columns = *
+            offsets = *
+            orders = *
+        }
+
+        small {
+            label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.sizes.small
+            columns = *
+            offsets = *
+            orders = *
+        }
+    }
+
+    columns {
+        label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.columns.label
+        itemLabel = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.columns.item_label
+    }
+
+    offsets {
+        label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.offsets.label
+        itemLabel = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.offsets.item_label
+    }
+
+    orders {
+        label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.orders.label
+        itemLabel = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.orders.item_label
+    }
+}
