@@ -3,6 +3,13 @@
     <file source-language="en" datatype="plaintext" original="messages" date="2018-03-05T10:56:51Z" product-name="column_layout">
         <header/>
         <body>
+
+            <trans-unit id="extconf.gridsystem">
+                <source>Grid System:Select a pre-configured gridsystem which already configures column sizes, offsets and orderings and provides a mapper for the css classes.</source>
+            </trans-unit>
+            <trans-unit id="extconf.gridsystem.foundation">
+                <source>Foundation</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

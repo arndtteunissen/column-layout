@@ -1,0 +1,2 @@
+# cat=basic; type=options[LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:extconf.gridsystem.foundation=foundation]; label=LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:extconf.gridsystem
+gridsystem = foundation
