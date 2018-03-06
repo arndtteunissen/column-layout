@@ -1,6 +1,12 @@
 <?php
-
 namespace Arndtteunissen\ColumnLayout\User;
+
+/*
+ * This file is part of the package arndtteunissen/column-layout.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
 use Arndtteunissen\ColumnLayout\Utility\ColumnLayoutUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
