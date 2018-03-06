@@ -28,6 +28,7 @@ class Tca
         $columnSizes = ColumnLayoutUtility::getSizesFor($size, $type, $pageUid);
 
         $settings = ColumnLayoutUtility::getColumnLayoutSettings($pageUid);
+        $sizeSettings = $settings['sizes.'][$size . '.'];
         $typeSettings = $settings['types.'][$type . '.'];
         $itemLabel = $this->getLanguageService()->sL($typeSettings['itemLabel']);
 
@@ -47,6 +48,8 @@ class Tca
         }
 
         $typeOrdering = $typeSettings['ordering'] ?? null;
+        $sizeTypeOverride = array_key_exists($type . '.', $sizeSettings) ? $sizeSettings[$type . '.']['ordering'] ?? false : false;
+        $typeOrdering = $sizeTypeOverride ? $sizeTypeOverride : $typeOrdering;
         if ($typeOrdering === 'reverse') {
             $items = array_reverse($items);
         }

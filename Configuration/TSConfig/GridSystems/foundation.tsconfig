@@ -19,6 +19,7 @@ mod.column_layout {
         small {
             label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.sizes.small
             widths = *
+            widths.ordering = reverse
             offsets = *
             orders = *
         }
@@ -29,7 +30,6 @@ mod.column_layout {
             label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.widths.label
             itemLabel = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.widths.item_label
             itemLabelDisabled = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.widths.item_label_disabled
-            ordering = reverse
         }
 
         offsets {
