@@ -27,6 +27,9 @@
             <trans-unit id="column_layout.columns.item_label">
                 <source>%2$s Column %d</source>
             </trans-unit>
+            <trans-unit id="column_layout.columns.item_label_disabled">
+                <source>disabled</source>
+            </trans-unit>
 
             <trans-unit id="column_layout.offsets.label">
                 <source>Offset</source>
@@ -34,12 +37,18 @@
             <trans-unit id="column_layout.offsets.item_label">
                 <source>%2$s Offset %d</source>
             </trans-unit>
+            <trans-unit id="column_layout.offsets.item_label_disabled">
+                <source>none</source>
+            </trans-unit>
 
             <trans-unit id="column_layout.orders.label">
                 <source>Order</source>
             </trans-unit>
             <trans-unit id="column_layout.orders.item_label">
                 <source>%2$s Order %d</source>
+            </trans-unit>
+            <trans-unit id="column_layout.orders.item_label_disabled">
+                <source>auto</source>
             </trans-unit>
         </body>
     </file>

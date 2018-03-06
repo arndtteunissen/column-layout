@@ -27,15 +27,19 @@ mod.column_layout {
     columns {
         label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.columns.label
         itemLabel = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.columns.item_label
+        itemLabelDisabled = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.columns.item_label_disabled
+        ordering = reverse
     }
 
     offsets {
         label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.offsets.label
         itemLabel = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.offsets.item_label
+        itemLabelDisabled = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.offsets.item_label_disabled
     }
 
     orders {
         label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.orders.label
         itemLabel = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.orders.item_label
+        itemLabelDisabled = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.orders.item_label_disabled
     }
 }
