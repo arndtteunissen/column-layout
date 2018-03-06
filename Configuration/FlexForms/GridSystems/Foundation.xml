@@ -24,48 +24,48 @@
                             </config>
                         </TCEforms>
                     </row_behaviour>
-                    <large_columns>
+                    <large_width>
                         <TCEforms>
-                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.large_columns</label>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.large_width</label>
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
                                 <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
                                 <txColumnLayout>
                                     <size>large</size>
-                                    <type>columns</type>
+                                    <type>widths</type>
                                 </txColumnLayout>
                             </config>
                         </TCEforms>
-                    </large_columns>
-                    <medium_columns>
+                    </large_width>
+                    <medium_width>
                         <TCEforms>
-                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.medium_columns</label>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.medium_width</label>
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
                                 <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
                                 <txColumnLayout>
                                     <size>medium</size>
-                                    <type>columns</type>
+                                    <type>widths</type>
                                 </txColumnLayout>
                             </config>
                         </TCEforms>
-                    </medium_columns>
-                    <small_columns>
+                    </medium_width>
+                    <small_width>
                         <TCEforms>
-                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.small_columns</label>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.small_width</label>
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
                                 <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
                                 <txColumnLayout>
                                     <size>small</size>
-                                    <type>columns</type>
+                                    <type>widths</type>
                                 </txColumnLayout>
                             </config>
                         </TCEforms>
-                    </small_columns>
+                    </small_width>
                 </el>
             </ROOT>
         </sDEF>

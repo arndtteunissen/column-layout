@@ -4,30 +4,30 @@ mod.column_layout {
     sizes {
         large {
             label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.sizes.large
-            columns = *
+            widths = *
             offsets = *
             orders = *
         }
 
         medium {
             label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.sizes.medium
-            columns = *
+            widths = *
             offsets = *
             orders = *
         }
 
         small {
             label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.sizes.small
-            columns = *
+            widths = *
             offsets = *
             orders = *
         }
     }
 
-    columns {
-        label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.columns.label
-        itemLabel = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.columns.item_label
-        itemLabelDisabled = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.columns.item_label_disabled
+    widths {
+        label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.widths.label
+        itemLabel = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.widths.item_label
+        itemLabelDisabled = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.widths.item_label_disabled
         ordering = reverse
     }
 

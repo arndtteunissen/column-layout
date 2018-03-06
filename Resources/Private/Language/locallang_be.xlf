@@ -21,13 +21,13 @@
                 <source>Small</source>
             </trans-unit>
 
-            <trans-unit id="column_layout.columns.label">
+            <trans-unit id="column_layout.widths.label">
                 <source>Columns</source>
             </trans-unit>
-            <trans-unit id="column_layout.columns.item_label">
+            <trans-unit id="column_layout.widths.item_label">
                 <source>%2$s Column %d</source>
             </trans-unit>
-            <trans-unit id="column_layout.columns.item_label_disabled">
+            <trans-unit id="column_layout.widths.item_label_disabled">
                 <source>disabled</source>
             </trans-unit>
 

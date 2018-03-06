@@ -26,7 +26,7 @@
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_behaviour.end_row">
                 <source>End row after this column</source>
             </trans-unit>
-            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.large_columns">
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.large_width">
                 <source>Large Column Width</source>
             </trans-unit>
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.large_offset">
@@ -35,7 +35,7 @@
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.large_order">
                 <source>Large Order</source>
             </trans-unit>
-            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.medium_columns">
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.medium_width">
                 <source>Medium Column Width</source>
             </trans-unit>
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.medium_offset">
@@ -44,7 +44,7 @@
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.medium_order">
                 <source>Medium Order</source>
             </trans-unit>
-            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.small_columns">
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.small_width">
                 <source>Small Column Width</source>
             </trans-unit>
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.small_offset">
