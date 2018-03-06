@@ -32,7 +32,9 @@
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
-                                <itemsProcFunc></itemsProcFunc>
+                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
+                                <columnLayoutSize>large</columnLayoutSize>
+                                <columnLayoutType>columns</columnLayoutType>
                             </config>
                         </TCEforms>
                     </large_columns>
@@ -42,7 +44,9 @@
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
-                                <itemsProcFunc></itemsProcFunc>
+                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
+                                <columnLayoutSize>large</columnLayoutSize>
+                                <columnLayoutType>offsets</columnLayoutType>
                             </config>
                         </TCEforms>
                     </large_offset>
@@ -52,7 +56,9 @@
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
-                                <itemsProcFunc></itemsProcFunc>
+                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
+                                <columnLayoutSize>large</columnLayoutSize>
+                                <columnLayoutType>orders</columnLayoutType>
                             </config>
                         </TCEforms>
                     </large_order>
@@ -64,7 +70,9 @@
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
-                                <itemsProcFunc></itemsProcFunc>
+                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
+                                <columnLayoutSize>medium</columnLayoutSize>
+                                <columnLayoutType>columns</columnLayoutType>
                             </config>
                         </TCEforms>
                     </medium_columns>
@@ -74,7 +82,9 @@
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
-                                <itemsProcFunc></itemsProcFunc>
+                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
+                                <columnLayoutSize>medium</columnLayoutSize>
+                                <columnLayoutType>offsets</columnLayoutType>
                             </config>
                         </TCEforms>
                     </medium_offset>
@@ -84,7 +94,9 @@
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
-                                <itemsProcFunc></itemsProcFunc>
+                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
+                                <columnLayoutSize>medium</columnLayoutSize>
+                                <columnLayoutType>orders</columnLayoutType>
                             </config>
                         </TCEforms>
                     </medium_order>
@@ -96,7 +108,9 @@
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
-                                <itemsProcFunc></itemsProcFunc>
+                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
+                                <columnLayoutSize>small</columnLayoutSize>
+                                <columnLayoutType>columns</columnLayoutType>
                             </config>
                         </TCEforms>
                     </small_columns>
@@ -106,7 +120,9 @@
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
-                                <itemsProcFunc></itemsProcFunc>
+                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
+                                <columnLayoutSize>small</columnLayoutSize>
+                                <columnLayoutType>offsets</columnLayoutType>
                             </config>
                         </TCEforms>
                     </small_offset>
@@ -116,7 +132,9 @@
                             <config>
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
-                                <itemsProcFunc></itemsProcFunc>
+                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
+                                <columnLayoutSize>small</columnLayoutSize>
+                                <columnLayoutType>orders</columnLayoutType>
                             </config>
                         </TCEforms>
                     </small_order>
