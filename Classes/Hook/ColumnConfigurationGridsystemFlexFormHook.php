@@ -48,6 +48,11 @@ class ColumnConfigurationGridsystemFlexFormHook implements SingletonInterface
      */
     protected function determineCurrentGridSystemKey(): string
     {
-        return $GLOBALS['EXT']['extConf']['column_layout']['gridsystem'];
+        $conf = $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['column_layout'];
+        if (is_string($conf)) {
+            $conf = unserialize($conf);
+        }
+
+        return $conf['gridsystem'];
     }
 }
