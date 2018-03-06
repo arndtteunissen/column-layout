@@ -1,0 +1,65 @@
+lib.columnLayoutColumnClasses = COA
+lib.columnLayoutColumnClasses {
+    100 = TEXT
+    100.value {
+        data = field:sDEF|small_width
+        noTrimWrap = |small-| |
+        if.isPositive.data < .data
+    }
+
+    110 = TEXT
+    110.value {
+        data = field:sDEF|medium_width
+        noTrimWrap = |medium-| |
+        if.isPositive.data < .data
+    }
+
+    120 = TEXT
+    120.value {
+        data = field:sDEF|large_width
+        noTrimWrap = |large-| |
+        if.isPositive.data < .data
+    }
+
+    200 = TEXT
+    200.value {
+        data = field:sOffsets|small_offset
+        noTrimWrap = |small-offset-| |
+        if.isPositive.data < .data
+    }
+
+    210 = TEXT
+    210.value {
+        data = field:sOffsets|medium_offset
+        noTrimWrap = |medium-offset-| |
+        if.isPositive.data < .data
+    }
+
+    220 = TEXT
+    220.value {
+        data = field:sOffsets|large_offset
+        noTrimWrap = |large-offset-| |
+        if.isPositive.data < .data
+    }
+
+    300 = TEXT
+    300.value {
+        data = field:sOrders|small_order
+        noTrimWrap = |small-order-| |
+        if.isPositive.data < .data
+    }
+
+    310 = TEXT
+    310.value {
+        data = field:sOrders|medium_order
+        noTrimWrap = |medium-order-| |
+        if.isPositive.data < .data
+    }
+
+    320 = TEXT
+    320.value {
+        data = field:sOrders|large_order
+        noTrimWrap = |large-order-| |
+        if.isPositive.data < .data
+    }
+}
