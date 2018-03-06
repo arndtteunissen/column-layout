@@ -22,8 +22,8 @@ class Tca
     public function generateSelectItems(array &$params)
     {
         $pageUid = $params['flexParentDatabaseRow']['pid'];
-        $size = $params['config']['columnLayoutSize'];
-        $type = $params['config']['columnLayoutType'];
+        $size = $params['config']['txColumnLayout']['size'];
+        $type = $params['config']['txColumnLayout']['type'];
 
         $columnSizes = ColumnLayoutUtility::getSizesFor($size, $type, $pageUid);
 

@@ -31,8 +31,10 @@
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
                                 <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
-                                <columnLayoutSize>large</columnLayoutSize>
-                                <columnLayoutType>columns</columnLayoutType>
+                                <txColumnLayout>
+                                    <size>large</size>
+                                    <type>columns</type>
+                                </txColumnLayout>
                             </config>
                         </TCEforms>
                     </large_columns>
@@ -43,8 +45,10 @@
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
                                 <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
-                                <columnLayoutSize>medium</columnLayoutSize>
-                                <columnLayoutType>columns</columnLayoutType>
+                                <txColumnLayout>
+                                    <size>medium</size>
+                                    <type>columns</type>
+                                </txColumnLayout>
                             </config>
                         </TCEforms>
                     </medium_columns>
@@ -55,8 +59,10 @@
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
                                 <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
-                                <columnLayoutSize>small</columnLayoutSize>
-                                <columnLayoutType>columns</columnLayoutType>
+                                <txColumnLayout>
+                                    <size>small</size>
+                                    <type>columns</type>
+                                </txColumnLayout>
                             </config>
                         </TCEforms>
                     </small_columns>
@@ -77,8 +83,10 @@
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
                                 <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
-                                <columnLayoutSize>large</columnLayoutSize>
-                                <columnLayoutType>offsets</columnLayoutType>
+                                <txColumnLayout>
+                                    <size>large</size>
+                                    <type>offsets</type>
+                                </txColumnLayout>
                             </config>
                         </TCEforms>
                     </large_offset>
@@ -89,8 +97,10 @@
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
                                 <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
-                                <columnLayoutSize>medium</columnLayoutSize>
-                                <columnLayoutType>offsets</columnLayoutType>
+                                <txColumnLayout>
+                                    <size>medium</size>
+                                    <type>offsets</type>
+                                </txColumnLayout>
                             </config>
                         </TCEforms>
                     </medium_offset>
@@ -101,8 +111,10 @@
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
                                 <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
-                                <columnLayoutSize>small</columnLayoutSize>
-                                <columnLayoutType>offsets</columnLayoutType>
+                                <txColumnLayout>
+                                    <size>small</size>
+                                    <type>offsets</type>
+                                </txColumnLayout>
                             </config>
                         </TCEforms>
                     </small_offset>
@@ -123,8 +135,10 @@
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
                                 <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
-                                <columnLayoutSize>large</columnLayoutSize>
-                                <columnLayoutType>orders</columnLayoutType>
+                                <txColumnLayout>
+                                    <size>large</size>
+                                    <type>orders</type>
+                                </txColumnLayout>
                             </config>
                         </TCEforms>
                     </large_order>
@@ -135,8 +149,10 @@
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
                                 <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
-                                <columnLayoutSize>medium</columnLayoutSize>
-                                <columnLayoutType>orders</columnLayoutType>
+                                <txColumnLayout>
+                                    <size>medium</size>
+                                    <type>orders</type>
+                                </txColumnLayout>
                             </config>
                         </TCEforms>
                     </medium_order>
@@ -147,8 +163,10 @@
                                 <type>select</type>
                                 <renderType>selectSingle</renderType>
                                 <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
-                                <columnLayoutSize>small</columnLayoutSize>
-                                <columnLayoutType>orders</columnLayoutType>
+                                <txColumnLayout>
+                                    <size>small</size>
+                                    <type>orders</type>
+                                </txColumnLayout>
                             </config>
                         </TCEforms>
                     </small_order>
