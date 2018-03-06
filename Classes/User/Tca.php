@@ -28,7 +28,7 @@ class Tca
         $columnSizes = ColumnLayoutUtility::getSizesFor($size, $type, $pageUid);
 
         $settings = ColumnLayoutUtility::getColumnLayoutSettings($pageUid);
-        $typeSettings = $settings[$type . '.'];
+        $typeSettings = $settings['types.'][$type . '.'];
         $itemLabel = $this->getLanguageService()->sL($typeSettings['itemLabel']);
 
         $items = array_map(function ($column) use ($size, $itemLabel) {
