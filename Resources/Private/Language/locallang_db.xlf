@@ -20,6 +20,33 @@
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_behaviour.end_row">
                 <source>End row after this column</source>
             </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.large_columns">
+                <source>Columns (Large)</source>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.large_offset">
+                <source>Offset (Large)</source>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.large_order">
+                <source>Order (Large)</source>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.medium_columns">
+                <source>Columns (Medium)</source>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.medium_offset">
+                <source>Offset (Medium)</source>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.medium_order">
+                <source>Order (Medium)</source>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.small_columns">
+                <source>Columns (Small)</source>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.small_offset">
+                <source>Offset (Small)</source>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.small_order">
+                <source>Order (Small)</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
