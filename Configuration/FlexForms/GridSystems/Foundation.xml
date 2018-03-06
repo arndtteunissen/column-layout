@@ -24,8 +24,6 @@
                             </config>
                         </TCEforms>
                     </row_behaviour>
-
-                    <!-- Large -->
                     <large_columns>
                         <TCEforms>
                             <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.large_columns</label>
@@ -38,32 +36,6 @@
                             </config>
                         </TCEforms>
                     </large_columns>
-                    <large_offset>
-                        <TCEforms>
-                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.large_offset</label>
-                            <config>
-                                <type>select</type>
-                                <renderType>selectSingle</renderType>
-                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
-                                <columnLayoutSize>large</columnLayoutSize>
-                                <columnLayoutType>offsets</columnLayoutType>
-                            </config>
-                        </TCEforms>
-                    </large_offset>
-                    <large_order>
-                        <TCEforms>
-                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.large_order</label>
-                            <config>
-                                <type>select</type>
-                                <renderType>selectSingle</renderType>
-                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
-                                <columnLayoutSize>large</columnLayoutSize>
-                                <columnLayoutType>orders</columnLayoutType>
-                            </config>
-                        </TCEforms>
-                    </large_order>
-
-                    <!-- Medium -->
                     <medium_columns>
                         <TCEforms>
                             <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.medium_columns</label>
@@ -76,32 +48,6 @@
                             </config>
                         </TCEforms>
                     </medium_columns>
-                    <medium_offset>
-                        <TCEforms>
-                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.medium_offset</label>
-                            <config>
-                                <type>select</type>
-                                <renderType>selectSingle</renderType>
-                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
-                                <columnLayoutSize>medium</columnLayoutSize>
-                                <columnLayoutType>offsets</columnLayoutType>
-                            </config>
-                        </TCEforms>
-                    </medium_offset>
-                    <medium_order>
-                        <TCEforms>
-                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.medium_order</label>
-                            <config>
-                                <type>select</type>
-                                <renderType>selectSingle</renderType>
-                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
-                                <columnLayoutSize>medium</columnLayoutSize>
-                                <columnLayoutType>orders</columnLayoutType>
-                            </config>
-                        </TCEforms>
-                    </medium_order>
-
-                    <!-- Small -->
                     <small_columns>
                         <TCEforms>
                             <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.small_columns</label>
@@ -114,6 +60,40 @@
                             </config>
                         </TCEforms>
                     </small_columns>
+                </el>
+            </ROOT>
+        </sDEF>
+        <sOffsets>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.sofssets.title</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <large_offset>
+                        <TCEforms>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.large_offset</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
+                                <columnLayoutSize>large</columnLayoutSize>
+                                <columnLayoutType>offsets</columnLayoutType>
+                            </config>
+                        </TCEforms>
+                    </large_offset>
+                    <medium_offset>
+                        <TCEforms>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.medium_offset</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
+                                <columnLayoutSize>medium</columnLayoutSize>
+                                <columnLayoutType>offsets</columnLayoutType>
+                            </config>
+                        </TCEforms>
+                    </medium_offset>
                     <small_offset>
                         <TCEforms>
                             <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.small_offset</label>
@@ -126,6 +106,40 @@
                             </config>
                         </TCEforms>
                     </small_offset>
+                </el>
+            </ROOT>
+        </sOffsets>
+        <sOrders>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.sorders.title</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <large_order>
+                        <TCEforms>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.large_order</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
+                                <columnLayoutSize>large</columnLayoutSize>
+                                <columnLayoutType>orders</columnLayoutType>
+                            </config>
+                        </TCEforms>
+                    </large_order>
+                    <medium_order>
+                        <TCEforms>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.medium_order</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <itemsProcFunc>Arndtteunissen\ColumnLayout\User\Tca->generateSelectItems</itemsProcFunc>
+                                <columnLayoutSize>medium</columnLayoutSize>
+                                <columnLayoutType>orders</columnLayoutType>
+                            </config>
+                        </TCEforms>
+                    </medium_order>
                     <small_order>
                         <TCEforms>
                             <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.small_order</label>
@@ -140,6 +154,6 @@
                     </small_order>
                 </el>
             </ROOT>
-        </sDEF>
+        </sOrders>
     </sheets>
 </T3DataStructure>

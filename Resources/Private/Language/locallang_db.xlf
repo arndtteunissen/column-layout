@@ -12,7 +12,13 @@
             </trans-unit>
             
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.sdef.title">
-                <source>Column Configuration</source>
+                <source>Main</source>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.sofssets.title">
+                <source>Offsets</source>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.sorders.title">
+                <source>Orders</source>
             </trans-unit>
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_behaviour">
                 <source>Row Behaviour</source>
@@ -21,31 +27,31 @@
                 <source>End row after this column</source>
             </trans-unit>
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.large_columns">
-                <source>Columns (Large)</source>
+                <source>Large Column Width</source>
             </trans-unit>
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.large_offset">
-                <source>Offset (Large)</source>
+                <source>Large Offset</source>
             </trans-unit>
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.large_order">
-                <source>Order (Large)</source>
+                <source>Large Order</source>
             </trans-unit>
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.medium_columns">
-                <source>Columns (Medium)</source>
+                <source>Medium Column Width</source>
             </trans-unit>
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.medium_offset">
-                <source>Offset (Medium)</source>
+                <source>Medium Offset</source>
             </trans-unit>
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.medium_order">
-                <source>Order (Medium)</source>
+                <source>Medium Order</source>
             </trans-unit>
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.small_columns">
-                <source>Columns (Small)</source>
+                <source>Small Column Width</source>
             </trans-unit>
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.small_offset">
-                <source>Offset (Small)</source>
+                <source>Small Offset</source>
             </trans-unit>
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.small_order">
-                <source>Order (Small)</source>
+                <source>Small Order</source>
             </trans-unit>
         </body>
     </file>
