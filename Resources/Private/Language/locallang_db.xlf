@@ -26,11 +26,11 @@
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_behaviour.start_row">
                 <source>Start a new row for this content element</source>
             </trans-unit>
-            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_layout">
-                <source>Row Layout</source>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_fullwidth">
+                <source>Fullwidth Row</source>
             </trans-unit>
-            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_layout.fullwidth">
-                <source>Fullwidth</source>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_fullwidth.enable">
+                <source>Enable</source>
             </trans-unit>
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.large_width">
                 <source>Large Column Width</source>

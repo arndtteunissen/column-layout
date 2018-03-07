@@ -24,20 +24,20 @@
                             </config>
                         </TCEforms>
                     </row_behaviour>
-                    <row_layout>
+                    <row_fullwidth>
                         <TCEforms>
-                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.row_layout</label>
+                            <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.row_fullwidth</label>
                             <config>
                                 <type>check</type>
                                 <items type="array">
                                      <numIndex index="1" type="array">
-                                        <numIndex index="0">LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.row_layout.fullwidth</numIndex>
-                                        <numIndex index="1">1</numIndex>
+                                        <numIndex index="0">LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.row_fullwidth.enable</numIndex>
+                                        <numIndex index="1"/>
                                      </numIndex>
                               </items>
                             </config>
                         </TCEforms>
-                    </row_layout>
+                    </row_fullwidth>
                     <large_width>
                         <TCEforms>
                             <label>LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.large_width</label>
