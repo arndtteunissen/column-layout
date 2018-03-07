@@ -63,7 +63,7 @@ class ColumnLayoutUtility implements SingletonInterface
                     list($from, $to) = explode('-', $value);
                     $columns = array_merge($columns, range($from, $to));
                 } else {
-                    $columns[] = (int) $value;
+                    $columns[] = (int)$value;
                 }
             }
         }
@@ -106,7 +106,7 @@ class ColumnLayoutUtility implements SingletonInterface
         // Level: FlexForm Sheets
         return array_map(function ($sheet) {
             // Level: FlexForm Sheet Fields
-            return array_map(function($field) {
+            return array_map(function ($field) {
                 // Level: FlexForm Field
                 return $field['vDEF'];
             }, $sheet['lDEF']);

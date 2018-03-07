@@ -9,9 +9,7 @@ namespace Arndtteunissen\ColumnLayout\User;
  */
 
 use Arndtteunissen\ColumnLayout\Utility\ColumnLayoutUtility;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Exception;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Lang\LanguageService;
 
 /**
