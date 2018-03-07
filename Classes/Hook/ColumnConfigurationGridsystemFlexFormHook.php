@@ -8,6 +8,7 @@ namespace Arndtteunissen\ColumnLayout\Hook;
  * LICENSE file that was distributed with this source code.
  */
 
+use Arndtteunissen\ColumnLayout\Utility\ColumnLayoutUtility;
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\SingletonInterface;
 
@@ -26,6 +27,7 @@ class ColumnConfigurationGridsystemFlexFormHook implements SingletonInterface
      * @param string $fieldName
      * @param array $row
      * @return array
+     * @throws \TYPO3\CMS\Core\Exception
      */
     public function getDataStructureIdentifierPreProcess(array $fieldTca, string $tableName, string $fieldName, array $row): array
     {
@@ -37,7 +39,7 @@ class ColumnConfigurationGridsystemFlexFormHook implements SingletonInterface
             'type' => 'tca',
             'tableName' => $tableName,
             'fieldName' => $fieldName,
-            'dataStructureKey' => $fieldTca['forceDataStructureKey'] ?? $this->determineCurrentGridSystemKey()
+            'dataStructureKey' => ColumnLayoutUtility::getColumnLayoutSettings($row['pid'])['flexFormKey']
         ];
     }
 

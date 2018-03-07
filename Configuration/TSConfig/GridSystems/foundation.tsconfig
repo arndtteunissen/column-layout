@@ -1,4 +1,5 @@
 mod.column_layout {
+    flexFormKey = foundation
     columnsCount = 12
 
     sizes {
