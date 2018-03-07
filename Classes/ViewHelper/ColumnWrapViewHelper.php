@@ -97,7 +97,7 @@ class ColumnWrapViewHelper extends AbstractViewHelper
         $output = $cObj->stdWrap_wrap($content, ['wrap' => $columnWrap]);
 
         // Begin new row before content
-        if ($flexForm && $rowStart) {
+        if ($rowStart) {
             $rowWrap = '';
             if ($GLOBALS['TX_COLUMN_LAYOUT']['rowStart'] < 0) {
                 $rowWrap .= $cObj->cObjGetSingle(
