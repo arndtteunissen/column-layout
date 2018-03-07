@@ -35,10 +35,14 @@ lib.tx_column_layout.columnWrap {
     content = COA
     content {
         100 = TEXT
-        100.value = <div class="
+        100.value = <div
 
         110 = COA
         110 {
+            stdWrap.trim = 1
+            stdWrap.noTrimWrap = | class="|"|
+            stdWrap.required = 1
+
             100 = TEXT
             100.value {
                 data = field:sDEF|small_width
@@ -104,7 +108,7 @@ lib.tx_column_layout.columnWrap {
         }
 
         190 = TEXT
-        190.value = ">
+        190.value = >
 
         300 = TEXT
         300.value = |
