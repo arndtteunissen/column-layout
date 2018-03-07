@@ -1,3 +1,36 @@
+lib.tx_column_layout.rowWrap {
+    start = COA
+    start {
+        200 = TEXT
+        200.value = <div class="grid-container
+
+        201 = TEXT
+        201.value = full
+        201.value {
+            noTrimWrap = | ||
+            if.isPositive.data = field:sDEF|row_fullwidth
+        }
+
+        290 = TEXT
+        290.value = ">
+
+        400 = TEXT
+        400.value = <div class="grid-x
+
+        490 = TEXT
+        490.value = ">
+    }
+
+    end = COA
+    end {
+        200 = TEXT
+        200.value = </div>
+
+        400 = TEXT
+        400.value = </div>
+    }
+}
+
 lib.tx_column_layout.columnClasses = COA
 lib.tx_column_layout.columnClasses {
     100 = TEXT

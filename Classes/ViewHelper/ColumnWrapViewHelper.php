@@ -90,6 +90,7 @@ class ColumnWrapViewHelper extends AbstractViewHelper
         $configuration = $record['tx_column_layout_column_config'] ?? false;
         $layoutConfiguration = null;
         $columnClasses = '';
+        $rowStart = $GLOBALS['TX_COLUMN_LAYOUT']['rowStart']-- == 1;
 
         if ($configuration) {
             $configuration = GeneralUtility::xml2array($configuration);
@@ -104,6 +105,9 @@ class ColumnWrapViewHelper extends AbstractViewHelper
             $typoScript = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
             $this->contentObjectRenderer->start($layoutConfiguration);
             $columnClasses = $this->contentObjectRenderer->cObjGetSingle($typoScript['lib.']['tx_column_layout.']['columnClasses'], $typoScript['lib.']['tx_column_layout.']['columnClasses.']);
+
+            // Check if manual forcing new row
+            $rowStart = $rowStart || (int)$layoutConfiguration['sDEF']['row_behaviour'];
         }
 
         if ($this->arguments['additionalClasses']) {
@@ -126,7 +130,26 @@ class ColumnWrapViewHelper extends AbstractViewHelper
             $this->templateVariableContainer->remove($as);
         }
 
+        $output = $tagBuilder->render();
 
-        return $tagBuilder->render();
+        // Begin new row before content
+        if ($configuration && $rowStart) {
+            $rowWrap = '';
+            if ($GLOBALS['TX_COLUMN_LAYOUT']['rowStart'] < 0) {
+                $rowWrap .= $this->contentObjectRenderer->cObjGetSingle(
+                    $typoScript['lib.']['tx_column_layout.']['rowWrap.']['end'],
+                    $typoScript['lib.']['tx_column_layout.']['rowWrap.']['end.']
+                );
+            }
+
+            $rowWrap .= $this->contentObjectRenderer->cObjGetSingle(
+                $typoScript['lib.']['tx_column_layout.']['rowWrap.']['start'],
+                $typoScript['lib.']['tx_column_layout.']['rowWrap.']['start.']
+            );
+
+            $output = $rowWrap . $output;
+        }
+
+        return $output;
     }
 }
