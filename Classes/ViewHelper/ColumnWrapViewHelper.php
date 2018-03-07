@@ -12,7 +12,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
 /**
  * ViewHelper which wraps content with a column according to the current gridsystem.
@@ -85,8 +84,8 @@ class ColumnWrapViewHelper extends AbstractViewHelper
     public function render()
     {
         $record = $this->arguments['record'];
-        $tagBuilder = new TagBuilder('div');
         $configuration = $record['tx_column_layout_column_config'] ?? false;
+        $typoScript = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         $layoutConfiguration = null;
         $rowStart = $GLOBALS['TX_COLUMN_LAYOUT']['rowStart']-- == 1;
 
@@ -99,16 +98,9 @@ class ColumnWrapViewHelper extends AbstractViewHelper
                 }, $sheet['lDEF']);
             }, $configuration['data']);
 
-            // Render TypoScript
-            $typoScript = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-            $this->contentObjectRenderer->start($layoutConfiguration);
-            $columnClasses = $this->contentObjectRenderer->cObjGetSingle($typoScript['lib.']['tx_column_layout.']['columnClasses'], $typoScript['lib.']['tx_column_layout.']['columnClasses.']);
-
             // Check if manual forcing new row
             $rowStart = $rowStart || (int)$layoutConfiguration['sDEF']['row_behaviour'];
         }
-        
-        $tagBuilder->addAttribute('class', trim($columnClasses));
 
         $as = $this->arguments['columnLayoutKey'];
         if ($as) {
@@ -119,13 +111,20 @@ class ColumnWrapViewHelper extends AbstractViewHelper
         if ($content == null) {
             $content = $this->renderChildren();
         }
-        $tagBuilder->setContent($content);
 
         if ($as) {
             $this->templateVariableContainer->remove($as);
         }
 
-        $output = $tagBuilder->render();
+        // Render column wrap
+        $this->contentObjectRenderer->start($layoutConfiguration);
+        $columnWrap = $this->contentObjectRenderer->cObjGetSingle(
+            $typoScript['lib.']['tx_column_layout.']['columnWrap.']['content'],
+            $typoScript['lib.']['tx_column_layout.']['columnWrap.']['content.']
+        );
+
+        // Wrap content with column
+        $output = $this->contentObjectRenderer->stdWrap_wrap($content, ['wrap' => $columnWrap]);
 
         // Begin new row before content
         if ($configuration && $rowStart) {
