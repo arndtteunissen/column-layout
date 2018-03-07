@@ -74,7 +74,6 @@ class ColumnWrapViewHelper extends AbstractViewHelper
     {
         $this->registerArgument('record', 'array', 'Content Element Data', true);
         $this->registerArgument('content', 'mixed', 'Content to be wrapped by the column', false, null);
-        $this->registerArgument('additionalClasses', 'string', 'Additional classes to be added to the column wrap', false, null);
         $this->registerArgument('columnLayoutKey', 'string', 'Variable name of the injected column layout', false, null);
     }
 
@@ -89,7 +88,6 @@ class ColumnWrapViewHelper extends AbstractViewHelper
         $tagBuilder = new TagBuilder('div');
         $configuration = $record['tx_column_layout_column_config'] ?? false;
         $layoutConfiguration = null;
-        $columnClasses = '';
         $rowStart = $GLOBALS['TX_COLUMN_LAYOUT']['rowStart']-- == 1;
 
         if ($configuration) {
@@ -109,10 +107,7 @@ class ColumnWrapViewHelper extends AbstractViewHelper
             // Check if manual forcing new row
             $rowStart = $rowStart || (int)$layoutConfiguration['sDEF']['row_behaviour'];
         }
-
-        if ($this->arguments['additionalClasses']) {
-            $columnClasses .= $this->arguments['additionalClasses'];
-        }
+        
         $tagBuilder->addAttribute('class', trim($columnClasses));
 
         $as = $this->arguments['columnLayoutKey'];
