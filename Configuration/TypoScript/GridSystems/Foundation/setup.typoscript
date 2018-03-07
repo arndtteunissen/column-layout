@@ -1,5 +1,5 @@
-lib.columnLayoutColumnClasses = COA
-lib.columnLayoutColumnClasses {
+lib.tx_column_layout.columnClasses = COA
+lib.tx_column_layout.columnClasses {
     100 = TEXT
     100.value {
         data = field:sDEF|small_width

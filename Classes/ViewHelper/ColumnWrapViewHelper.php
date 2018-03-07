@@ -20,11 +20,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 class ColumnWrapViewHelper extends AbstractViewHelper
 {
     /**
-     * @var string key of the classes rendering CObject in typoscript lib.
-     */
-    protected $typoScriptClassesRenderingLibKey = 'columnLayoutColumnClasses';
-
-    /**
      * Prevent the children output from being escaped
      *
      * @var bool
@@ -108,12 +103,13 @@ class ColumnWrapViewHelper extends AbstractViewHelper
             // Render TypoScript
             $typoScript = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
             $this->contentObjectRenderer->start($layoutConfiguration);
-            $columnClasses = $this->contentObjectRenderer->cObjGetSingle($typoScript['lib.'][$this->typoScriptClassesRenderingLibKey], $typoScript['lib.'][$this->typoScriptClassesRenderingLibKey . '.']);
+            $columnClasses = $this->contentObjectRenderer->cObjGetSingle($typoScript['lib.']['tx_column_layout.']['columnClasses'], $typoScript['lib.']['tx_column_layout.']['columnClasses.']);
         }
 
         if ($this->arguments['additionalClasses']) {
             $columnClasses .= $this->arguments['additionalClasses'];
         }
+        $tagBuilder->addAttribute('class', trim($columnClasses));
 
         $as = $this->arguments['columnLayoutKey'];
         if ($as) {
@@ -130,7 +126,6 @@ class ColumnWrapViewHelper extends AbstractViewHelper
             $this->templateVariableContainer->remove($as);
         }
 
-        $tagBuilder->addAttribute('class', trim($columnClasses));
 
         return $tagBuilder->render();
     }
