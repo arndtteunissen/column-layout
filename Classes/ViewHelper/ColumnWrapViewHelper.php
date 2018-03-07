@@ -17,7 +17,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 /**
  * ViewHelper which wraps content with a column according to the current gridsystem.
  */
-class WrapColumnViewHelper extends AbstractViewHelper
+class ColumnWrapViewHelper extends AbstractViewHelper
 {
     /**
      * @var string key of the classes rendering CObject in typoscript lib.
