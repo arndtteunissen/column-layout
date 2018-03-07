@@ -8,8 +8,9 @@ namespace Arndtteunissen\ColumnLayout\ViewHelper;
  * LICENSE file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -32,37 +33,9 @@ class RowWrapViewHelper extends AbstractViewHelper
     protected $escapeChildren = false;
 
     /**
-     * @var ConfigurationManagerInterface
+     * {@inheritdoc}
      */
-    protected $configurationManager;
-
-    /**
-     * @var ContentObjectRenderer
-     */
-    protected $contentObjectRenderer;
-
-    /**
-     * @param ConfigurationManagerInterface $configurationManager
-     */
-    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
-    {
-        $this->configurationManager = $configurationManager;
-    }
-
-    /**
-     * @param ContentObjectRenderer $contentObjectRenderer
-     */
-    public function injectContentObjectRenderer(ContentObjectRenderer $contentObjectRenderer)
-    {
-        $this->contentObjectRenderer = $contentObjectRenderer;
-    }
-
-    /**
-     * Render the output of this ViewHelper
-     *
-     * @return string
-     */
-    public function render()
+    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
         if (!isset($GLOBALS['TX_COLUMN_LAYOUT'])) {
             $GLOBALS['TX_COLUMN_LAYOUT'] = [];
@@ -70,12 +43,13 @@ class RowWrapViewHelper extends AbstractViewHelper
 
         $GLOBALS['TX_COLUMN_LAYOUT']['rowStart'] = 1;
 
-        $output = $this->renderChildren();
+        $output = $renderChildrenClosure();
 
         if ($GLOBALS['TX_COLUMN_LAYOUT']['rowStart'] != 1) {
             // End row after last column
-            $typoScript = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-            $output .= $this->contentObjectRenderer->cObjGetSingle(
+            $typoScript = self::getTypoScript();
+            $cObj = self::getCObj();
+            $output .= $cObj->cObjGetSingle(
                 $typoScript['lib.']['tx_column_layout.']['rowWrap.']['end'],
                 $typoScript['lib.']['tx_column_layout.']['rowWrap.']['end.']
             );
@@ -84,5 +58,29 @@ class RowWrapViewHelper extends AbstractViewHelper
         unset($GLOBALS['TX_COLUMN_LAYOUT']['rowStart']);
 
         return $output;
+    }
+
+    /**
+     * Returns a new ContentObjectRenderer
+     * Please note, that the ContentObjectRenderer is not a singleton, so each time this function gets called, a new
+     * cObj will be created.
+     *
+     * @return ContentObjectRenderer
+     */
+    protected static function getCObj(): ContentObjectRenderer
+    {
+        return GeneralUtility::makeInstance(ContentObjectRenderer::class);
+    }
+
+    /**
+     * Return the TypoScript setup of the current page template.
+     *
+     * @see FrontendConfigurationManager::getTypoScriptSetup()
+     *
+     * @return array
+     */
+    protected static function getTypoScript(): array
+    {
+        return $GLOBALS['TSFE']->tmpl->setup;
     }
 }
