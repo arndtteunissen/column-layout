@@ -10,15 +10,19 @@ namespace Arndtteunissen\ColumnLayout\ViewHelper;
 
 use Arndtteunissen\ColumnLayout\Utility\ColumnLayoutUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
  * ViewHelper which wraps content with a column according to the current gridsystem.
  */
 class ColumnWrapViewHelper extends AbstractViewHelper
 {
+    use CompileWithContentArgumentAndRenderStatic;
+
     /**
      * Prevent the children output from being escaped
      *
@@ -34,37 +38,11 @@ class ColumnWrapViewHelper extends AbstractViewHelper
     protected $escapeOutput = false;
 
     /**
-     * @var ConfigurationManagerInterface
-     */
-    protected $configurationManager;
-
-    /**
-     * @var ContentObjectRenderer
-     */
-    protected $contentObjectRenderer;
-
-    /**
-     * @param ConfigurationManagerInterface $configurationManager
-     */
-    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
-    {
-        $this->configurationManager = $configurationManager;
-    }
-
-    /**
-     * @param ContentObjectRenderer $contentObjectRenderer
-     */
-    public function injectContentObjectRenderer(ContentObjectRenderer $contentObjectRenderer)
-    {
-        $this->contentObjectRenderer = $contentObjectRenderer;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function initialize()
     {
-        parent::initialize();
+        $this->contentArgumentName = 'content';
     }
 
     /**
@@ -78,15 +56,13 @@ class ColumnWrapViewHelper extends AbstractViewHelper
     }
 
     /**
-     * Render the output of this ViewHelper
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function render()
+    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
-        $record = $this->arguments['record'];
+        $record = $arguments['record'];
         $flexForm = $record['tx_column_layout_column_config'] ?? false;
-        $typoScript = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        $typoScript = self::getTypoScript();
         $layoutConfiguration = null;
         $rowStart = $GLOBALS['TX_COLUMN_LAYOUT']['rowStart']-- == 1;
 
@@ -97,41 +73,40 @@ class ColumnWrapViewHelper extends AbstractViewHelper
             $rowStart = $rowStart || (int)$layoutConfiguration['sDEF']['row_behaviour'];
         }
 
-        $as = $this->arguments['columnLayoutKey'];
+        $as = $arguments['columnLayoutKey'];
         if ($as) {
-            $this->templateVariableContainer->add($as, $layoutConfiguration);
+            $renderingContext->getVariableProvider()->add($as, $layoutConfiguration);
         }
 
-        $content = $this->arguments['content'];
-        if ($content == null) {
-            $content = $this->renderChildren();
-        }
+        $content = $renderChildrenClosure();
 
         if ($as) {
-            $this->templateVariableContainer->remove($as);
+            $renderingContext->getVariableProvider()->remove($as);
         }
+
+        $cObj = self::getCObj();
 
         // Render column wrap
-        $this->contentObjectRenderer->start($layoutConfiguration);
-        $columnWrap = $this->contentObjectRenderer->cObjGetSingle(
+        $cObj->start($layoutConfiguration);
+        $columnWrap = $cObj->cObjGetSingle(
             $typoScript['lib.']['tx_column_layout.']['columnWrap.']['content'],
             $typoScript['lib.']['tx_column_layout.']['columnWrap.']['content.']
         );
 
         // Wrap content with column
-        $output = $this->contentObjectRenderer->stdWrap_wrap($content, ['wrap' => $columnWrap]);
+        $output = $cObj->stdWrap_wrap($content, ['wrap' => $columnWrap]);
 
         // Begin new row before content
         if ($flexForm && $rowStart) {
             $rowWrap = '';
             if ($GLOBALS['TX_COLUMN_LAYOUT']['rowStart'] < 0) {
-                $rowWrap .= $this->contentObjectRenderer->cObjGetSingle(
+                $rowWrap .= $cObj->cObjGetSingle(
                     $typoScript['lib.']['tx_column_layout.']['rowWrap.']['end'],
                     $typoScript['lib.']['tx_column_layout.']['rowWrap.']['end.']
                 );
             }
 
-            $rowWrap .= $this->contentObjectRenderer->cObjGetSingle(
+            $rowWrap .= $cObj->cObjGetSingle(
                 $typoScript['lib.']['tx_column_layout.']['rowWrap.']['start'],
                 $typoScript['lib.']['tx_column_layout.']['rowWrap.']['start.']
             );
@@ -140,5 +115,29 @@ class ColumnWrapViewHelper extends AbstractViewHelper
         }
 
         return $output;
+    }
+
+    /**
+     * Returns a new ContentObjectRenderer
+     * Please note, that the ContentObjectRenderer is not a singleton, so each time this function gets called, a new
+     * cObj will be created.
+     *
+     * @return ContentObjectRenderer
+     */
+    protected static function getCObj(): ContentObjectRenderer
+    {
+        return GeneralUtility::makeInstance(ContentObjectRenderer::class);
+    }
+
+    /**
+     * Return the TypoScript setup of the current page template.
+     *
+     * @see FrontendConfigurationManager::getTypoScriptSetup()
+     *
+     * @return array
+     */
+    protected static function getTypoScript(): array
+    {
+        return $GLOBALS['TSFE']->tmpl->setup;
     }
 }
