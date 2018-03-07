@@ -42,19 +42,4 @@ class ColumnConfigurationGridsystemFlexFormHook implements SingletonInterface
             'dataStructureKey' => ColumnLayoutUtility::getColumnLayoutSettings($row['pid'])['flexFormKey']
         ];
     }
-
-    /**
-     * Returns the configured gridsystem from the extension configuration
-     *
-     * @return string gridsystem key
-     */
-    protected function determineCurrentGridSystemKey(): string
-    {
-        $conf = $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['column_layout'];
-        if (is_string($conf)) {
-            $conf = unserialize($conf);
-        }
-
-        return $conf['gridsystem'];
-    }
 }

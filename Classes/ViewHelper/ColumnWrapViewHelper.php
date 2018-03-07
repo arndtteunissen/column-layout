@@ -134,19 +134,4 @@ class ColumnWrapViewHelper extends AbstractViewHelper
 
         return $tagBuilder->render();
     }
-
-    /**
-     * Returns the configured gridsystem from the extension configuration
-     *
-     * @return string gridsystem key
-     */
-    protected static function determineCurrentGridSystemKey(): string
-    {
-        $conf = $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['column_layout'];
-        if (is_string($conf)) {
-            $conf = unserialize($conf);
-        }
-
-        return $conf['gridsystem'];
-    }
 }
