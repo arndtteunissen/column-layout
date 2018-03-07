@@ -1,0 +1,29 @@
+language: php
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.0
+    - php: 7.1
+
+notifications:
+  email:
+    - dev@arndtteunissen.de
+
+sudo: false
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_install:
+  - phpenv config-rm xdebug.ini
+
+script:
+  - >
+    echo;
+    echo "PHP Linting";
+    find . -name \*.php -exec php -d display_errors=stderr -l {} > /dev/null \;
+  - >
+    echo;
+    echo "PHP CS Linting";
+    composer run-script cs
