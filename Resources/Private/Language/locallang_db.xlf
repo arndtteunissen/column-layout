@@ -23,8 +23,8 @@
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_behaviour">
                 <source>Row Behaviour</source>
             </trans-unit>
-            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_behaviour.end_row">
-                <source>End row after this column</source>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_behaviour.start_row">
+                <source>Start a new row for this content element</source>
             </trans-unit>
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.large_width">
                 <source>Large Column Width</source>

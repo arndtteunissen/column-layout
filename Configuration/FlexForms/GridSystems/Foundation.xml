@@ -17,7 +17,7 @@
                                 <type>check</type>
                                 <items type="array">
                                      <numIndex index="1" type="array">
-                                        <numIndex index="0">LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.row_behaviour.end_row</numIndex>
+                                        <numIndex index="0">LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.row_behaviour.start_row</numIndex>
                                         <numIndex index="1">1</numIndex>
                                      </numIndex>
                               </items>
