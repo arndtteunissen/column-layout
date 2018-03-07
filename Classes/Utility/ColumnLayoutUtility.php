@@ -11,6 +11,7 @@ namespace Arndtteunissen\ColumnLayout\Utility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Exception;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Utility class for dealing with column layout settings.
@@ -86,5 +87,29 @@ class ColumnLayoutUtility implements SingletonInterface
         }
 
         return $pageTSConfig['mod.']['column_layout.'];
+    }
+
+    /**
+     * Simplify a FlexForm DataStructure array.
+     * Removes all unnecessary sheet, field or value identifiers.
+     *
+     * @param string|array $flexFormData either a converted FlexForm array or the raw FlexForm string
+     * @return array simplified FlexForm data structure
+     */
+    public static function hydrateLayoutConfigFlexFormData($flexFormData): array
+    {
+        $dataStructure = $flexFormData;
+        if (is_string($flexFormData)) {
+            $dataStructure = GeneralUtility::xml2array($flexFormData);
+        }
+
+        // Level: FlexForm Sheets
+        return array_map(function ($sheet) {
+            // Level: FlexForm Sheet Fields
+            return array_map(function($field) {
+                // Level: FlexForm Field
+                return $field['vDEF'];
+            }, $sheet['lDEF']);
+        }, $dataStructure['data']);
     }
 }

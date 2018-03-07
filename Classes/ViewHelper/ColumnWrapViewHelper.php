@@ -8,6 +8,7 @@ namespace Arndtteunissen\ColumnLayout\ViewHelper;
  * LICENSE file that was distributed with this source code.
  */
 
+use Arndtteunissen\ColumnLayout\Utility\ColumnLayoutUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
@@ -84,19 +85,13 @@ class ColumnWrapViewHelper extends AbstractViewHelper
     public function render()
     {
         $record = $this->arguments['record'];
-        $configuration = $record['tx_column_layout_column_config'] ?? false;
+        $flexForm = $record['tx_column_layout_column_config'] ?? false;
         $typoScript = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
         $layoutConfiguration = null;
         $rowStart = $GLOBALS['TX_COLUMN_LAYOUT']['rowStart']-- == 1;
 
-        if ($configuration) {
-            $configuration = GeneralUtility::xml2array($configuration);
-            // Hydrate flexform data structure
-            $layoutConfiguration = array_map(function ($sheet) {
-                return array_map(function($field) {
-                    return $field['vDEF'];
-                }, $sheet['lDEF']);
-            }, $configuration['data']);
+        if ($flexForm) {
+            $layoutConfiguration = ColumnLayoutUtility::hydrateLayoutConfigFlexFormData($flexForm);
 
             // Check if manual forcing new row
             $rowStart = $rowStart || (int)$layoutConfiguration['sDEF']['row_behaviour'];
@@ -127,7 +122,7 @@ class ColumnWrapViewHelper extends AbstractViewHelper
         $output = $this->contentObjectRenderer->stdWrap_wrap($content, ['wrap' => $columnWrap]);
 
         // Begin new row before content
-        if ($configuration && $rowStart) {
+        if ($flexForm && $rowStart) {
             $rowWrap = '';
             if ($GLOBALS['TX_COLUMN_LAYOUT']['rowStart'] < 0) {
                 $rowWrap .= $this->contentObjectRenderer->cObjGetSingle(
