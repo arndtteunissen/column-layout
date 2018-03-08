@@ -22,14 +22,8 @@ before_script:
   - composer global require friendsofphp/php-cs-fixer
 
 script:
-  - >
-    echo;
-    echo "PHP Linting";
-    find . -name \*.php -exec php -d display_errors=stderr -l {} > /dev/null \;
-  - >
-    echo;
-    echo "PHP CS Linting";
-    .Build/bin/php-cs-fixer fix --dry-run --verbose --diff-format=udiff
+  - find . -name \*.php -exec php -d display_errors=stderr -l {} > /dev/null \;
+  - .Build/bin/php-cs-fixer fix --dry-run --verbose --diff-format=udiff
 
 deploy:
   provider: script
