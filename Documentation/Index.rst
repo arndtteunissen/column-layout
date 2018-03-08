@@ -10,7 +10,7 @@ Extension Name
 .. only:: html
 
 	:Classification:
-		<extension key>
+		column_layout
 
 	:Version:
 		|release|
@@ -19,19 +19,19 @@ Extension Name
 		en
 
 	:Description:
-		Manual covering TYPO3 extension <extension name>
+		Manual covering TYPO3 extension column_layout
 
 	:Keywords:
-		comma,separated,list,of,keywords
+		grid, columns, page-view
 
 	:Copyright:
-		2017
+		2018
 
 	:Author:
-		|t3author|
+		Arndtteunissen
 
 	:Email:
-		|project_contact|
+		dev@arndtteunissen.de
 
 	:License:
 		This document is published under the Open Publication License
