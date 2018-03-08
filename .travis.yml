@@ -17,6 +17,8 @@ cache:
 
 before_install:
   - phpenv config-rm xdebug.ini
+
+before_script:
   - composer global require friendsofphp/php-cs-fixer
 
 script:
@@ -27,7 +29,7 @@ script:
   - >
     echo;
     echo "PHP CS Linting";
-    composer run-script cs
+    .Build/bin/php-cs-fixer fix --dry-run --verbose --diff-format=udiff
 
 deploy:
   provider: script
