@@ -3,6 +3,7 @@
     "description": "Adds column configuration to fluid styled content elements",
     "type": "typo3-cms-extension",
     "license": "GPL-2.0-or-later",
+    "homepage": "https://github.com/arndtteunissen/column-layout",
 	"keywords": [
 		"grid",
 		"columns",
@@ -18,6 +19,9 @@
 			"email": "schreiner.tim@gmail.com"
 		}
     ],
+    "support": {
+        "issues": "https://github.com/arndtteunissen/column-layout/issues"
+    },
     "minimum-stability": "stable",
     "require": {
         "typo3/cms-fluid-styled-content": "^8.7",
