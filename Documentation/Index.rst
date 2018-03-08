@@ -52,3 +52,5 @@ Extension Name
 	:glob:
 
 	Setup/Index
+	DeveloperManual/Usage
+	DeveloperManual/Customize
