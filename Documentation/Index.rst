@@ -46,4 +46,9 @@ Extension Name
 
 	**Table of Contents**
 
-See `README.md link`__ for more information.
+.. toctree::
+	:maxdepth: 3
+	:titlesonly:
+	:glob:
+
+	Setup/Index
