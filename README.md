@@ -13,5 +13,8 @@ The preferred way to install this extension is via [Composer](https://getcompose
 composer require arndtteunissen/column-layout
 ```
 
+## Documentation
+The extension manual can be found here: [https://docs.typo3.org/typo3cms/extensions/column_layout/](https://docs.typo3.org/typo3cms/extensions/column_layout/)
+
 ## License
 For the full copyright and license information, please read the [LICENSE](LICENSE) file.

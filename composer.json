@@ -20,7 +20,8 @@
 		}
     ],
     "support": {
-        "issues": "https://github.com/arndtteunissen/column-layout/issues"
+        "issues": "https://github.com/arndtteunissen/column-layout/issues",
+        "docs": "https://docs.typo3.org/typo3cms/extensions/column_layout/"
     },
     "minimum-stability": "stable",
     "require": {
