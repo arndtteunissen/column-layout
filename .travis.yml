@@ -23,7 +23,7 @@ before_script:
 
 script:
   - find . -name \*.php -exec php -d display_errors=stderr -l {} > /dev/null \;
-  - .Build/bin/php-cs-fixer fix --dry-run --verbose --diff-format=udiff
+  - php-cs-fixer fix --dry-run --verbose --diff-format=udiff
 
 deploy:
   provider: script
