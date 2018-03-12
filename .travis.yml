@@ -4,7 +4,9 @@ matrix:
   fast_finish: true
   include:
     - php: 7.0
+      env: TYPO3_VERSION=^8.7
     - php: 7.1
+      env: TYPO3_VERSION=^8.7
 
 notifications:
   email:
@@ -19,11 +21,14 @@ before_install:
   - phpenv config-rm xdebug.ini
 
 before_script:
-  - composer global require friendsofphp/php-cs-fixer
+  - composer require typo3/cms=$TYPO3_VERSION
+  # Restore composer.json
+  - git checkout composer.json
+  - export TYPO3_PATH_WEB=$PWD/.Build/Web
 
 script:
   - find . -name \*.php -exec php -d display_errors=stderr -l {} > /dev/null \;
-  - php-cs-fixer fix --dry-run --verbose --diff-format=udiff
+  - .Build/bin/php-cs-fixer fix --dry-run --verbose --diff-format=udiff
 
 deploy:
   provider: script
