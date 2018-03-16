@@ -87,7 +87,9 @@ class ColumnWrapViewHelper extends AbstractViewHelper
         $cObj = self::getCObj();
 
         // Render column wrap
-        $cObj->start($layoutConfiguration);
+        $record['tx_column_layout_column_config_orig'] = $record['tx_column_layout_column_config'];
+        $record['tx_column_layout_column_config'] = $layoutConfiguration;
+        $cObj->start($record);
         $columnWrap = $cObj->cObjGetSingle(
             $typoScript['lib.']['tx_column_layout.']['columnWrap.']['content'],
             $typoScript['lib.']['tx_column_layout.']['columnWrap.']['content.']
