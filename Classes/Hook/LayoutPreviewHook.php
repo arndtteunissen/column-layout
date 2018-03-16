@@ -81,6 +81,12 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
             $totalWidth = $largeOffset + $largeWidth;
         }
 
+        // Fill row if no width is given
+        if ($largeWidth == 0) {
+            $largeWidth = $maxColumns - $totalOffset;
+            $totalWidth = $maxColumns;
+        }
+
         // Render
         $html = $this->renderColumnPreviewRow($largeWidth, $totalOffset, $maxColumns - $totalWidth, $row['pid']);
         $info[] = $html;
