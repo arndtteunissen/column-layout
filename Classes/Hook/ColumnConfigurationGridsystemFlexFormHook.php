@@ -39,7 +39,7 @@ class ColumnConfigurationGridsystemFlexFormHook implements SingletonInterface
             'type' => 'tca',
             'tableName' => $tableName,
             'fieldName' => $fieldName,
-            'dataStructureKey' => ColumnLayoutUtility::getColumnLayoutSettings($row['pid'])['flexFormKey']
+            'dataStructureKey' => ColumnLayoutUtility::getColumnLayoutSettings($row['_tx_column_layout_orig_pid'])['flexFormKey']
         ];
     }
 }
