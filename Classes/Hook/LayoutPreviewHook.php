@@ -94,6 +94,7 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
      * @param int $width
      * @param int $offset
      * @param int $fill
+     * @param int $pid
      * @return string
      * @throws \TYPO3\CMS\Core\Exception
      */
