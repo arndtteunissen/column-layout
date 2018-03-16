@@ -38,5 +38,5 @@ script:
 deploy:
   provider: script
   on:
-      branch: master
+      tags: true
   script: ./ter_deploy.sh
