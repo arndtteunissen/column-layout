@@ -23,9 +23,6 @@ class SaveEffectivePidInDatabaseRow implements FormDataProviderInterface
      */
     public function addData(array $result)
     {
-        if ($result['command'] !== 'new') {
-            return $result;
-        }
         if (!is_array($result['databaseRow'])) {
             throw new \UnexpectedValueException(
                 'databaseRow of table ' . $result['tableName'] . ' is not an array',
