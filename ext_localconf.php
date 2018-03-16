@@ -20,9 +20,7 @@ call_user_func(function ($extKey) {
     // Extend FormData processing for flexforms as quickfix
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord'][\Arndtteunissen\ColumnLayout\Form\FormDataProvider\SaveEffectivePidInDatabaseRow::class] = [
         'depends' => [
-            \TYPO3\CMS\Backend\Form\FormDataProvider\DatabaseEffectivePid::class,
-            \TYPO3\CMS\Backend\Form\FormDataProvider\PageTsConfig::class
+            \TYPO3\CMS\Backend\Form\FormDataProvider\DatabaseEffectivePid::class
         ]
     ];
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord'][\TYPO3\CMS\Backend\Form\FormDataProvider\DatabaseRowInitializeNew::class]['depends'][] = \Arndtteunissen\ColumnLayout\Form\FormDataProvider\SaveEffectivePidInDatabaseRow::class;
 }, $_EXTKEY);
