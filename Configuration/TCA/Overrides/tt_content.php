@@ -17,7 +17,7 @@ $ll = 'LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:';
         'config' => [
             'type' => 'flex',
             'ds' => [
-                'default' => 'FILE:EXT:column_layout/Configuration/FlexForms/GridSystems/Foundation.xml'
+                'foundation' => 'FILE:EXT:column_layout/Configuration/FlexForms/GridSystems/Foundation.xml'
             ]
         ]
     ]
