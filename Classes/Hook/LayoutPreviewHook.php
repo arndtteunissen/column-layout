@@ -39,6 +39,7 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
 
     /**
      * {@inheritdoc}
+     * @param array $info
      */
     public function preProcess(PageLayoutView &$parentObject, &$info, array &$row)
     {
@@ -89,6 +90,7 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
 
         // Render
         $info[] = $this->renderColumnPreviewRow($largeWidth, $totalOffset, $maxColumns - $totalWidth, $row['pid']);
+        $info[] = $this->generateGridCss($row['uid'], $maxColumns, $largeWidth, $largeOffset);
 
         // Update column offset counter
 
@@ -150,6 +152,52 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
         $html .= '</div>';
 
         return $html;
+    }
+
+    /**
+     * Generates the CSS for a content element in PageLayoutView to look like a column
+     *
+     * @param int $uid
+     * @param int $max
+     * @param int $width
+     * @param int $offset
+     * @return string
+     */
+    protected function generateGridCss($uid, $max, $width, $offset): string
+    {
+        return sprintf(
+            '<style type="text/css">%s</style>',
+            $this->generateCEColumnCSS($uid, $max, $width, $offset)
+        );
+    }
+
+    /**
+     * @param $uid
+     * @param $max
+     * @param $width
+     * @param $offset
+     * @return string
+     */
+    protected function generateCEColumnCSS($uid, $max, $width, $offset)
+    {
+        $css = sprintf(
+            '#element-tt_content-%d { width: %d%%; } 
+            #element-tt_content-%1$d > .t3-page-ce-dragitem { flex: %d; } 
+            #element-tt_content-%1$d::before { flex: %d; content: \'%4$s\'; }',
+            $uid,
+            (($width + $offset) / $max) * 100,
+            $width,
+            $offset
+        );
+
+        if (!$offset) {
+            $css .= sprintf(
+                '#element-tt_content-%1$d::before { display: none; }',
+                $uid
+            );
+        }
+
+        return $css;
     }
 
     /**
