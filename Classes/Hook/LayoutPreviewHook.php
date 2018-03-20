@@ -75,7 +75,7 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
         $totalWidth = $totalOffset + $largeWidth;
         if (
             $layoutConfiguration['sDEF']['row_behaviour']
-            || $totalWidth >= $maxColumns
+            || $totalWidth > $maxColumns
         ) {
             $totalOffset = $largeOffset;
             $totalWidth = $largeOffset + $largeWidth;
