@@ -88,8 +88,7 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
         }
 
         // Render
-        $html = $this->renderColumnPreviewRow($largeWidth, $totalOffset, $maxColumns - $totalWidth, $row['pid']);
-        $info[] = $html;
+        $info[] = $this->renderColumnPreviewRow($largeWidth, $totalOffset, $maxColumns - $totalWidth, $row['pid']);
 
         // Update column offset counter
 
