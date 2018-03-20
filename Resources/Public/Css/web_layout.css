@@ -36,3 +36,77 @@
 .column-box.active.last::before {
     display: none;
 }
+
+/* Page Layout View
+ * Mod>Page
+ */
+@media only screen and (min-width: 1024px) {
+    /* General */
+    .t3-page-ce-wrapper {
+        padding: 0 2rem;
+    }
+
+    /* Content Element */
+    .t3-page-ce {
+        display: inline-flex;
+        vertical-align: top;
+        margin: 10px 0;
+        padding: 0 10px;
+    }
+
+    .t3-page-ce > .t3-page-ce-dragitem {
+        flex: 1;
+    }
+
+    .t3-page-ce::before {
+        padding: 2rem 0;
+        border: 1px dashed grey;
+        text-align: center;
+        margin: 0 1em 36px 0; /* 26px button height + 10px ce border-bottom */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .t3-page-ce-dragitem {
+        z-index: 20;
+    }
+
+    /* Dropzone of CE */
+    .t3-page-ce-dropzone-available {
+        z-index: 10;
+    }
+
+    .t3-page-ce-dropzone-available.active {
+        position: absolute;
+        right: -3em;
+        top: 0;
+        width: 40%;
+        height: 100%;
+    }
+
+    .t3-page-ce-dropzone-available.active.t3-page-ce-dropzone-possible {
+        position: absolute;
+        margin: 0;
+    }
+
+    .t3-page-ce:first-child {
+        width: 100%;
+
+    }
+    .t3-page-ce:first-child .t3-page-ce-dropzone-available.active {
+        position: relative;
+        height: 26px;
+        flex: 1;
+        right: 0;
+    }
+
+    .t3-page-ce:first-child .t3-page-ce-dropzone-available.active.t3-page-ce-dropzone-possible {
+        padding: 0;
+    }
+
+    /* New CE Button */
+    .t3-page-ce:not(:first-child) .t3js-page-new-ce {
+        float: right;
+    }
+}
