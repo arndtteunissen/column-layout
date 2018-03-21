@@ -23,4 +23,5 @@ call_user_func(function ($extKey) {
             \TYPO3\CMS\Backend\Form\FormDataProvider\DatabaseEffectivePid::class
         ]
     ];
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord'][\TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexPrepare::class]['depends'][] = \Arndtteunissen\ColumnLayout\Form\FormDataProvider\SaveEffectivePidInDatabaseRow::class;
 }, $_EXTKEY);

@@ -10,11 +10,11 @@
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Column Layout',
     'description' => 'Adds column configuration to fluid styled content elements',
-    'version' => '0.2.2',
+    'version' => '0.3.0',
     'category' => 'fe',
     'constraints' => [
         'depends' => [
-            'typo3' => '8.7.0-8.7.99'
+            'typo3' => '8.7.0-9.5.99'
         ]
     ],
     'state' => 'alpha',

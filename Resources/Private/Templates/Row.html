@@ -1,0 +1,10 @@
+<html data-namespace-typo3-fluid="true"
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
+
+<f:render renderable="{settings.content}"/>
+
+<f:if condition="{settings.row_end}">
+    <f:render partial="Row/End" arguments="{_all}"/>
+</f:if>
+
+</html>
