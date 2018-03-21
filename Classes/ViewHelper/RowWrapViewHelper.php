@@ -56,6 +56,10 @@ class RowWrapViewHelper extends AbstractViewHelper
             ->setName('row-content')
             ->setClosure(function() use ($renderChildrenClosure, &$rowEnd) {
                 $output = $renderChildrenClosure();
+                /*
+                 * After content is rendered check for whether to close the row.
+                 * Changes the value of a variable passed by reference to the rendering variable container.
+                 */
                 $rowEnd = $GLOBALS['TX_COLUMN_LAYOUT']['rowStart'] != 1;
 
                 return $output;
@@ -66,6 +70,7 @@ class RowWrapViewHelper extends AbstractViewHelper
 
         // Add additional data
         $templateConfig['settings.']['content'] = $content;
+        // The rowEnd variable changes based on the content so it is necessary to pass it by reference
         $templateConfig['settings.']['row_end'] = &$rowEnd;
 
         // Render template
