@@ -54,7 +54,7 @@ class RowWrapViewHelper extends AbstractViewHelper
         $content = new RenderableClosure();
         $content
             ->setName('row-content')
-            ->setClosure(function() use ($renderChildrenClosure, &$rowEnd) {
+            ->setClosure(function () use ($renderChildrenClosure, &$rowEnd) {
                 $output = $renderChildrenClosure();
                 /*
                  * After content is rendered check for whether to close the row.
