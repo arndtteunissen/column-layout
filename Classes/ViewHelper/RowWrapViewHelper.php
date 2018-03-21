@@ -54,7 +54,7 @@ class RowWrapViewHelper extends AbstractViewHelper
         $content = new RenderableClosure();
         $content
             ->setName('row-content')
-            ->setClosure(function() use($renderChildrenClosure, &$rowEnd) {
+            ->setClosure(function() use ($renderChildrenClosure, &$rowEnd) {
                 $output = $renderChildrenClosure();
                 $rowEnd = $GLOBALS['TX_COLUMN_LAYOUT']['rowStart'] != 1;
 
