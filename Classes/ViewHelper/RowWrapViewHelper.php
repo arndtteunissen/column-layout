@@ -10,6 +10,7 @@ namespace Arndtteunissen\ColumnLayout\ViewHelper;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderableClosure;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
@@ -37,23 +38,41 @@ class RowWrapViewHelper extends AbstractViewHelper
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
+        $typoScript = self::getTypoScript();
+
+        // Setup row context
         if (!isset($GLOBALS['TX_COLUMN_LAYOUT'])) {
             $GLOBALS['TX_COLUMN_LAYOUT'] = [];
         }
 
         $GLOBALS['TX_COLUMN_LAYOUT']['rowStart'] = 1;
 
-        $output = $renderChildrenClosure();
+        // Prepare rendering
+        $cObj = self::getCObj();
+        $rowEnd = false;
 
-        if ($GLOBALS['TX_COLUMN_LAYOUT']['rowStart'] != 1) {
-            // End row after last column
-            $typoScript = self::getTypoScript();
-            $cObj = self::getCObj();
-            $output .= $cObj->cObjGetSingle(
-                $typoScript['lib.']['tx_column_layout.']['rowWrap.']['end'],
-                $typoScript['lib.']['tx_column_layout.']['rowWrap.']['end.']
-            );
-        }
+        $content = new RenderableClosure();
+        $content
+            ->setName('row-content')
+            ->setClosure(function() use($renderChildrenClosure, &$rowEnd) {
+                $output = $renderChildrenClosure();
+                $rowEnd = $GLOBALS['TX_COLUMN_LAYOUT']['rowStart'] != 1;
+
+                return $output;
+            });
+
+        $template = $typoScript['lib.']['tx_column_layout.']['rendering.']['row'];
+        $templateConfig = $typoScript['lib.']['tx_column_layout.']['rendering.']['row.'];
+
+        // Add additional data
+        $templateConfig['settings.']['content'] = $content;
+        $templateConfig['settings.']['row_end'] = &$rowEnd;
+
+        // Render template
+        $output = $cObj->cObjGetSingle(
+            $template,
+            $templateConfig
+        );
 
         unset($GLOBALS['TX_COLUMN_LAYOUT']['rowStart']);
 
