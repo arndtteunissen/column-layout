@@ -41,29 +41,18 @@ class RowWrapViewHelper extends AbstractViewHelper
         $typoScript = self::getTypoScript();
 
         // Setup row context
-        if (!isset($GLOBALS['TX_COLUMN_LAYOUT'])) {
-            $GLOBALS['TX_COLUMN_LAYOUT'] = [];
-        }
-
-        $GLOBALS['TX_COLUMN_LAYOUT']['rowStart'] = 1;
+        $GLOBALS['TX_COLUMN_LAYOUT'] = [
+            'contentElementIndex' => 0,
+            'isFullwidthElement' => false
+        ];
 
         // Prepare rendering
         $cObj = self::getCObj();
-        $rowEnd = false;
 
         $content = new RenderableClosure();
         $content
             ->setName('row-content')
-            ->setClosure(function () use ($renderChildrenClosure, &$rowEnd) {
-                $output = $renderChildrenClosure();
-                /*
-                 * After content is rendered check for whether to close the row.
-                 * Changes the value of a variable passed by reference to the rendering variable container.
-                 */
-                $rowEnd = $GLOBALS['TX_COLUMN_LAYOUT']['rowStart'] != 1;
-
-                return $output;
-            });
+            ->setClosure($renderChildrenClosure);
 
         $template = $typoScript['lib.']['tx_column_layout.']['rendering.']['row'];
         $templateConfig = $typoScript['lib.']['tx_column_layout.']['rendering.']['row.'];
@@ -71,7 +60,8 @@ class RowWrapViewHelper extends AbstractViewHelper
         // Add additional data
         $templateConfig['settings.']['content'] = $content;
         // The rowEnd variable changes based on the content so it is necessary to pass it by reference
-        $templateConfig['settings.']['row_end'] = &$rowEnd;
+        $templateConfig['settings.']['row_end'] = $GLOBALS['TX_COLUMN_LAYOUT']['contentElementIndex'] > 0;
+        $templateConfig['settings.']['fullscreen'] = $GLOBALS['TX_COLUMN_LAYOUT']['isFullscreenElement'];
 
         // Render template
         $output = $cObj->cObjGetSingle(
@@ -79,7 +69,7 @@ class RowWrapViewHelper extends AbstractViewHelper
             $templateConfig
         );
 
-        unset($GLOBALS['TX_COLUMN_LAYOUT']['rowStart']);
+        unset($GLOBALS['TX_COLUMN_LAYOUT']);
 
         return $output;
     }

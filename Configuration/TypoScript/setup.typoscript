@@ -21,6 +21,7 @@ lib.tx_column_layout.rendering {
             content = # children rendering closure
             row_begin = # whether to begin a new row
             row_end = # whether to end a previous row
+            fullscreen = # is the current element a fullscreen element
         }
     }
 
