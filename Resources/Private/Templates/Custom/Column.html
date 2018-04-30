@@ -1,12 +1,12 @@
 <html data-namespace-typo3-fluid="true"
       xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
-
+<f:debug>{settings}</f:debug>
 <f:if condition="{settings.row_end}">
-    <f:render partial="Row/End" arguments="{_all}"/>
+    <f:render partial="Row/End" arguments="{settings:settings}"/>
 </f:if>
 
-<f:if condition="{settings.row_begin} || {column_layout.sDEF.row_fullwidth}">
-    <f:render partial="Row/Begin" arguments="{_all}"/>
+<f:if condition="{settings.row_begin}">
+    <f:render partial="Row/Begin" arguments="{settings:settings}"/>
 </f:if>
 
 <div class="cell {column_classes}{additionalColumnClasses}">
