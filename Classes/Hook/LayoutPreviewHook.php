@@ -68,32 +68,38 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
 
         $layoutConfiguration = ColumnLayoutUtility::hydrateLayoutConfigFlexFormData($row['tx_column_layout_column_config']);
 
-        $largeWidth = $layoutConfiguration['sDEF']['large_width'];
-        $largeOffset = $layoutConfiguration['sOffsets']['large_offset'];
+        $width = $layoutConfiguration['sDEF']['large_width'];
+        $offset = $layoutConfiguration['sOffsets']['large_offset'];
 
         // Calculate offset
-        $totalOffset = $previousOffset + $largeOffset;
-        $totalWidth = $totalOffset + $largeWidth;
+        $fullwidth = (bool)$layoutConfiguration['sDEF']['row_fullwidth'];
+        $totalOffset = $previousOffset + $offset;
+        $totalWidth = $totalOffset + $width;
         if (
             $layoutConfiguration['sDEF']['row_behaviour']
             || $totalWidth > $maxColumns
         ) {
-            $totalOffset = $largeOffset;
-            $totalWidth = $largeOffset + $largeWidth;
+            $totalOffset = $offset;
+            $totalWidth = $offset + $width;
         }
 
         // Fill row if no width is given
-        if ($largeWidth == 0) {
-            $largeWidth = $maxColumns - $totalOffset;
+        if ($width == 0) {
+            $width = $maxColumns - $totalOffset;
             $totalWidth = $maxColumns;
         }
 
         // Render
-        $info[] = $this->renderColumnPreviewRow($largeWidth, $totalOffset, $maxColumns - $totalWidth, $row['pid']);
-        $info[] = $this->generateGridCss($row['uid'], $maxColumns, $largeWidth, $largeOffset);
+        $info[] = $this->renderColumnPreviewRow($width, $totalOffset, $maxColumns - $totalWidth, $fullwidth, $row['pid']);
+
+        // Finish current row for fullscreen elements. There should not be another element in that row.
+        if ($fullwidth) {
+            // Set total width to max to tell the following content element that it has to start in a new row.
+            $totalWidth = $maxColumns;
+        }
+        $info[] = $this->generateGridCss($row['uid'], $maxColumns, $width, $offset, $fullwidth);
 
         // Update column offset counter
-
         $GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnOffset'][$row['colPos']] = $totalWidth;
     }
 
@@ -101,11 +107,12 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
      * @param int $width
      * @param int $offset
      * @param int $fill
+     * @param bool $fullwidth
      * @param int $pid
      * @return string
      * @throws \TYPO3\CMS\Core\Exception
      */
-    protected function renderColumnPreviewRow($width, $offset, $fill, $pid): string
+    protected function renderColumnPreviewRow($width, $offset, $fill, $fullwidth, $pid): string
     {
         $html = '<div class="column-layout-container">';
 
@@ -113,10 +120,14 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
 
         $widthLabel = $this->getLanguageService()->sL(ColumnLayoutUtility::getColumnLayoutSettings($pid)['types.']['widths.']['label']);
         $offsetLabel = $this->getLanguageService()->sL(ColumnLayoutUtility::getColumnLayoutSettings($pid)['types.']['offsets.']['label']);
+        $fullwidthLabel = $this->getLanguageService()->sL(ColumnLayoutUtility::getColumnLayoutSettings($pid)['types.']['fullwidth.']['label']);
 
         $html .= '<div class="column-info-container">';
         $html .= sprintf('<span>%s: %d</span>', $widthLabel, $width);
-        $html .= ' ' . sprintf('<span>%s: %d</span>', $offsetLabel, $offset);
+        $html .= ' | ' . sprintf('<span>%s: %d</span>', $offsetLabel, $offset);
+        if ($fullwidth) {
+            $html .= ' | ' . sprintf('<span>%s</span>', $fullwidthLabel);
+        }
         $html .= '</div>';
 
         $html .= '</div>';
@@ -161,37 +172,42 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
      * @param int $max
      * @param int $width
      * @param int $offset
+     * @param bool $fullwidth
      * @return string
      */
-    protected function generateGridCss($uid, $max, $width, $offset): string
+    protected function generateGridCss($uid, $max, $width, $offset, $fullwidth): string
     {
         return sprintf(
             '<style type="text/css">%s</style>',
-            $this->generateCEColumnCSS($uid, $max, $width, $offset)
+            $this->generateCEColumnCSS($uid, $max, $width, $offset, $fullwidth)
         );
     }
 
     /**
-     * @param $uid
-     * @param $max
-     * @param $width
-     * @param $offset
+     * @param int $uid
+     * @param int $max
+     * @param int $width
+     * @param int $offset
+     * @param bool $fullwidth
      * @return string
      */
-    protected function generateCEColumnCSS($uid, $max, $width, $offset)
+    protected function generateCEColumnCSS($uid, $max, $width, $offset, $fullwidth)
     {
         $template = <<<'CSS'
 @media only screen and (min-width: 1024px) {
-    #element-tt_content-%d { width: %d%%; } 
+    #element-tt_content-%d { width: %d%%; margin-right: %d%%; } 
     #element-tt_content-%1$d > .t3-page-ce-dragitem { flex: %d; } 
     #element-tt_content-%1$d::before { flex: %d; content: '%4$s'; }
 }
 CSS;
 
+
+        $widthPercent = (($width + $offset) / $max) * 100;
         $css = sprintf(
             $template,
             $uid,
-            (($width + $offset) / $max) * 100,
+            $widthPercent,
+            ($fullwidth) ? 100 - $widthPercent : 0,
             $width,
             $offset
         );
