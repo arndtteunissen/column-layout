@@ -62,10 +62,9 @@ class RowWrapViewHelper extends AbstractViewHelper
                  * Changes the value of a variable passed by reference to the rendering variable container.
                  */
                 $templateConfig['settings.']['row_end'] = $GLOBALS['TX_COLUMN_LAYOUT']['contentElementIndex'] > 0;
+
                 return $output;
             });
-
-        
 
         // Add additional data
         $templateConfig['settings.']['content'] = $content;
