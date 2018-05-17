@@ -180,10 +180,16 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
      */
     protected function generateCEColumnCSS($uid, $max, $width, $offset)
     {
+        $template = <<<'CSS'
+@media only screen and (min-width: 1024px) {
+    #element-tt_content-%d { width: %d%%; } 
+    #element-tt_content-%1$d > .t3-page-ce-dragitem { flex: %d; } 
+    #element-tt_content-%1$d::before { flex: %d; content: '%4$s'; }
+}
+CSS;
+
         $css = sprintf(
-            '#element-tt_content-%d { width: %d%%; } 
-            #element-tt_content-%1$d > .t3-page-ce-dragitem { flex: %d; } 
-            #element-tt_content-%1$d::before { flex: %d; content: \'%4$s\'; }',
+            $template,
             $uid,
             (($width + $offset) / $max) * 100,
             $width,
@@ -192,7 +198,7 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
 
         if (!$offset) {
             $css .= sprintf(
-                '#element-tt_content-%1$d::before { display: none; }',
+                '@media only screen and (min-width: 1024px) { #element-tt_content-%1$d::before { display: none; } }',
                 $uid
             );
         }

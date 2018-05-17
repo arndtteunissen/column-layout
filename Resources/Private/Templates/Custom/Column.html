@@ -2,14 +2,14 @@
       xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
 
 <f:if condition="{settings.row_end}">
-    <f:render partial="Row/End" arguments="{_all}"/>
+    <f:render partial="Row/End" arguments="{settings:settings}"/>
 </f:if>
 
 <f:if condition="{settings.row_begin}">
-    <f:render partial="Row/Begin" arguments="{_all}"/>
+    <f:render partial="Row/Begin" arguments="{settings:settings}"/>
 </f:if>
 
-<div class="{column_classes}{additionalColumnClasses}">
+<div class="cell {column_classes}{additionalColumnClasses}">
     <f:render renderable="{settings.content}"/>
 </div>
 

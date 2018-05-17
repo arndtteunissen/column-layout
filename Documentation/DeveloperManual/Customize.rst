@@ -13,7 +13,7 @@ These are designed to be easily customizable.
 Backend
 -------
 
-If you want to change the behaviour in the backend you need to modify the Page TSConfig under the path :code:`mod.cloumn_layout`.
+If you want to change the behaviour in the backend you need to modify the Page TSConfig under the path :code:`mod.column_layout`.
 
 Make sure you include your TSConfig file after include this extension's.
 
