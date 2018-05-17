@@ -49,18 +49,26 @@ class RowWrapViewHelper extends AbstractViewHelper
         // Prepare rendering
         $cObj = self::getCObj();
 
-        $content = new RenderableClosure();
-        $content
-            ->setName('row-content')
-            ->setClosure($renderChildrenClosure);
-
         $template = $typoScript['lib.']['tx_column_layout.']['rendering.']['row'];
         $templateConfig = $typoScript['lib.']['tx_column_layout.']['rendering.']['row.'];
 
+        $content = new RenderableClosure();
+        $content
+            ->setName('row-content')
+            ->setClosure(function () use ($renderChildrenClosure, &$templateConfig) {
+                $output = $renderChildrenClosure();
+                /*
+                 * After content is rendered check for whether to close the row.
+                 * Changes the value of a variable passed by reference to the rendering variable container.
+                 */
+                $templateConfig['settings.']['row_end'] = $GLOBALS['TX_COLUMN_LAYOUT']['contentElementIndex'] > 0;
+                return $output;
+            });
+
+        
+
         // Add additional data
         $templateConfig['settings.']['content'] = $content;
-        // The rowEnd variable changes based on the content so it is necessary to pass it by reference
-        $templateConfig['settings.']['row_end'] = $GLOBALS['TX_COLUMN_LAYOUT']['contentElementIndex'] > 0;
         $templateConfig['settings.']['fullscreen'] = $GLOBALS['TX_COLUMN_LAYOUT']['isFullscreenElement'];
 
         // Render template
