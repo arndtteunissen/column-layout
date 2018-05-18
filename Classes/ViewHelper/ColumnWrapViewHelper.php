@@ -87,6 +87,10 @@ class ColumnWrapViewHelper extends AbstractViewHelper
         if ($GLOBALS['TX_COLUMN_LAYOUT']['contentElementIndex'] === 0) {
             // If is the first element. Force opening a new row - regardless of the configuration.
             $templateConfig['settings.']['row_begin'] = true;
+
+            if ((int)$currentLayoutConfig['row_fullwidth'] === 1) {
+                $GLOBALS['TX_COLUMN_LAYOUT']['isFullwidthElement'] = true;
+            }
         } elseif ((int)$currentLayoutConfig['row_fullwidth'] === 1) {
             // When the element is full with, there has to a be new row.
             $templateConfig['settings.']['row_begin'] = true;
