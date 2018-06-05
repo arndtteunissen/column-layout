@@ -44,5 +44,9 @@ mod.column_layout {
             itemLabel = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.orders.item_label
             itemLabelDisabled = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.orders.item_label_disabled
         }
+
+        fullwidth {
+            label = LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.fullwidth.label
+        }
     }
 }
