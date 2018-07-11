@@ -1,3 +1,5 @@
+/.idea/
+/.ddev/
 /vendor/
 /.Build/
 /composer.lock
