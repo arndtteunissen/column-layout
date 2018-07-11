@@ -5,10 +5,14 @@
 .column-box-container .column-box {
     display: inline-block;
     background-color: #b9b9b9;
-    width: 6px;
-    height: 6px;
+    width: 14px;
+    height: 14px;
     margin: 0 3px;
     position: relative;
+    padding: 3px 0;
+    font-size: 9px;
+    line-height: 1;
+    text-align: center;
 }
 
 .column-box:first-child {
@@ -21,16 +25,17 @@
 
 .column-box.active {
     background-color: #ff8700;
+    color: #fff;
 }
 
 .column-box.active::before {
     position: absolute;
-    left: 0;
+    left: 14px;
     background-color: #ff8700;
     content: '';
-    width: 12px;
+    width: 6px;
     height: 2px;
-    margin: 2px 0;
+    margin: 3px 0;
 }
 
 .column-box.active.last::before {

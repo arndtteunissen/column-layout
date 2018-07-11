@@ -135,20 +135,15 @@ CSS;
 
         $html .= $this->renderColumnPreviewBoxes($width, $offset, $fill);
 
-        $widthLabel = $this->getLanguageService()->sL(ColumnLayoutUtility::getColumnLayoutSettings($this->row['pid'])['types.']['widths.']['label']);
-        $offsetLabel = $this->getLanguageService()->sL(ColumnLayoutUtility::getColumnLayoutSettings($this->row['pid'])['types.']['offsets.']['label']);
         $newRowLabel = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.new_row.label');
         $fullwidthRowLabel = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.fullwidth_row.label');
         $yes = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.yes');
         $no = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.no');
 
         $html .= '<div class="column-info-container">';
-        $html .= sprintf('<span>%s: %d</span>', $widthLabel, $width);
-        $html .= ' ' . sprintf('<span>%s: %d</span>', $offsetLabel, $offset);
+        $html .= sprintf('<span>%s: %s</span>', $newRowLabel, $this->startNewRow ? $yes : $no);
         $html .= '<br />';
-        $html .= sprintf('<span>%s: %s</span>', $newRowLabel, $this->startNewRow ? $yes : $no );
-        $html .= '<br />';
-        $html .= sprintf('<span>%s: %s</span>', $fullwidthRowLabel, $this->isFullwidthRow() ? $yes : $no );
+        $html .= sprintf('<span>%s: %s</span>', $fullwidthRowLabel, $this->isFullwidthRow() ? $yes : $no);
         $html .= '</div>';
 
         $html .= '</div>';
@@ -166,19 +161,17 @@ CSS;
     {
         $html = '<div class="column-box-container">';
 
-        while ($offset-- > 0) {
-            $html .= '<span class="column-box"></span>';
+        for ($i = 1; $i <= $offset; $i++) {
+            $html .= '<span class="column-box">' . $i . '</span>';
         }
 
-        while ($width-- > 1) {
-            $html .= '<span class="column-box active"></span>';
+        for ($i = 1; $i < $width; $i++) {
+            $html .= '<span class="column-box active">' . $i . '</span>';
         }
-        if ($width == 0) {
-            $html .= '<span class="column-box active last"></span>';
-        }
+        $html .= '<span class="column-box active last">' . ($i) . '</span>';
 
-        while ($fill-- > 0) {
-            $html .= '<span class="column-box"></span>';
+        for ($i = 1; $i <= $fill; $i++) {
+            $html .= '<span class="column-box">' . $i . '</span>';
         }
 
         $html .= '</div>';
