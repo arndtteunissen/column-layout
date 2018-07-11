@@ -8,18 +8,29 @@ namespace Arndtteunissen\ColumnLayout\Hook;
  * LICENSE file that was distributed with this source code.
  */
 
-use Arndtteunissen\ColumnLayout\Utility\ColumnLayoutUtility;
+use Arndtteunissen\ColumnLayout\Backend\ColumnRenderer;
 use TYPO3\CMS\Backend\Controller\PageLayoutController;
 use TYPO3\CMS\Backend\View\PageLayoutView;
 use TYPO3\CMS\Backend\View\PageLayoutViewDrawFooterHookInterface;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Lang\LanguageService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * A hook for adding column layout information to content elements in backend "Page" module.
  */
 class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, SingletonInterface
 {
+    /**
+     * @var bool
+     */
+    protected $activateElementFloating = false;
+
+    /**
+     * @var bool
+     */
+    protected $isInitialized = false;
+
     /**
      * Hook for header rendering of the PageLayoutController to inject stylesheet required for custom column layout
      * display.
@@ -30,9 +41,13 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
      * @param PageLayoutController $ref
      * @return string html to be added to the page layout
      */
-    public function injectStyleSheet(array $params, PageLayoutController $ref): string
+    public function injectStyleSheets(array $params, PageLayoutController $ref): string
     {
-        $ref->getModuleTemplate()->getPageRenderer()->addCssFile('EXT:column_layout/Resources/Public/Css/web_layout.css');
+        $ref->getModuleTemplate()->getPageRenderer()->addCssFile('EXT:column_layout/Resources/Public/Css/column_layout.css');
+
+        if ($this->activateElementFloating) {
+            $ref->getModuleTemplate()->getPageRenderer()->addCssFile('EXT:column_layout/Resources/Public/Css/activate_floating.css');
+        }
 
         return '';
     }
@@ -43,174 +58,80 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
      */
     public function preProcess(PageLayoutView &$parentObject, &$info, array &$row)
     {
-        $tsConf = $parentObject->modTSconfig['column_layout'] ?? [];
+        $this->init($parentObject);
 
-        if (
-            $tsConf['hidePreview'] ?? false                     // Hidden via page TSConfig
-            || empty($row['tx_column_layout_column_config'])    // Not set
-            || $tsConf['disabled'] ?? false                     // Hidden for this element
-        ) {
+        if ($this->skipRendering($parentObject, $row)) {
             return;
         }
 
-        if (!isset($GLOBALS['TX_COLUMN_LAYOUT'])) {
-            $GLOBALS['TX_COLUMN_LAYOUT'] = [];
-        }
-        if (!isset($GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnOffset'])) {
-            $GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnOffset'] = [];
-        }
-        if (!isset($GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnOffset'][$row['colPos']])) {
-            $GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnOffset'][$row['colPos']] = 0;
-        }
+        $renderer = GeneralUtility::makeInstance(ColumnRenderer::class, $row);
 
-        $maxColumns = (int)ColumnLayoutUtility::getColumnLayoutSettings($row['pid'])['columnsCount'];
-        $previousOffset = $GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnOffset'][$row['colPos']];
+        // Do not float the elements when hidden records are shown.
+        $renderer->setActivateElementFloating($this->activateElementFloating);
 
-        $layoutConfiguration = ColumnLayoutUtility::hydrateLayoutConfigFlexFormData($row['tx_column_layout_column_config']);
+        $info[] = $renderer->renderSingleColumn();
 
-        $largeWidth = $layoutConfiguration['sDEF']['large_width'];
-        $largeOffset = $layoutConfiguration['sOffsets']['large_offset'];
-
-        // Calculate offset
-        $totalOffset = $previousOffset + $largeOffset;
-        $totalWidth = $totalOffset + $largeWidth;
-        if (
-            $layoutConfiguration['sDEF']['row_behaviour']
-            || $totalWidth > $maxColumns
-        ) {
-            $totalOffset = $largeOffset;
-            $totalWidth = $largeOffset + $largeWidth;
-        }
-
-        // Fill row if no width is given
-        if ($largeWidth == 0) {
-            $largeWidth = $maxColumns - $totalOffset;
-            $totalWidth = $maxColumns;
-        }
-
-        // Render
-        $info[] = $this->renderColumnPreviewRow($largeWidth, $totalOffset, $maxColumns - $totalWidth, $row['pid']);
-        $info[] = $this->generateGridCss($row['uid'], $maxColumns, $largeWidth, $largeOffset);
-
-        // Update column offset counter
-
-        $GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnOffset'][$row['colPos']] = $totalWidth;
+        return;
     }
 
     /**
-     * @param int $width
-     * @param int $offset
-     * @param int $fill
-     * @param int $pid
-     * @return string
-     * @throws \TYPO3\CMS\Core\Exception
-     */
-    protected function renderColumnPreviewRow($width, $offset, $fill, $pid): string
-    {
-        $html = '<div class="column-layout-container">';
-
-        $html .= $this->renderColumnPreviewBoxes($width, $offset, $fill);
-
-        $widthLabel = $this->getLanguageService()->sL(ColumnLayoutUtility::getColumnLayoutSettings($pid)['types.']['widths.']['label']);
-        $offsetLabel = $this->getLanguageService()->sL(ColumnLayoutUtility::getColumnLayoutSettings($pid)['types.']['offsets.']['label']);
-
-        $html .= '<div class="column-info-container">';
-        $html .= sprintf('<span>%s: %d</span>', $widthLabel, $width);
-        $html .= ' ' . sprintf('<span>%s: %d</span>', $offsetLabel, $offset);
-        $html .= '</div>';
-
-        $html .= '</div>';
-
-        return $html;
-    }
-
-    /**
-     * @param $width
-     * @param $offset
-     * @param $fill
-     * @return string
-     */
-    protected function renderColumnPreviewBoxes($width, $offset, $fill): string
-    {
-        $html = '<div class="column-box-container">';
-
-        while ($offset-- > 0) {
-            $html .= '<span class="column-box"></span>';
-        }
-
-        while ($width-- > 1) {
-            $html .= '<span class="column-box active"></span>';
-        }
-        if ($width == 0) {
-            $html .= '<span class="column-box active last"></span>';
-        }
-
-        while ($fill-- > 0) {
-            $html .= '<span class="column-box"></span>';
-        }
-
-        $html .= '</div>';
-
-        return $html;
-    }
-
-    /**
-     * Generates the CSS for a content element in PageLayoutView to look like a column
+     * Checks if the rendering of the column markup should be skipped.
      *
-     * @param int $uid
-     * @param int $max
-     * @param int $width
-     * @param int $offset
-     * @return string
+     * @param PageLayoutView $parentObject
+     * @return bool
      */
-    protected function generateGridCss($uid, $max, $width, $offset): string
+    protected function skipRendering(PageLayoutView &$parentObject, array $row): bool
     {
-        return sprintf(
-            '<style type="text/css">%s</style>',
-            $this->generateCEColumnCSS($uid, $max, $width, $offset)
+        $tsConf = $parentObject->modTSconfig['column_layout'] ?? [];
+
+        return (
+            $row['hidden'] ||
+            $tsConf['hidePreview'] ?? false                     // Hidden via page TSConfig
+            || empty($row['tx_column_layout_column_config'])    // Not set
+            || $tsConf['disabled'] ?? false                     // Hidden for this element
         );
     }
 
     /**
-     * @param $uid
-     * @param $max
-     * @param $width
-     * @param $offset
-     * @return string
+     * Checks if elements should float.
+     * Floating is active, when no hidden elements are shown.
+     *
+     * @param PageLayoutView $pageLayoutView
+     * @return bool
      */
-    protected function generateCEColumnCSS($uid, $max, $width, $offset)
+    protected function isElementFloatingActive(PageLayoutView $pageLayoutView): bool
     {
-        $template = <<<'CSS'
-@media only screen and (min-width: 1024px) {
-    #element-tt_content-%d { width: %d%%; } 
-    #element-tt_content-%1$d > .t3-page-ce-dragitem { flex: %d; } 
-    #element-tt_content-%1$d::before { flex: %d; content: '%4$s'; }
-}
-CSS;
+        $showHiddenRecords = (bool)$pageLayoutView->tt_contentConfig['showHidden'];
 
-        $css = sprintf(
-            $template,
-            $uid,
-            (($width + $offset) / $max) * 100,
-            $width,
-            $offset
-        );
+        if ($showHiddenRecords) {
+            // Check if there are any hidden records on that page.
+            $expressionBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+                ->getConnectionForTable($pageLayoutView->table)
+                ->getExpressionBuilder();
+            $constraints = [
+                $expressionBuilder->eq($pageLayoutView->table . '.hidden', 1)
+            ];
+            $queryBuilder = $pageLayoutView->getQueryBuilder('tt_content', $pageLayoutView->id, $constraints, ['hidden']);
+            $result = $queryBuilder->execute();
 
-        if (!$offset) {
-            $css .= sprintf(
-                '@media only screen and (min-width: 1024px) { #element-tt_content-%1$d::before { display: none; } }',
-                $uid
-            );
+            if ($result->rowCount() > 0) {
+                return false;
+            }
         }
 
-        return $css;
+        return true;
     }
 
     /**
-     * @return LanguageService
+     * @param PageLayoutView $pageLayoutView
      */
-    protected function getLanguageService(): LanguageService
+    protected function init(PageLayoutView $pageLayoutView)
     {
-        return $GLOBALS['LANG'];
+        if ($this->isInitialized) {
+            return;
+        }
+
+        $this->activateElementFloating = $this->isElementFloatingActive($pageLayoutView);
+        $this->isInitialized = true;
     }
 }

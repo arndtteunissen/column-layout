@@ -1,51 +1,7 @@
-.column-layout-container .column-box-container {
-    display: block;
-}
-
-.column-box-container .column-box {
-    display: inline-block;
-    background-color: #b9b9b9;
-    width: 6px;
-    height: 6px;
-    margin: 0 3px;
-    position: relative;
-}
-
-.column-box:first-child {
-    margin-left: 0;
-}
-
-.column-box:last-child {
-    margin-right: 0;
-}
-
-.column-box.active {
-    background-color: #ff8700;
-}
-
-.column-box.active::before {
-    position: absolute;
-    left: 0;
-    background-color: #ff8700;
-    content: '';
-    width: 12px;
-    height: 2px;
-    margin: 2px 0;
-}
-
-.column-box.active.last::before {
-    display: none;
-}
-
 /* Page Layout View
  * Mod>Page
  */
 @media only screen and (min-width: 1024px) {
-    /* General */
-    .t3-page-ce-wrapper {
-        padding: 0 2rem;
-    }
-
     /* Content Element */
     .t3-page-ce {
         display: inline-flex;
