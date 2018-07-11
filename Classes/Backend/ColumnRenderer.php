@@ -137,10 +137,18 @@ CSS;
 
         $widthLabel = $this->getLanguageService()->sL(ColumnLayoutUtility::getColumnLayoutSettings($this->row['pid'])['types.']['widths.']['label']);
         $offsetLabel = $this->getLanguageService()->sL(ColumnLayoutUtility::getColumnLayoutSettings($this->row['pid'])['types.']['offsets.']['label']);
+        $newRowLabel = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.new_row.label');
+        $fullwidthRowLabel = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.fullwidth_row.label');
+        $yes = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.yes');
+        $no = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.no');
 
         $html .= '<div class="column-info-container">';
         $html .= sprintf('<span>%s: %d</span>', $widthLabel, $width);
         $html .= ' ' . sprintf('<span>%s: %d</span>', $offsetLabel, $offset);
+        $html .= '<br />';
+        $html .= sprintf('<span>%s: %s</span>', $newRowLabel, $this->startNewRow ? $yes : $no );
+        $html .= '<br />';
+        $html .= sprintf('<span>%s: %s</span>', $fullwidthRowLabel, $this->isFullwidthRow() ? $yes : $no );
         $html .= '</div>';
 
         $html .= '</div>';
@@ -288,7 +296,9 @@ CSS;
      */
     protected function shouldStartNewRow(): bool
     {
-        return $this->layoutConfiguration['sDEF']['row_behaviour'] || $this->isFullwidthRow();
+        return $this->layoutConfiguration['sDEF']['row_behaviour']
+            || $this->isFullwidthRow()
+            || $GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnOffset'][$this->row['colPos']] === 0;
     }
 
     /**

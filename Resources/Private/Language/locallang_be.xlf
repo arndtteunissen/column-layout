@@ -50,6 +50,20 @@
             <trans-unit id="column_layout.orders.item_label_disabled">
                 <source>auto</source>
             </trans-unit>
+
+            <trans-unit id="column_layout.new_row.label">
+                <source>Force new row</source>
+            </trans-unit>
+            <trans-unit id="column_layout.fullwidth_row.label">
+                <source>Fullwidth</source>
+            </trans-unit>
+
+            <trans-unit id="column_layout.yes">
+                <source>yes</source>
+            </trans-unit>
+            <trans-unit id="column_layout.no">
+                <source>no</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
