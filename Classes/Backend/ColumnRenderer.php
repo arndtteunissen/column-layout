@@ -105,6 +105,15 @@ CSS;
             $totalWidthInRow = $columnOffset + $columnWidth;
         }
 
+        if ($this->isFullwidthRow()) {
+            $this->startNewRow = true;
+            $this->setPreviousOffset(0);
+            $columnOffset = 0;
+            $totalOffsetInRow = 0;
+            $columnWidth = $this->maxColumns;
+            $totalWidthInRow = $this->maxColumns;
+        }
+
         $html[] = $this->renderColumnPreviewRow($columnWidth, $totalOffsetInRow, $this->maxColumns - $totalWidthInRow);
         $html[] = $this->generateGridCss($columnWidth, $columnOffset);
 
