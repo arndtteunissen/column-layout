@@ -40,7 +40,11 @@
         }
     },
     "scripts": {
-        "cs": "php-cs-fixer fix --dry-run --verbose --diff-format=udiff"
+        "cs": "php-cs-fixer fix --dry-run --verbose --diff-format=udiff",
+        "post-autoload-dump": [
+            "mkdir -p .Build/Web/typo3conf/ext/",
+            "[ -L .Build/Web/typo3conf/ext/column_layout ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/column_layout"
+        ]
     },
     "config": {
         "vendor-dir": ".Build/vendor",
