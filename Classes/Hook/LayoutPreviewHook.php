@@ -55,10 +55,13 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
         }
 
         $renderer = GeneralUtility::makeInstance(ColumnRenderer::class, $row);
-        list($html, $css) = $renderer->renderSingleColumn();
 
-        $info[] = $html;
-        $this->inlineStyles[] = $css;
+        if (!$renderer->skipRendering()) {
+            list($html, $css) = $renderer->renderSingleColumn();
+
+            $info[] = $html;
+            $this->inlineStyles[] = $css;
+        }
 
         return;
     }

@@ -28,13 +28,6 @@ CSS;
 CSS;
 
     /**
-     * When activated, elements will float.
-     *
-     * @var bool
-     */
-    protected $activateElementFloating = false;
-
-    /**
      * @var array
      */
     protected $row;
@@ -83,11 +76,11 @@ CSS;
     }
 
     /**
-     * @param bool $activateElementFloating
+     * @return bool
      */
-    public function setActivateElementFloating(bool $activateElementFloating)
+    public function skipRendering(): bool
     {
-        $this->activateElementFloating = $activateElementFloating;
+        return (bool)$this->row['hidden'];
     }
 
     /**
@@ -100,26 +93,32 @@ CSS;
         $columnWidth = $this->calculateWidth();
         $columnOffset = $this->calculateOffset();
 
-        $totalOffsetInRow = $this->getPreviousOffset() + $columnOffset;
-        $totalWidthInRow = $totalOffsetInRow + $columnWidth;
+        $offsetInRow = $this->getPreviousOffset();
+        $totalWidthInRow = $offsetInRow + $columnOffset + $columnWidth;
 
+        /*
+         * Start a new row either when its manually configured or
+         * when the new element will not fit into the remaining space in current row.
+         */
         if ($this->shouldStartNewRow() || $totalWidthInRow > $this->maxColumns) {
             $this->startNewRow = true;
             $this->setPreviousOffset($columnOffset);
-            $totalOffsetInRow = $columnOffset;
+            $offsetInRow = 0;
             $totalWidthInRow = $columnOffset + $columnWidth;
         }
 
+        /*
+         * When the element should be a full width element,
+         * start also a new row. Also override the configured column width and offset.
+         */
         if ($this->isFullwidthRow()) {
             $this->startNewRow = true;
             $this->setPreviousOffset(0);
-            $columnOffset = 0;
-            $totalOffsetInRow = 0;
-            $columnWidth = $this->maxColumns;
-            $totalWidthInRow = $this->maxColumns;
+            $columnOffset = $offsetInRow = 0;
+            $columnWidth = $totalWidthInRow = $this->maxColumns;
         }
 
-        $htmlAndCss[] = $this->renderColumnPreviewRow($columnWidth, $totalOffsetInRow, $this->maxColumns - $totalWidthInRow);
+        $htmlAndCss[] = $this->renderColumnPreviewRow($columnWidth, $offsetInRow, $columnOffset, $this->maxColumns - $totalWidthInRow);
         $htmlAndCss[] = $this->generateFloatingCEColumnCSS($columnWidth, $columnOffset);
 
         $this->setPreviousOffset($totalWidthInRow);
@@ -129,16 +128,17 @@ CSS;
 
     /**
      * @param int $width
+     * @param int $rowOffset
      * @param int $offset
      * @param int $fill
      * @return string
      * @throws \TYPO3\CMS\Core\Exception
      */
-    protected function renderColumnPreviewRow($width, $offset, $fill): string
+    protected function renderColumnPreviewRow($width, $rowOffset, $offset, $fill): string
     {
         $html = '<div class="column-layout-container">';
 
-        $html .= $this->renderColumnPreviewBoxes($width, $offset, $fill);
+        $html .= $this->renderColumnPreviewBoxes($width, $rowOffset, $offset, $fill);
 
         $newRowLabel = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.new_row.label');
         $fullwidthRowLabel = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.fullwidth_row.label');
@@ -157,26 +157,31 @@ CSS;
     }
 
     /**
-     * @param $width
-     * @param $offset
-     * @param $fill
+     * @param int $width
+     * @param int $rowOffset
+     * @param int $offset
+     * @param int $fill
      * @return string
      */
-    protected function renderColumnPreviewBoxes($width, $offset, $fill): string
+    protected function renderColumnPreviewBoxes($width, $rowOffset, $offset, $fill): string
     {
         $html = '<div class="column-box-container">';
 
+        for ($i = 1; $i <= $rowOffset; $i++) {
+            $html .= '<span class="column-box"></span>';
+        }
+
         for ($i = 1; $i <= $offset; $i++) {
-            $html .= '<span class="column-box">' . $i . '</span>';
+            $html .= '<span class="column-box offset"></span>';
         }
 
         for ($i = 1; $i < $width; $i++) {
-            $html .= '<span class="column-box active">' . $i . '</span>';
+            $html .= '<span class="column-box active"></span>';
         }
-        $html .= '<span class="column-box active last">' . ($i) . '</span>';
+        $html .= '<span class="column-box active last"></span>';
 
         for ($i = 1; $i <= $fill; $i++) {
-            $html .= '<span class="column-box">' . $i . '</span>';
+            $html .= '<span class="column-box"></span>';
         }
 
         $html .= '</div>';

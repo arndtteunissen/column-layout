@@ -5,14 +5,10 @@
 .column-box-container .column-box {
     display: inline-block;
     background-color: #b9b9b9;
-    width: 14px;
-    height: 14px;
+    width: 8px;
+    height: 8px;
     margin: 0 3px;
     position: relative;
-    padding: 3px 0;
-    font-size: 9px;
-    line-height: 1;
-    text-align: center;
 }
 
 .column-box:first-child {
@@ -25,12 +21,15 @@
 
 .column-box.active {
     background-color: #ff8700;
-    color: #fff;
+}
+
+.column-box.offset {
+    background-color: #292929;
 }
 
 .column-box.active::before {
     position: absolute;
-    left: 14px;
+    left: 9px;
     background-color: #ff8700;
     content: '';
     width: 6px;
