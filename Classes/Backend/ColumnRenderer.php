@@ -132,23 +132,17 @@ CSS;
      * @param int $offset
      * @param int $fill
      * @return string
-     * @throws \TYPO3\CMS\Core\Exception
      */
     protected function renderColumnPreviewRow($width, $rowOffset, $offset, $fill): string
     {
         $html = '<div class="column-layout-container">';
 
+        $html .= '<div class="column-box-container">';
         $html .= $this->renderColumnPreviewBoxes($width, $rowOffset, $offset, $fill);
-
-        $newRowLabel = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.new_row.label');
-        $fullwidthRowLabel = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.fullwidth_row.label');
-        $yes = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.yes');
-        $no = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.no');
+        $html .= '</div>';
 
         $html .= '<div class="column-info-container">';
-        $html .= sprintf('<span>%s: %s</span>', $newRowLabel, $this->startNewRow ? $yes : $no);
-        $html .= '<br />';
-        $html .= sprintf('<span>%s: %s</span>', $fullwidthRowLabel, $this->isFullwidthRow() ? $yes : $no);
+        $html .= $this->renderAdditionalInformation();
         $html .= '</div>';
 
         $html .= '</div>';
@@ -165,26 +159,56 @@ CSS;
      */
     protected function renderColumnPreviewBoxes($width, $rowOffset, $offset, $fill): string
     {
-        $html = '<div class="column-box-container">';
+        $html = '';
+        $widthLabel = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.widths.label') . ': ' . $width;
+        $offsetLabel = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.offsets.label') . ': ' . $offset;
 
         for ($i = 1; $i <= $rowOffset; $i++) {
             $html .= '<span class="column-box"></span>';
         }
 
         for ($i = 1; $i <= $offset; $i++) {
-            $html .= '<span class="column-box offset"></span>';
+            $html .= sprintf(
+                '<span class="column-box offset" title="%s" data-toggle="tooltip" data-html="true" data-placement="top"></span>',
+                $offsetLabel
+            );
         }
 
         for ($i = 1; $i < $width; $i++) {
-            $html .= '<span class="column-box active"></span>';
+            $html .= sprintf(
+                '<span class="column-box active" title="%s" data-toggle="tooltip" data-html="true" data-placement="top"></span>',
+                $widthLabel
+            );
         }
-        $html .= '<span class="column-box active last"></span>';
+        $html .= sprintf(
+            '<span class="column-box active last" title="%s" data-toggle="tooltip" data-html="true" data-placement="top"></span>',
+            $widthLabel
+        );
 
         for ($i = 1; $i <= $fill; $i++) {
             $html .= '<span class="column-box"></span>';
         }
 
-        $html .= '</div>';
+        return $html;
+    }
+
+    /**
+     * @return string
+     */
+    protected function renderAdditionalInformation(): string
+    {
+        $html = '';
+
+        $html .= sprintf(
+            '<span class="cl-icon cl-icon-new-row %s" title="%s" data-toggle="tooltip" data-html="true" data-placement="bottom"></span>',
+            (!$this->startNewRow ? 'hidden' : ''),
+            $newRowLabel = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.new_row.title')
+        );
+        $html .= sprintf(
+            '<span class="cl-icon cl-icon-fullwidth %s"></span>',
+            (!$this->isFullwidthRow() ? 'hidden' : ''),
+            $newRowLabel = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.fullwidth.title')
+        );
 
         return $html;
     }

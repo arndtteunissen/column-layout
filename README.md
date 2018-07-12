@@ -18,3 +18,5 @@ The extension manual can be found here: [https://docs.typo3.org/typo3cms/extensi
 
 ## License
 For the full copyright and license information, please read the [LICENSE](LICENSE) file.
+
+Icons made by [Dario Ferrando](https://www.flaticon.com/authors/dario-ferrando) from [www.flaticon.com](https://www.flaticon.com)
