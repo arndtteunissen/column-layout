@@ -15,15 +15,15 @@ class ColumnRenderer
 {
     const CSS_TEMPLATE_WITH_FLOATING = <<<'CSS'
 @media only screen and (min-width: 1024px) {
-    #element-tt_content-%d { width: %d%%; } 
-    #element-tt_content-%1$d > .t3-page-ce-dragitem { flex: %d; } 
-    #element-tt_content-%1$d::before { flex: %d; content: '%4$s'; }
+    .cl-enable-element-floating #element-tt_content-%d { width: %d%%; } 
+    .cl-enable-element-floating #element-tt_content-%1$d > .t3-page-ce-dragitem { flex: %d; } 
+    .cl-enable-element-floating #element-tt_content-%1$d::before { flex: %d; content: '%4$s'; }
 }
 CSS;
 
     const CSS_TEMPLATE_WITHOUT_FLOATING = <<<'CSS'
 @media only screen and (min-width: 1024px) {
-    #element-tt_content-%d { width: %d%%; }
+    .cl-enable-element-floating #element-tt_content-%d { width: %d%%; }
 }
 CSS;
 
@@ -53,6 +53,11 @@ CSS;
      * @var bool
      */
     protected $startNewRow = false;
+
+    /**
+     * @var array
+     */
+    protected $styles = [];
 
     /**
      * ColumnRenderer constructor.
@@ -86,12 +91,12 @@ CSS;
     }
 
     /**
-     * @return string The additional html markup
+     * @return array An array with two keys. 0 is the html markup and 1 is the css.
      * @throws \TYPO3\CMS\Core\Exception
      */
-    public function renderSingleColumn(): string
+    public function renderSingleColumn(): array
     {
-        $html = [];
+        $htmlAndCss = [];
         $columnWidth = $this->calculateWidth();
         $columnOffset = $this->calculateOffset();
 
@@ -114,12 +119,12 @@ CSS;
             $totalWidthInRow = $this->maxColumns;
         }
 
-        $html[] = $this->renderColumnPreviewRow($columnWidth, $totalOffsetInRow, $this->maxColumns - $totalWidthInRow);
-        $html[] = $this->generateGridCss($columnWidth, $columnOffset);
+        $htmlAndCss[] = $this->renderColumnPreviewRow($columnWidth, $totalOffsetInRow, $this->maxColumns - $totalWidthInRow);
+        $htmlAndCss[] = $this->generateFloatingCEColumnCSS($columnWidth, $columnOffset);
 
         $this->setPreviousOffset($totalWidthInRow);
 
-        return implode("\n", $html);
+        return $htmlAndCss;
     }
 
     /**
@@ -177,21 +182,6 @@ CSS;
         $html .= '</div>';
 
         return $html;
-    }
-
-    /**
-     * Generates the CSS for a content element in PageLayoutView to look like a column
-     *
-     * @param int $width
-     * @param int $offset
-     * @return string
-     */
-    protected function generateGridCss($width, $offset): string
-    {
-        return sprintf(
-            '<style type="text/css">%s</style>',
-            $this->activateElementFloating ? $this->generateFloatingCEColumnCSS($width, $offset) : $this->generateNonFloatingCEColumnCSS($width, $offset)
-        );
     }
 
     /**
