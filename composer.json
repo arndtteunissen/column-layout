@@ -25,14 +25,12 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "typo3/cms-fluid-styled-content": "^8.7 || ^9.0",
-        "typo3/cms-backend": "^8.7 || ^9.0",
-        "typo3/cms-core": "^8.7 || ^9.0",
-        "php": ">=7.0"
+        "typo3/cms-fluid-styled-content": "^8.7 || >= 9.0 < 9.5.0",
+        "typo3/cms-backend": "^8.7 || >= 9.0 < 9.5.0",
+        "typo3/cms-core": "^8.7 || >= 9.0 < 9.5.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.10",
-        "georgringer/backend-debug": "^1.0"
+        "friendsofphp/php-cs-fixer": "^2.10"
     },
     "autoload": {
         "psr-4": {
