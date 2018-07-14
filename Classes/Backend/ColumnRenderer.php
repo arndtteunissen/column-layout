@@ -17,7 +17,7 @@ class ColumnRenderer
 @media only screen and (min-width: 1024px) {
     .cl-enable-element-floating #element-tt_content-%d { width: %d%%; } 
     .cl-enable-element-floating #element-tt_content-%1$d > .t3-page-ce-dragitem { flex: %d; } 
-    .cl-enable-element-floating #element-tt_content-%1$d::before { flex: %d; content: '%4$s'; }
+    .cl-enable-element-floating #element-tt_content-%1$d::before { flex: %d; content: 'Offset'; }
 }
 CSS;
 
