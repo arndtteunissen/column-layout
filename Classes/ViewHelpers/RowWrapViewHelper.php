@@ -1,5 +1,5 @@
 <?php
-namespace Arndtteunissen\ColumnLayout\ViewHelper;
+namespace Arndtteunissen\ColumnLayout\ViewHelpers;
 
 /*
  * This file is part of the package arndtteunissen/column-layout.

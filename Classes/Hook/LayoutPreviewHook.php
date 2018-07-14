@@ -8,18 +8,23 @@ namespace Arndtteunissen\ColumnLayout\Hook;
  * LICENSE file that was distributed with this source code.
  */
 
-use Arndtteunissen\ColumnLayout\Utility\ColumnLayoutUtility;
+use Arndtteunissen\ColumnLayout\Backend\ColumnRenderer;
 use TYPO3\CMS\Backend\Controller\PageLayoutController;
 use TYPO3\CMS\Backend\View\PageLayoutView;
 use TYPO3\CMS\Backend\View\PageLayoutViewDrawFooterHookInterface;
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Lang\LanguageService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * A hook for adding column layout information to content elements in backend "Page" module.
  */
 class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, SingletonInterface
 {
+    /**
+     * @var array
+     */
+    protected $inlineStyles = [];
+
     /**
      * Hook for header rendering of the PageLayoutController to inject stylesheet required for custom column layout
      * display.
@@ -30,9 +35,11 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
      * @param PageLayoutController $ref
      * @return string html to be added to the page layout
      */
-    public function injectStyleSheet(array $params, PageLayoutController $ref): string
+    public function injectStylesAndScripts(array $params, PageLayoutController $ref): string
     {
-        $ref->getModuleTemplate()->getPageRenderer()->addCssFile('EXT:column_layout/Resources/Public/Css/web_layout.css');
+        $ref->getModuleTemplate()->getPageRenderer()->loadRequireJsModule('TYPO3/CMS/ColumnLayout/ColumnLayout');
+        $ref->getModuleTemplate()->getPageRenderer()->addCssFile('EXT:column_layout/Resources/Public/Css/column_layout.css');
+        $ref->getModuleTemplate()->getPageRenderer()->addCssInlineBlock('column-layout', implode(LF, $this->inlineStyles), true);
 
         return '';
     }
@@ -43,174 +50,36 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
      */
     public function preProcess(PageLayoutView &$parentObject, &$info, array &$row)
     {
-        $tsConf = $parentObject->modTSconfig['column_layout'] ?? [];
-
-        if (
-            $tsConf['hidePreview'] ?? false                     // Hidden via page TSConfig
-            || empty($row['tx_column_layout_column_config'])    // Not set
-            || $tsConf['disabled'] ?? false                     // Hidden for this element
-        ) {
+        if ($this->skipRendering($parentObject, $row)) {
             return;
         }
 
-        if (!isset($GLOBALS['TX_COLUMN_LAYOUT'])) {
-            $GLOBALS['TX_COLUMN_LAYOUT'] = [];
-        }
-        if (!isset($GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnOffset'])) {
-            $GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnOffset'] = [];
-        }
-        if (!isset($GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnOffset'][$row['colPos']])) {
-            $GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnOffset'][$row['colPos']] = 0;
-        }
+        $renderer = GeneralUtility::makeInstance(ColumnRenderer::class, $row);
 
-        $maxColumns = (int)ColumnLayoutUtility::getColumnLayoutSettings($row['pid'])['columnsCount'];
-        $previousOffset = $GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnOffset'][$row['colPos']];
+        if (!$renderer->skipRendering()) {
+            list($html, $css) = $renderer->renderSingleColumn();
 
-        $layoutConfiguration = ColumnLayoutUtility::hydrateLayoutConfigFlexFormData($row['tx_column_layout_column_config']);
-
-        $largeWidth = $layoutConfiguration['sDEF']['large_width'];
-        $largeOffset = $layoutConfiguration['sOffsets']['large_offset'];
-
-        // Calculate offset
-        $totalOffset = $previousOffset + $largeOffset;
-        $totalWidth = $totalOffset + $largeWidth;
-        if (
-            $layoutConfiguration['sDEF']['row_behaviour']
-            || $totalWidth > $maxColumns
-        ) {
-            $totalOffset = $largeOffset;
-            $totalWidth = $largeOffset + $largeWidth;
+            $info[] = $html;
+            $this->inlineStyles[] = $css;
         }
 
-        // Fill row if no width is given
-        if ($largeWidth == 0) {
-            $largeWidth = $maxColumns - $totalOffset;
-            $totalWidth = $maxColumns;
-        }
-
-        // Render
-        $info[] = $this->renderColumnPreviewRow($largeWidth, $totalOffset, $maxColumns - $totalWidth, $row['pid']);
-        $info[] = $this->generateGridCss($row['uid'], $maxColumns, $largeWidth, $largeOffset);
-
-        // Update column offset counter
-
-        $GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnOffset'][$row['colPos']] = $totalWidth;
+        return;
     }
 
     /**
-     * @param int $width
-     * @param int $offset
-     * @param int $fill
-     * @param int $pid
-     * @return string
-     * @throws \TYPO3\CMS\Core\Exception
-     */
-    protected function renderColumnPreviewRow($width, $offset, $fill, $pid): string
-    {
-        $html = '<div class="column-layout-container">';
-
-        $html .= $this->renderColumnPreviewBoxes($width, $offset, $fill);
-
-        $widthLabel = $this->getLanguageService()->sL(ColumnLayoutUtility::getColumnLayoutSettings($pid)['types.']['widths.']['label']);
-        $offsetLabel = $this->getLanguageService()->sL(ColumnLayoutUtility::getColumnLayoutSettings($pid)['types.']['offsets.']['label']);
-
-        $html .= '<div class="column-info-container">';
-        $html .= sprintf('<span>%s: %d</span>', $widthLabel, $width);
-        $html .= ' ' . sprintf('<span>%s: %d</span>', $offsetLabel, $offset);
-        $html .= '</div>';
-
-        $html .= '</div>';
-
-        return $html;
-    }
-
-    /**
-     * @param $width
-     * @param $offset
-     * @param $fill
-     * @return string
-     */
-    protected function renderColumnPreviewBoxes($width, $offset, $fill): string
-    {
-        $html = '<div class="column-box-container">';
-
-        while ($offset-- > 0) {
-            $html .= '<span class="column-box"></span>';
-        }
-
-        while ($width-- > 1) {
-            $html .= '<span class="column-box active"></span>';
-        }
-        if ($width == 0) {
-            $html .= '<span class="column-box active last"></span>';
-        }
-
-        while ($fill-- > 0) {
-            $html .= '<span class="column-box"></span>';
-        }
-
-        $html .= '</div>';
-
-        return $html;
-    }
-
-    /**
-     * Generates the CSS for a content element in PageLayoutView to look like a column
+     * Checks if the rendering of the column markup should be skipped.
      *
-     * @param int $uid
-     * @param int $max
-     * @param int $width
-     * @param int $offset
-     * @return string
+     * @param PageLayoutView $parentObject
+     * @return bool
      */
-    protected function generateGridCss($uid, $max, $width, $offset): string
+    protected function skipRendering(PageLayoutView &$parentObject, array $row): bool
     {
-        return sprintf(
-            '<style type="text/css">%s</style>',
-            $this->generateCEColumnCSS($uid, $max, $width, $offset)
+        $tsConf = $parentObject->modTSconfig['column_layout'] ?? [];
+
+        return (
+            $tsConf['hidePreview'] ?? false                     // Hidden via page TSConfig
+            || empty($row['tx_column_layout_column_config'])    // Not set
+            || $tsConf['disabled'] ?? false                     // Hidden for this element
         );
-    }
-
-    /**
-     * @param $uid
-     * @param $max
-     * @param $width
-     * @param $offset
-     * @return string
-     */
-    protected function generateCEColumnCSS($uid, $max, $width, $offset)
-    {
-        $template = <<<'CSS'
-@media only screen and (min-width: 1024px) {
-    #element-tt_content-%d { width: %d%%; } 
-    #element-tt_content-%1$d > .t3-page-ce-dragitem { flex: %d; } 
-    #element-tt_content-%1$d::before { flex: %d; content: '%4$s'; }
-}
-CSS;
-
-        $css = sprintf(
-            $template,
-            $uid,
-            (($width + $offset) / $max) * 100,
-            $width,
-            $offset
-        );
-
-        if (!$offset) {
-            $css .= sprintf(
-                '@media only screen and (min-width: 1024px) { #element-tt_content-%1$d::before { display: none; } }',
-                $uid
-            );
-        }
-
-        return $css;
-    }
-
-    /**
-     * @return LanguageService
-     */
-    protected function getLanguageService(): LanguageService
-    {
-        return $GLOBALS['LANG'];
     }
 }
