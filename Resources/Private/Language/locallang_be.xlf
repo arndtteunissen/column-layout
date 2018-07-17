@@ -25,7 +25,7 @@
                 <source>Columns</source>
             </trans-unit>
             <trans-unit id="column_layout.widths.item_label">
-                <source>%2$s Column %d</source>
+                <source>Width %d</source>
             </trans-unit>
             <trans-unit id="column_layout.widths.item_label_disabled">
                 <source>inherit</source>
@@ -35,7 +35,7 @@
                 <source>Offset</source>
             </trans-unit>
             <trans-unit id="column_layout.offsets.item_label">
-                <source>%2$s Offset %d</source>
+                <source>Offset %d</source>
             </trans-unit>
             <trans-unit id="column_layout.offsets.item_label_disabled">
                 <source>none</source>
@@ -45,7 +45,7 @@
                 <source>Order</source>
             </trans-unit>
             <trans-unit id="column_layout.orders.item_label">
-                <source>%2$s Order %d</source>
+                <source>Order %d</source>
             </trans-unit>
             <trans-unit id="column_layout.orders.item_label_disabled">
                 <source>auto</source>
