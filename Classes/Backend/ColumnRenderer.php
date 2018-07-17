@@ -205,7 +205,7 @@ CSS;
             $newRowLabel = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.new_row.title')
         );
         $html .= sprintf(
-            '<span class="cl-icon cl-icon-fullwidth %s"></span>',
+            '<span class="cl-icon cl-icon-fullwidth %s" title="%s" data-toggle="tooltip" data-html="true" data-placement="bottom"></span>',
             (!$this->isFullwidthRow() ? 'hidden' : ''),
             $newRowLabel = $this->getLanguageService()->sL('LLL:EXT:column_layout/Resources/Private/Language/locallang_be.xlf:column_layout.fullwidth.title')
         );
