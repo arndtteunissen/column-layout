@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2018-03-05T10:56:51Z" product-name="column_layout">
+        <header/>
+        <body>
+            <trans-unit id="extconf.gridsystem">
+                <target>Grid System:Wähle ein vorkonfiguriertes Raster-System, dass bereits Spaltenbreiten, Offsets und Sortierungen vorgibt und die CSS-Klassen erstellt.</target>
+            </trans-unit>
+            <trans-unit id="extconf.gridsystem.foundation">
+                <target>Foundation</target>
+            </trans-unit>
+
+            <trans-unit id="column_layout.sizes.large">
+                <target>Groß</target>
+            </trans-unit>
+            <trans-unit id="column_layout.sizes.medium">
+                <target>Mittel</target>
+            </trans-unit>
+            <trans-unit id="column_layout.sizes.small">
+                <target>Klein</target>
+            </trans-unit>
+
+            <trans-unit id="column_layout.widths.label">
+                <target>Spalten</target>
+            </trans-unit>
+            <trans-unit id="column_layout.widths.item_label">
+                <target>Breite %d</target>
+            </trans-unit>
+            <trans-unit id="column_layout.widths.item_label_disabled">
+                <target>vererbt</target>
+            </trans-unit>
+
+            <trans-unit id="column_layout.offsets.label">
+                <target>Offset</target>
+            </trans-unit>
+            <trans-unit id="column_layout.offsets.item_label">
+                <target>Offset %d</target>
+            </trans-unit>
+            <trans-unit id="column_layout.offsets.item_label_disabled">
+                <target>keine</target>
+            </trans-unit>
+
+            <trans-unit id="column_layout.orders.label">
+                <target>Sortierung</target>
+            </trans-unit>
+            <trans-unit id="column_layout.orders.item_label">
+                <target>Sortierung %d</target>
+            </trans-unit>
+            <trans-unit id="column_layout.orders.item_label_disabled">
+                <target>auto</target>
+            </trans-unit>
+
+            <trans-unit id="column_layout.new_row.title">
+                <target>Beginne neue Zeile vor dem Element</target>
+            </trans-unit>
+            <trans-unit id="column_layout.fullwidth.title">
+                <target>Element über volle Bildschirmbreite</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2018-03-05T10:56:51Z" product-name="column_layout">
+        <header/>
+        <body>
+            <trans-unit id="tt_content.tabs.tx_column_layout_column_config">
+                <target>Raster</target>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.label">
+                <target>Spalten-Konfiguration</target>
+            </trans-unit>
+            
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.sdef.title">
+                <target>Konfiguration</target>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.sofssets.title">
+                <target>Offsets</target>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.sorders.title">
+                <target>Sortierung</target>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_behaviour">
+                <target>Verhalten</target>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_behaviour.start_row">
+                <target>Neue Zeile vor dem Element beginnen</target>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_fullwidth">
+                <target>Zeile über volle Bildschirmbreite</target>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.row_fullwidth.enable">
+                <target>Aktiviert</target>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.large_width">
+                <target>Spaltenbreite (Groß)</target>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.large_offset">
+                <target>Offset (Groß)</target>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.large_order">
+                <target>Sortierung (Groß)</target>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.medium_width">
+                <target>Spaltenbreite (Mittel)</target>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.medium_offset">
+                <target>Offset (Mittel)</target>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.medium_order">
+                <target>Sortierung (Mittel)</target>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.small_width">
+                <target>Spaltenbreite (Klein)</target>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.small_offset">
+                <target>Offset (Klein)</target>
+            </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.small_order">
+                <target>Sortierung (Klein)</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
