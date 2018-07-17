@@ -28,7 +28,7 @@
                 <source>%2$s Column %d</source>
             </trans-unit>
             <trans-unit id="column_layout.widths.item_label_disabled">
-                <source>disabled</source>
+                <source>inherit</source>
             </trans-unit>
 
             <trans-unit id="column_layout.offsets.label">
