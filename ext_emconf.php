@@ -17,7 +17,7 @@ $EM_CONF[$_EXTKEY] = [
             'typo3' => '8.7.0-9.4.99'
         ]
     ],
-    'state' => 'alpha',
+    'state' => 'beta',
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => true,
