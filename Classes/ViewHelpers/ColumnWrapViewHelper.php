@@ -59,10 +59,23 @@ class ColumnWrapViewHelper extends AbstractViewHelper
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
+        if (isset($GLOBALS['TX_COLUMN_LAYOUT']['enabled']) && $GLOBALS['TX_COLUMN_LAYOUT']['enabled']) {
+            return self::wrapContent($arguments, $renderChildrenClosure);
+        } else {
+            return $renderChildrenClosure();
+        }
+    }
+
+    /**
+     * @param array $arguments
+     * @param \Closure $renderChildrenClosure
+     * @return string
+     */
+    protected static function wrapContent(array $arguments, \Closure $renderChildrenClosure): string
+    {
         $record = $arguments['record'];
         $typoScript = self::getTypoScript();
         $currentLayoutConfig = self::getColumnLayoutConfig($record);
-
 
         // Get the typoscript config to render the template.
         $template = $typoScript['lib.']['tx_column_layout.']['rendering.']['column'];

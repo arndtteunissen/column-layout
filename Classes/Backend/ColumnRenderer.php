@@ -9,6 +9,7 @@ namespace Arndtteunissen\ColumnLayout\Backend;
  */
 
 use Arndtteunissen\ColumnLayout\Utility\ColumnLayoutUtility;
+use Arndtteunissen\ColumnLayout\Utility\EmConfigurationUtility;
 use TYPO3\CMS\Lang\LanguageService;
 
 class ColumnRenderer
@@ -80,7 +81,9 @@ CSS;
      */
     public function skipRendering(): bool
     {
-        return (bool)$this->row['hidden'];
+        $emConfig = EmConfigurationUtility::getSettings();
+
+        return (bool)$this->row['hidden'] || in_array($this->row['colPos'], $emConfig->getColPosListForDisable());
     }
 
     /**

@@ -1,0 +1,2 @@
+# cat=settings/enable/100; type=string; label=List of colPos values to disable grid:When a content element is added to a colPos equals to one of the given values, the column rendering will be disabled.
+colPosListForDisable =
