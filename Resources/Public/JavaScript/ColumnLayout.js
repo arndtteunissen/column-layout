@@ -5,6 +5,9 @@ define(['jquery','TYPO3/CMS/Backend/PageActions'], function($, PageActions) {
     'use strict';
 
     var ColumnLayout = {
+        settings: {
+            isTranslationView: false
+        },
         identifier: {
             pageColumns: '.t3js-page-columns'
         }
@@ -36,9 +39,10 @@ define(['jquery','TYPO3/CMS/Backend/PageActions'], function($, PageActions) {
 
     ColumnLayout.isElementFloatingEnabled = function() {
         var $hiddenElements = $(PageActions.identifier.hiddenElements),
-            showHiddenRecords = PageActions.elements.$showHiddenElementsCheckbox.prop('checked');
+            showHiddenRecords = PageActions.elements.$showHiddenElementsCheckbox.prop('checked'),
+            translationViewNotActive = !ColumnLayout.settings.isTranslationView;
 
-        return !($hiddenElements.length > 0 && showHiddenRecords);
+        return !($hiddenElements.length > 0 && showHiddenRecords) && translationViewNotActive;
     };
 
     $(function() {

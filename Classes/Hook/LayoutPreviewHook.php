@@ -37,7 +37,16 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
      */
     public function injectStylesAndScripts(array $params, PageLayoutController $ref): string
     {
-        $ref->getModuleTemplate()->getPageRenderer()->loadRequireJsModule('TYPO3/CMS/ColumnLayout/ColumnLayout');
+        $jsCallbackFunction = null;
+
+        // The translation view is shown. Disable floating elements for that view.
+        if ($ref->MOD_SETTINGS['function'] === '2') {
+            $jsCallbackFunction = 'function(ColumnLayout) {
+                ColumnLayout.settings.isTranslationView = true;
+            }';
+        }
+
+        $ref->getModuleTemplate()->getPageRenderer()->loadRequireJsModule('TYPO3/CMS/ColumnLayout/ColumnLayout', $jsCallbackFunction);
         $ref->getModuleTemplate()->getPageRenderer()->addCssFile('EXT:column_layout/Resources/Public/Css/column_layout.css');
         $ref->getModuleTemplate()->getPageRenderer()->addCssInlineBlock('column-layout', implode(LF, $this->inlineStyles), true);
 
