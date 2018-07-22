@@ -145,7 +145,10 @@ class ColumnWrapViewHelper extends AbstractViewHelper
      */
     protected static function getCObj(): ContentObjectRenderer
     {
-        return GeneralUtility::makeInstance(ContentObjectRenderer::class);
+        /** @var ContentObjectRenderer $contentObjectRenderer */
+        $contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
+
+        return $contentObjectRenderer;
     }
 
     /**
@@ -168,6 +171,7 @@ class ColumnWrapViewHelper extends AbstractViewHelper
      */
     protected static function getColumnLayoutConfig(array $record): array
     {
+        /** @var FlexFormService $flexFormService */
         $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
 
         return $flexFormService->convertFlexFormContentToArray($record['tx_column_layout_column_config']);

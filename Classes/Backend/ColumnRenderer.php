@@ -217,11 +217,11 @@ CSS;
     }
 
     /**
-     * @param $width
-     * @param $offset
+     * @param int $width
+     * @param int $offset
      * @return string
      */
-    protected function generateFloatingCEColumnCSS($width, $offset): string
+    protected function generateFloatingCEColumnCSS(int $width, int $offset): string
     {
         $css = sprintf(
             self::CSS_TEMPLATE_WITH_FLOATING,
@@ -242,8 +242,8 @@ CSS;
     }
 
     /**
-     * @param $width
-     * @param $offset
+     * @param int $width
+     * @param int $offset
      * @return string
      */
     protected function generateNonFloatingCEColumnCSS($width, $offset): string

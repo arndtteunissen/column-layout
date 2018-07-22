@@ -29,7 +29,8 @@
         "typo3/cms-core": "^8.7 || >= 9.0 < 9.5.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.10"
+        "friendsofphp/php-cs-fixer": "^2.10",
+        "phpstan/phpstan": "^0.10.1"
     },
     "autoload": {
         "psr-4": {
@@ -38,6 +39,7 @@
     },
     "scripts": {
         "cs": "php-cs-fixer fix --dry-run --verbose --diff-format=udiff",
+        "phpstan": "phpstan analyse Classes/ Configuration/ --level 3",
         "post-autoload-dump": [
             "mkdir -p .Build/Web/typo3conf/ext/",
             "[ -L .Build/Web/typo3conf/ext/column_layout ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/column_layout"

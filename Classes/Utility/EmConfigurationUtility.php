@@ -16,7 +16,7 @@ use Arndtteunissen\ColumnLayout\Domain\Model\Dto\EmConfiguration;
 class EmConfigurationUtility
 {
     /**
-     * @var array|null
+     * @var EmConfiguration
      */
     protected static $settings = null;
 
