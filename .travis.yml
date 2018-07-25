@@ -32,15 +32,5 @@ before_script:
   - export TYPO3_PATH_WEB=$PWD/.Build/Web
 
 script:
-  - >
-    echo;
-    echo "Running php lint...";
-    find . -name \*.php ! -path "./.Build/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
-  - >
-    echo;
-    echo "Running PHP Coding Standards Fixer checks";
-    composer cs;
-  - >
-    echo;
-    echo "Running phpstan";
-    composer phpstan;
+  - find . -name \*.php ! -path "./.Build/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
+  - .Build/bin/php-cs-fixer fix --dry-run --verbose --diff-format=udiff

@@ -128,10 +128,7 @@ class RowWrapViewHelper extends AbstractViewHelper
      */
     protected static function getCObj(): ContentObjectRenderer
     {
-        /** @var ContentObjectRenderer $contentObjectRenderer */
-        $contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-
-        return $contentObjectRenderer;
+        return GeneralUtility::makeInstance(ContentObjectRenderer::class);
     }
 
     /**

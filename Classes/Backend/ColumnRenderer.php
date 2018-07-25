@@ -222,11 +222,11 @@ CSS;
     }
 
     /**
-     * @param int $width
-     * @param int $offset
+     * @param $width
+     * @param $offset
      * @return string
      */
-    protected function generateFloatingCEColumnCSS(int $width, int $offset): string
+    protected function generateFloatingCEColumnCSS($width, $offset): string
     {
         $css = '';
 
@@ -253,8 +253,8 @@ CSS;
     }
 
     /**
-     * @param int $width
-     * @param int $offset
+     * @param $width
+     * @param $offset
      * @return string
      */
     protected function generateNonFloatingCEColumnCSS($width, $offset): string
