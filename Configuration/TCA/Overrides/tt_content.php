@@ -19,6 +19,7 @@ $columns = [
             'type' => 'flex',
             'ds' => [
                 'foundation' => 'FILE:EXT:column_layout/Configuration/FlexForms/GridSystems/Foundation.xml',
+                'bootstrap' => 'FILE:EXT:column_layout/Configuration/FlexForms/GridSystems/Bootstrap.xml',
                 'custom' => 'FILE:EXT:column_layout/Configuration/FlexForms/GridSystems/Custom.xml'
             ]
         ]
