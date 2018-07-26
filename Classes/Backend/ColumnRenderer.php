@@ -9,6 +9,7 @@ namespace Arndtteunissen\ColumnLayout\Backend;
  */
 
 use Arndtteunissen\ColumnLayout\Utility\ColumnLayoutUtility;
+use Arndtteunissen\ColumnLayout\Utility\EmConfigurationUtility;
 use TYPO3\CMS\Lang\LanguageService;
 
 class ColumnRenderer
@@ -24,6 +25,12 @@ CSS;
     const CSS_TEMPLATE_WITHOUT_FLOATING = <<<'CSS'
 @media only screen and (min-width: 1024px) {
     .cl-enable-element-floating #element-tt_content-%d { width: %d%%; }
+}
+CSS;
+
+    const CSS_TEMPLATE_FORCE_CLOSE_ROW = <<<'CSS'
+@media only screen and (min-width: 1024px) {
+    .cl-enable-element-floating #element-tt_content-%d { margin-right: %d%%; } 
 }
 CSS;
 
@@ -80,7 +87,9 @@ CSS;
      */
     public function skipRendering(): bool
     {
-        return (bool)$this->row['hidden'];
+        $emConfig = EmConfigurationUtility::getSettings();
+
+        return (bool)$this->row['hidden'] || in_array($this->row['colPos'], $emConfig->getColPosListForDisable());
     }
 
     /**
@@ -102,7 +111,6 @@ CSS;
          */
         if ($this->shouldStartNewRow() || $totalWidthInRow > $this->maxColumns) {
             $this->startNewRow = true;
-            $this->setPreviousOffset($columnOffset);
             $offsetInRow = 0;
             $totalWidthInRow = $columnOffset + $columnWidth;
         }
@@ -113,7 +121,6 @@ CSS;
          */
         if ($this->isFullwidthRow()) {
             $this->startNewRow = true;
-            $this->setPreviousOffset(0);
             $columnOffset = $offsetInRow = 0;
             $columnWidth = $totalWidthInRow = $this->maxColumns;
         }
@@ -121,6 +128,7 @@ CSS;
         $htmlAndCss[] = $this->renderColumnPreviewRow($columnWidth, $offsetInRow, $columnOffset, $this->maxColumns - $totalWidthInRow);
         $htmlAndCss[] = $this->generateFloatingCEColumnCSS($columnWidth, $columnOffset);
 
+        $this->setPreviousElementUid((int)$this->row['uid']);
         $this->setPreviousOffset($totalWidthInRow);
 
         return $htmlAndCss;
@@ -220,7 +228,13 @@ CSS;
      */
     protected function generateFloatingCEColumnCSS($width, $offset): string
     {
-        $css = sprintf(
+        $css = '';
+
+        if ($this->startNewRow) {
+            $css .= $this->closeCurrentRow();
+        }
+
+        $css .= sprintf(
             self::CSS_TEMPLATE_WITH_FLOATING,
             $this->row['uid'],
             (($width + $offset) / $this->maxColumns) * 100,
@@ -314,6 +328,25 @@ CSS;
     }
 
     /**
+     * @return string
+     */
+    protected function closeCurrentRow(): string
+    {
+        $currentColumns = $this->getPreviousOffset();
+        $prevousElementUid = $this->getPreviousElementUid();
+
+        if ($prevousElementUid && $currentColumns > 0 && $currentColumns < $this->maxColumns) {
+            return sprintf(
+                self::CSS_TEMPLATE_FORCE_CLOSE_ROW,
+                $prevousElementUid,
+                ($currentColumns / $this->maxColumns) * 100
+            );
+        }
+
+        return '';
+    }
+
+    /**
      * @return bool
      */
     protected function isFullwidthRow(): bool
@@ -335,6 +368,22 @@ CSS;
     protected function setPreviousOffset(int $offset)
     {
         $GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnOffset'][$this->row['colPos']] = $offset;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getPreviousElementUid(): int
+    {
+        return (int)$GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnElementUid'][$this->row['colPos']];
+    }
+
+    /**
+     * @param int $uid
+     */
+    protected function setPreviousElementUid(int $uid)
+    {
+        $GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnElementUid'][$this->row['colPos']] = $uid;
     }
 
     /**

@@ -1,5 +1,5 @@
 mod.column_layout {
-    flexFormKey = custom
+    flexFormKey = bootstrap
     columnsCount = 12
 
     sizes {

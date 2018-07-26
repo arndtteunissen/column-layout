@@ -29,7 +29,7 @@
 
 .column-box.active::before {
     position: absolute;
-    left: 9px;
+    left: 8px;
     background-color: #ff8700;
     content: '';
     width: 6px;

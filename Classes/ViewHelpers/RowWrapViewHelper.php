@@ -8,6 +8,7 @@ namespace Arndtteunissen\ColumnLayout\ViewHelpers;
  * LICENSE file that was distributed with this source code.
  */
 
+use Arndtteunissen\ColumnLayout\Utility\EmConfigurationUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderableClosure;
@@ -34,14 +35,38 @@ class RowWrapViewHelper extends AbstractViewHelper
     protected $escapeChildren = false;
 
     /**
+     * Initialize arguments.
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('colPos', 'int', 'Specify the colPos that should be rendered', false, 0);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
+    {
+        $enabled = self::isEnabled($arguments['colPos']);
+
+        if ($enabled) {
+            return self::wrapContent($renderChildrenClosure);
+        } else {
+            return $renderChildrenClosure();
+        }
+    }
+
+    /**
+     * @param \Closure $renderChildrenClosure
+     * @return string
+     */
+    protected static function wrapContent(\Closure $renderChildrenClosure): string
     {
         $typoScript = self::getTypoScript();
 
         // Setup row context
         $GLOBALS['TX_COLUMN_LAYOUT'] = [
+            'enabled' => true,
             'contentElementIndex' => 0,
             'isFullwidthElement' => false
         ];
@@ -66,6 +91,8 @@ class RowWrapViewHelper extends AbstractViewHelper
                 return $output;
             });
 
+
+
         // Add additional data
         $templateConfig['settings.']['content'] = $content;
         $templateConfig['settings.']['fullscreen'] = $GLOBALS['TX_COLUMN_LAYOUT']['isFullscreenElement'];
@@ -79,6 +106,17 @@ class RowWrapViewHelper extends AbstractViewHelper
         unset($GLOBALS['TX_COLUMN_LAYOUT']);
 
         return $output;
+    }
+
+    /**
+     * @param int $colPos
+     * @return bool
+     */
+    protected static function isEnabled(int $colPos): bool
+    {
+        $emConfig = EmConfigurationUtility::getSettings();
+
+        return !in_array($colPos, $emConfig->getColPosListForDisable());
     }
 
     /**

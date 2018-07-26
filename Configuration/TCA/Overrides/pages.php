@@ -11,4 +11,4 @@ defined('TYPO3_MODE') || die();
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile('column_layout', 'Configuration/TSConfig/column_layout.tsconfig', 'Column Layout Gridsystem');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile('column_layout', 'Configuration/TSConfig/GridSystems/foundation.tsconfig', 'Gridsystem :: Foundation');
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile('column_layout', 'Configuration/TSConfig/GridSystems/custom.tsconfig', 'Gridsystem :: Custom');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile('column_layout', 'Configuration/TSConfig/GridSystems/bootstrap.tsconfig', 'Gridsystem :: Bootstrap');
