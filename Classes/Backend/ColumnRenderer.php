@@ -335,11 +335,15 @@ CSS;
         $currentColumns = $this->getPreviousOffset();
         $prevousElementUid = $this->getPreviousElementUid();
 
-        return sprintf(
-            self::CSS_TEMPLATE_FORCE_CLOSE_ROW,
-            $prevousElementUid,
-            ($currentColumns / $this->maxColumns) * 100
-        );
+        if ($prevousElementUid && $currentColumns > 0 && $currentColumns < $this->maxColumns) {
+            return sprintf(
+                self::CSS_TEMPLATE_FORCE_CLOSE_ROW,
+                $prevousElementUid,
+                ($currentColumns / $this->maxColumns) * 100
+            );
+        }
+
+        return '';
     }
 
     /**
