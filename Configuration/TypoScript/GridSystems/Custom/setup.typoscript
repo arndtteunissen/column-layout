@@ -1,9 +1,0 @@
-lib.tx_column_layout.rendering {
-    column.dataProcessing {
-        10 = Arndtteunissen\ColumnLayout\DataProcessing\CustomColumnClasses
-        10 {
-            layoutConfig = column_layout
-            as = column_classes
-        }
-    }
-}
