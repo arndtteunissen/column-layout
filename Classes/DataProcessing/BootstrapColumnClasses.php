@@ -60,10 +60,10 @@ class BootstrapColumnClasses implements DataProcessorInterface
         if (!empty($layoutConfiguration['sOffsets']['small_offset'])) {
             $classes[] = 'offset-' . $layoutConfiguration['sOffsets']['small_offset'];
         }
-        if (!empty($layoutConfiguration['sOffsets']['medium_offset'])) {
+        if (isset($layoutConfiguration['sOffsets']['medium_offset'])) {
             $classes[] = 'offset-md-' . $layoutConfiguration['sOffsets']['medium_offset'];
         }
-        if (!empty($layoutConfiguration['sOffsets']['large_offset'])) {
+        if (isset($layoutConfiguration['sOffsets']['large_offset'])) {
             $classes[] = 'offset-lg-' . $layoutConfiguration['sOffsets']['large_offset'];
         }
 
