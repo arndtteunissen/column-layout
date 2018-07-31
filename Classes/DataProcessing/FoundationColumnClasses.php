@@ -60,10 +60,10 @@ class FoundationColumnClasses implements DataProcessorInterface
         if (!empty($layoutConfiguration['sOffsets']['small_offset'])) {
             $classes[] = 'small-offset-' . $layoutConfiguration['sOffsets']['small_offset'];
         }
-        if (!empty($layoutConfiguration['sOffsets']['medium_offset'])) {
+        if (isset($layoutConfiguration['sOffsets']['medium_offset'])) {
             $classes[] = 'medium-offset-' . $layoutConfiguration['sOffsets']['medium_offset'];
         }
-        if (!empty($layoutConfiguration['sOffsets']['large_offset'])) {
+        if (isset($layoutConfiguration['sOffsets']['large_offset'])) {
             $classes[] = 'large-offset-' . $layoutConfiguration['sOffsets']['large_offset'];
         }
 
