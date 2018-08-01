@@ -339,7 +339,7 @@ CSS;
             return sprintf(
                 self::CSS_TEMPLATE_FORCE_CLOSE_ROW,
                 $prevousElementUid,
-                ($currentColumns / $this->maxColumns) * 100
+                100 - (($currentColumns / $this->maxColumns) * 100)
             );
         }
 
