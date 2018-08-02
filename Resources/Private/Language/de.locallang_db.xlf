@@ -58,6 +58,9 @@
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.small_order">
                 <target>Sortierung (Klein)</target>
             </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.additional_layout">
+                <target>Layout</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
