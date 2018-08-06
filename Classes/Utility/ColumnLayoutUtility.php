@@ -132,6 +132,7 @@ class ColumnLayoutUtility implements SingletonInterface
 
         // Add TsConfig values
         foreach ($this->getLayoutsFromTsConfig($pageUid) as $layoutKey => $title) {
+            // Add support for select option separators. Use "--div--,Separator label"
             if (GeneralUtility::isFirstPartOfStr($title, '--div--')) {
                 $optGroupParts = GeneralUtility::trimExplode(',', $title, true, 2);
                 $title = $optGroupParts[1];
