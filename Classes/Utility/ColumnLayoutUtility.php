@@ -131,13 +131,13 @@ class ColumnLayoutUtility implements SingletonInterface
         }
 
         // Add TsConfig values
-        foreach ($this->getLayoutsFromTsConfig($pageUid) as $templateKey => $title) {
+        foreach ($this->getLayoutsFromTsConfig($pageUid) as $layoutKey => $title) {
             if (GeneralUtility::isFirstPartOfStr($title, '--div--')) {
                 $optGroupParts = GeneralUtility::trimExplode(',', $title, true, 2);
                 $title = $optGroupParts[1];
-                $templateKey = $optGroupParts[0];
+                $layoutKey= $optGroupParts[0];
             }
-            $layouts[] = [$title, $templateKey];
+            $layouts[] = [$title, $layoutKey];
         }
 
         return $layouts;
