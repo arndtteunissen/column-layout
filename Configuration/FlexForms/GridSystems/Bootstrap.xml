@@ -45,7 +45,7 @@
                                 <type>select</type>
                                 <itemsProcFunc>Arndtteunissen\ColumnLayout\Hook\ItemsProcFunc->additionalLayout</itemsProcFunc>
                                 <items>
-                                    <numIndex index="0" tyle="array">
+                                    <numIndex index="0" type="array">
                                         <numIndex index="0"></numIndex>
                                         <numIndex index="1"></numIndex>
                                     </numIndex>
