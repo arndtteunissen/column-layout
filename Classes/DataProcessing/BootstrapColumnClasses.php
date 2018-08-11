@@ -77,10 +77,6 @@ class BootstrapColumnClasses implements DataProcessorInterface
             $classes[] = 'order-lg-' . $layoutConfiguration['sOrders']['large_order'];
         }
 
-        if (!empty($layoutConfiguration['sDEF']['additional_layout'])) {
-            $classes[] = $layoutConfiguration['sDEF']['additional_layout'];
-        }
-
         return implode(' ', $classes);
     }
 }

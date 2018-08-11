@@ -62,6 +62,9 @@
             <trans-unit id="tt_content.tx_column_layout_column_config.flexform.additional_layout">
                 <source>Layout</source>
             </trans-unit>
+            <trans-unit id="tt_content.tx_column_layout_column_config.flexform.additional_layout.default">
+                <source>Default</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

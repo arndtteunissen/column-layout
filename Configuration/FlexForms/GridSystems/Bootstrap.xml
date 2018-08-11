@@ -46,7 +46,7 @@
                                 <itemsProcFunc>Arndtteunissen\ColumnLayout\Hook\ItemsProcFunc->additionalLayout</itemsProcFunc>
                                 <items>
                                     <numIndex index="0" type="array">
-                                        <numIndex index="0"></numIndex>
+                                        <numIndex index="0">LLL:EXT:column_layout/Resources/Private/Language/locallang_db.xlf:tt_content.tx_column_layout_column_config.flexform.additional_layout.default</numIndex>
                                         <numIndex index="1"></numIndex>
                                     </numIndex>
                                 </items>

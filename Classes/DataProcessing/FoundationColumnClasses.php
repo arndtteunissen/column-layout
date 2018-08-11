@@ -77,10 +77,6 @@ class FoundationColumnClasses implements DataProcessorInterface
             $classes[] = 'large-order-' . $layoutConfiguration['sOrders']['large_order'];
         }
 
-        if (!empty($layoutConfiguration['sDEF']['additional_layout'])) {
-            $classes[] = $layoutConfiguration['sDEF']['additional_layout'];
-        }
-
         return implode(' ', $classes);
     }
 }
