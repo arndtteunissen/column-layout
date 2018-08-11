@@ -47,34 +47,34 @@ class FoundationColumnClasses implements DataProcessorInterface
     {
         $classes = [];
 
-        if (!empty($layoutConfiguration['sDEF']['small_width'])) {
-            $classes[] = 'small-' . $layoutConfiguration['sDEF']['small_width'];
+        if (!empty($layoutConfiguration['small_width'])) {
+            $classes[] = 'small-' . $layoutConfiguration['small_width'];
         }
-        if (!empty($layoutConfiguration['sDEF']['medium_width'])) {
-            $classes[] = 'medium-' . $layoutConfiguration['sDEF']['medium_width'];
+        if (!empty($layoutConfiguration['medium_width'])) {
+            $classes[] = 'medium-' . $layoutConfiguration['medium_width'];
         }
-        if (!empty($layoutConfiguration['sDEF']['large_width'])) {
-            $classes[] = 'large-' . $layoutConfiguration['sDEF']['large_width'];
-        }
-
-        if (!empty($layoutConfiguration['sOffsets']['small_offset'])) {
-            $classes[] = 'small-offset-' . $layoutConfiguration['sOffsets']['small_offset'];
-        }
-        if (isset($layoutConfiguration['sOffsets']['medium_offset'])) {
-            $classes[] = 'medium-offset-' . $layoutConfiguration['sOffsets']['medium_offset'];
-        }
-        if (isset($layoutConfiguration['sOffsets']['large_offset'])) {
-            $classes[] = 'large-offset-' . $layoutConfiguration['sOffsets']['large_offset'];
+        if (!empty($layoutConfiguration['large_width'])) {
+            $classes[] = 'large-' . $layoutConfiguration['large_width'];
         }
 
-        if (!empty($layoutConfiguration['sOrders']['small_order'])) {
-            $classes[] = 'small-order-' . $layoutConfiguration['sOrders']['small_order'];
+        if (!empty($layoutConfiguration['small_offset'])) {
+            $classes[] = 'small-offset-' . $layoutConfiguration['small_offset'];
         }
-        if (!empty($layoutConfiguration['sOrders']['medium_order'])) {
-            $classes[] = 'medium-order-' . $layoutConfiguration['sOrders']['medium_order'];
+        if (isset($layoutConfiguration['medium_offset'])) {
+            $classes[] = 'medium-offset-' . $layoutConfiguration['medium_offset'];
         }
-        if (!empty($layoutConfiguration['sOrders']['large_order'])) {
-            $classes[] = 'large-order-' . $layoutConfiguration['sOrders']['large_order'];
+        if (isset($layoutConfiguration['large_offset'])) {
+            $classes[] = 'large-offset-' . $layoutConfiguration['large_offset'];
+        }
+
+        if (!empty($layoutConfiguration['small_order'])) {
+            $classes[] = 'small-order-' . $layoutConfiguration['small_order'];
+        }
+        if (!empty($layoutConfiguration['medium_order'])) {
+            $classes[] = 'medium-order-' . $layoutConfiguration['medium_order'];
+        }
+        if (!empty($layoutConfiguration['large_order'])) {
+            $classes[] = 'large-order-' . $layoutConfiguration['large_order'];
         }
 
         return implode(' ', $classes);
