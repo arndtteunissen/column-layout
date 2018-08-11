@@ -110,7 +110,7 @@ class ColumnLayoutUtility implements SingletonInterface
             }, $sheetValue['lDEF']));
         }
 
-       return $fields;
+        return $fields;
     }
 
     /**
