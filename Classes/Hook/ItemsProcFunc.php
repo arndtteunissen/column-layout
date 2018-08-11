@@ -19,16 +19,6 @@ use TYPO3\CMS\Lang\LanguageService;
 class ItemsProcFunc
 {
     /**
-     * @var ColumnLayoutUtility $columnLayoutUtility
-     */
-    protected $columnLayoutUtility;
-
-    public function __construct()
-    {
-        $this->columnLayoutUtility = GeneralUtility::makeInstance(ColumnLayoutUtility::class);
-    }
-
-    /**
      * Itemsproc function to add additional layout classes to columns.
      *
      * @param array $config
@@ -38,7 +28,7 @@ class ItemsProcFunc
         $pageId = $this->getPageId($config['flexParentDatabaseRow']['pid']);
 
         if ($pageId > 0) {
-            $templateLayouts = $this->columnLayoutUtility->getAvailableLayouts($pageId);
+            $templateLayouts = ColumnLayoutUtility::getAvailableLayouts($pageId);
 
             foreach ($templateLayouts as $layout) {
                 $additionalLayout = [

@@ -119,7 +119,7 @@ class ColumnLayoutUtility implements SingletonInterface
      * @param int $pageUid
      * @return array
      */
-    public function getAvailableLayouts(int $pageUid): array
+    public static function getAvailableLayouts(int $pageUid): array
     {
         $layouts = [];
 
@@ -131,7 +131,7 @@ class ColumnLayoutUtility implements SingletonInterface
         }
 
         // Add TsConfig values
-        foreach ($this->getLayoutsFromTsConfig($pageUid) as $layoutKey => $title) {
+        foreach (self::getLayoutsFromTsConfig($pageUid) as $layoutKey => $title) {
             // Add support for select option separators. Use "--div--,Separator label"
             if (GeneralUtility::isFirstPartOfStr($title, '--div--')) {
                 $optGroupParts = GeneralUtility::trimExplode(',', $title, true, 2);
@@ -150,7 +150,7 @@ class ColumnLayoutUtility implements SingletonInterface
      * @param $pageUid
      * @return array
      */
-    protected function getLayoutsFromTsConfig(int $pageUid): array
+    protected static function getLayoutsFromTsConfig(int $pageUid): array
     {
         $templateLayouts = [];
         $pagesTsConfig = BackendUtility::getPagesTSconfig($pageUid);
