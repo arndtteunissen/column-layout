@@ -282,8 +282,8 @@ CSS;
 
         // Check all breakpoints for a width value.
         foreach ($checkFieldNames as $fieldName) {
-            if (isset($this->layoutConfiguration['sDEF'][$fieldName]) && $this->layoutConfiguration['sDEF'][$fieldName] > 0) {
-                $width = (int)$this->layoutConfiguration['sDEF'][$fieldName];
+            if (isset($this->layoutConfiguration[$fieldName]) && $this->layoutConfiguration[$fieldName] > 0) {
+                $width = (int)$this->layoutConfiguration[$fieldName];
                 break;
             }
         }
@@ -305,8 +305,8 @@ CSS;
 
         // Check all breakpoints for a width value.
         foreach ($checkFieldNames as $fieldName) {
-            if (isset($this->layoutConfiguration['sOffsets'][$fieldName]) && $this->layoutConfiguration['sOffsets'][$fieldName] > 0) {
-                $offset = (int)$this->layoutConfiguration['sOffsets'][$fieldName];
+            if (isset($this->layoutConfiguration[$fieldName]) && $this->layoutConfiguration[$fieldName] > 0) {
+                $offset = (int)$this->layoutConfiguration[$fieldName];
                 break;
             }
         }
@@ -322,7 +322,7 @@ CSS;
      */
     protected function shouldStartNewRow(): bool
     {
-        return $this->layoutConfiguration['sDEF']['row_behaviour']
+        return $this->layoutConfiguration['row_behaviour']
             || $this->isFullwidthRow()
             || $GLOBALS['TX_COLUMN_LAYOUT']['PageLayoutColumnOffset'][$this->row['colPos']] === 0;
     }
@@ -351,7 +351,7 @@ CSS;
      */
     protected function isFullwidthRow(): bool
     {
-        return (bool)$this->layoutConfiguration['sDEF']['row_fullwidth'];
+        return (bool)$this->layoutConfiguration['row_fullwidth'];
     }
 
     /**

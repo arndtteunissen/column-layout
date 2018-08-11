@@ -98,19 +98,19 @@ class ColumnLayoutUtility implements SingletonInterface
      */
     public static function hydrateLayoutConfigFlexFormData($flexFormData): array
     {
+        $fields = [];
         $dataStructure = $flexFormData;
         if (is_string($flexFormData)) {
             $dataStructure = GeneralUtility::xml2array($flexFormData);
         }
 
-        // Level: FlexForm Sheets
-        return array_map(function ($sheet) {
-            // Level: FlexForm Sheet Fields
-            return array_map(function ($field) {
-                // Level: FlexForm Field
+        foreach ($dataStructure['data'] as $sheetName => $sheetValue) {
+            $fields = array_merge($fields, array_map(function ($field) {
                 return $field['vDEF'];
-            }, $sheet['lDEF']);
-        }, $dataStructure['data']);
+            }, $sheetValue['lDEF']));
+        }
+
+       return $fields;
     }
 
     /**
