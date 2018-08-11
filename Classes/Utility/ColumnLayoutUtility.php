@@ -104,10 +104,12 @@ class ColumnLayoutUtility implements SingletonInterface
             $dataStructure = GeneralUtility::xml2array($flexFormData);
         }
 
-        foreach ($dataStructure['data'] as $sheetName => $sheetValue) {
-            $fields = array_merge($fields, array_map(function ($field) {
-                return $field['vDEF'];
-            }, $sheetValue['lDEF']));
+        if (is_array($dataStructure)) {
+            foreach ($dataStructure['data'] as $sheetName => $sheetValue) {
+                $fields = array_merge($fields, array_map(function ($field) {
+                    return $field['vDEF'];
+                }, $sheetValue['lDEF']));
+            }
         }
 
         return $fields;
