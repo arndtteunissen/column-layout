@@ -112,4 +112,52 @@ class ColumnLayoutUtility implements SingletonInterface
             }, $sheet['lDEF']);
         }, $dataStructure['data']);
     }
+
+    /**
+     * Get available and configured additional column layout classes.
+     *
+     * @param int $pageUid
+     * @return array
+     */
+    public function getAvailableLayouts(int $pageUid): array
+    {
+        $layouts = [];
+
+        // Check if the layouts are extended by ext_tables
+        if (isset($GLOBALS['TYPO3_CONF_VARS']['EXT']['column_layout']['additionalLayouts'])
+            && is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['column_layout']['additionalLayouts'])
+        ) {
+            $layouts = $GLOBALS['TYPO3_CONF_VARS']['EXT']['column_layout']['additionalLayouts'];
+        }
+
+        // Add TsConfig values
+        foreach ($this->getLayoutsFromTsConfig($pageUid) as $layoutKey => $title) {
+            // Add support for select option separators. Use "--div--,Separator label"
+            if (GeneralUtility::isFirstPartOfStr($title, '--div--')) {
+                $optGroupParts = GeneralUtility::trimExplode(',', $title, true, 2);
+                $title = $optGroupParts[1];
+                $layoutKey= $optGroupParts[0];
+            }
+            $layouts[] = [$title, $layoutKey];
+        }
+
+        return $layouts;
+    }
+
+    /**
+     * Get additional layout classes defined in TsConfig
+     *
+     * @param $pageUid
+     * @return array
+     */
+    protected function getLayoutsFromTsConfig(int $pageUid): array
+    {
+        $templateLayouts = [];
+        $pagesTsConfig = BackendUtility::getPagesTSconfig($pageUid);
+        if (isset($pagesTsConfig['mod.']['column_layout.']['additionalLayouts.']) && is_array($pagesTsConfig['mod.']['column_layout.']['additionalLayouts.'])) {
+            $templateLayouts = $pagesTsConfig['mod.']['column_layout.']['additionalLayouts.'];
+        }
+
+        return $templateLayouts;
+    }
 }
