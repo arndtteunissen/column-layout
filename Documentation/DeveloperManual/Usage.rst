@@ -18,7 +18,7 @@ For the row rendering add the :code:`RowWrapViewHelper` around your content elem
         :name: row-example
 
         <html data-namespace-typo3-fluid="true"
-              xmlns:layout="http://typo3.org/ns/Arndtteunissen/ColumnLayout/ViewHelper">
+              xmlns:layout="http://typo3.org/ns/Arndtteunissen/ColumnLayout/ViewHelpers">
 
         ...
 
@@ -39,7 +39,7 @@ Around each content element a column must be wrapped using the :code:`ColumnWrap
         :name: column-example
 
         <html data-namespace-typo3-fluid="true"
-              xmlns:layout="http://typo3.org/ns/Arndtteunissen/ColumnLayout/ViewHelper">
+              xmlns:layout="http://typo3.org/ns/Arndtteunissen/ColumnLayout/ViewHelpers">
 
         ...
 
