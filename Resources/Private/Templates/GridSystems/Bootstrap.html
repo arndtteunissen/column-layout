@@ -1,0 +1,38 @@
+<template data-namespace-typo3-fluid="true"
+          xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
+
+<f:render section="{settings.rendering_target}" arguments="{_all}"/>
+
+<f:section name="RowBegin">
+    <div class="{f:if(condition:settings.fullwidth,then:'container-fluid',else:'container')}">
+        <div class="row">
+</f:section>
+
+<f:section name="RowEnd">
+        </div>
+    </div>
+</f:section>
+
+<f:section name="Row">
+    <f:render renderable="{settings.content}"/>
+
+    <f:if condition="{settings.row_end}">
+        <f:render section="RowEnd" arguments="{_all}"/>
+    </f:if>
+</f:section>
+
+<f:section name="Column">
+    <f:if condition="{settings.row_end}">
+        <f:render section="RowEnd" arguments="{_all}"/>
+    </f:if>
+
+    <f:if condition="{settings.row_begin}">
+        <f:render section="RowBegin" arguments="{_all}"/>
+    </f:if>
+
+    <div class="{column_classes}">
+        <f:render renderable="{settings.content}"/>
+    </div>
+</f:section>
+
+</template>
