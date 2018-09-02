@@ -74,8 +74,16 @@ class RowWrapViewHelper extends AbstractViewHelper
         // Prepare rendering
         $cObj = self::getCObj();
 
-        $template = $typoScript['lib.']['tx_column_layout.']['rendering.']['row'];
-        $templateConfig = $typoScript['lib.']['tx_column_layout.']['rendering.']['row.'];
+        $template = $typoScript['lib.']['tx_column_layout.']['rendering'];
+        $templateConfig = $typoScript['lib.']['tx_column_layout.']['rendering.'];
+
+        $templateConfig['settings.']['rendering_target'] = 'Row';
+
+        // Apply rendering specific DataProcessing configuration to current cObj config
+        if (isset($templateConfig['row.']) && isset($templateConfig['row.']['dataProcessing.'])) {
+            $templateConfig['dataProcessing.'] = $templateConfig['row.']['dataProcessing.'];
+            unset($templateConfig['row.']['dataProcessing.']);
+        }
 
         $content = new RenderableClosure();
         $content

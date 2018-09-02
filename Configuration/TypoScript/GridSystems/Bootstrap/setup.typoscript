@@ -1,4 +1,6 @@
 lib.tx_column_layout.rendering {
+    templateName = Bootstrap
+
     column.dataProcessing {
         10 = Arndtteunissen\ColumnLayout\DataProcessing\BootstrapColumnClasses
         10 {

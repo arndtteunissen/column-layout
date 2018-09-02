@@ -1,5 +1,0 @@
-lib.tx_column_layout.rendering {
-    layoutRootPath = EXT:column_layout/Resources/Private/Layouts/Bootstrap/
-    partialRootPath = EXT:column_layout/Resources/Private/Partials/Bootstrap/
-    templateRootPath = EXT:column_layout/Resources/Private/Templates/Bootstrap/
-}

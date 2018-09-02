@@ -1,34 +1,29 @@
+lib.tx_column_layout.rendering = FLUIDTEMPLATE
 lib.tx_column_layout.rendering {
-    row = FLUIDTEMPLATE
-    row {
-        templateName = Row
+    templateName = Default
 
-        layoutRootPaths {
-            10 = EXT:column_layout/Resources/Private/Layouts/
-            20 = {$lib.tx_column_layout.rendering.layoutRootPath}
-        }
-        partialRootPaths {
-            10 = EXT:column_layout/Resources/Private/Partials/
-            20 = {$lib.tx_column_layout.rendering.partialRootPath}
-        }
-        templateRootPaths {
-            10 = EXT:column_layout/Resources/Private/Templates/
-            20 = {$lib.tx_column_layout.rendering.templateRootPath}
-        }
-
-        settings {
-            # Do not touch these values! They will be dynamically injected.
-            content = # children rendering closure
-            row_begin = # whether to begin a new row
-            row_end = # whether to end a previous row
-            fullscreen = # is the current element a fullscreen element
-        }
+    layoutRootPaths {
+        10 = EXT:column_layout/Resources/Private/Layouts/GridSystems/
+        20 = {$lib.tx_column_layout.rendering.layoutRootPath}
+    }
+    partialRootPaths {
+        10 = EXT:column_layout/Resources/Private/Partials/GridSystems/
+        20 = {$lib.tx_column_layout.rendering.partialRootPath}
+    }
+    templateRootPaths {
+        10 = EXT:column_layout/Resources/Private/Templates/GridSystems/
+        20 = {$lib.tx_column_layout.rendering.templateRootPath}
     }
 
-    column < .row
-    column {
-        templateName = Column
+    settings {
+        # Do not touch these values! They will be dynamically injected.
+        content = # children rendering closure
+        row_begin = # whether to begin a new row
+        row_end = # whether to end a previous row
+        fullscreen = # is the current element a fullscreen element
+    }
 
+    column {
         dataProcessing {
             5 = Arndtteunissen\ColumnLayout\DataProcessing\HydrateFlexFormConfig
             5 {

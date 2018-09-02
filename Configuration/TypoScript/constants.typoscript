@@ -1,5 +1,5 @@
 lib.tx_column_layout.rendering {
-    layoutRootPath = EXT:column_layout/Resources/Private/Layouts/
-    partialRootPath = EXT:column_layout/Resources/Private/Partials/
-    templateRootPath = EXT:column_layout/Resources/Private/Templates/
+    layoutRootPath = EXT:column_layout/Resources/Private/Layouts/GridSystems/
+    partialRootPath = EXT:column_layout/Resources/Private/Partials/GridSystems/
+    templateRootPath = EXT:column_layout/Resources/Private/Templates/GridSystems/
 }

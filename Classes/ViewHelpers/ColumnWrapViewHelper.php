@@ -78,12 +78,19 @@ class ColumnWrapViewHelper extends AbstractViewHelper
         $currentLayoutConfig = self::getColumnLayoutConfig($record);
 
         // Get the typoscript config to render the template.
-        $template = $typoScript['lib.']['tx_column_layout.']['rendering.']['column'];
-        $templateConfig = $typoScript['lib.']['tx_column_layout.']['rendering.']['column.'];
+        $template = $typoScript['lib.']['tx_column_layout.']['rendering'];
+        $templateConfig = $typoScript['lib.']['tx_column_layout.']['rendering.'];
 
         // Prepare rendering
         $cObj = self::getCObj();
         $cObj->start($record);
+        $templateConfig['settings.']['rendering_target'] = 'Column';
+
+        // Apply rendering specific DataProcessing configuration to current cObj config
+        if (isset($templateConfig['column.']) && isset($templateConfig['column.']['dataProcessing.'])) {
+            $templateConfig['dataProcessing.'] = $templateConfig['column.']['dataProcessing.'];
+            unset($templateConfig['column.']['dataProcessing.']);
+        }
 
         // Reset the row states variables.
         $templateConfig['settings.']['row_begin'] = false;

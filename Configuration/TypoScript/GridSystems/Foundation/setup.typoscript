@@ -1,4 +1,6 @@
 lib.tx_column_layout.rendering {
+    templateName = Foundation
+
     column.dataProcessing {
         10 = Arndtteunissen\ColumnLayout\DataProcessing\FoundationColumnClasses
         10 {
