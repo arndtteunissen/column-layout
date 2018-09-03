@@ -56,7 +56,7 @@ abstract class AbstractGridViewHelper extends AbstractViewHelper
      * @param RenderingContextInterface $renderingContext
      * @return string
      */
-    protected abstract static function wrapContent(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext);
+    abstract protected static function wrapContent(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext);
 
     /**
      * @return GridSystemTemplateService
@@ -73,5 +73,5 @@ abstract class AbstractGridViewHelper extends AbstractViewHelper
      * @param RenderingContextInterface $context the current rendering context
      * @return bool TRUE if the view helper should render the grid
      */
-    protected abstract static function isGridRenderingEnabled(array $arguments, RenderingContextInterface $context): bool;
+    abstract protected static function isGridRenderingEnabled(array $arguments, RenderingContextInterface $context): bool;
 }
