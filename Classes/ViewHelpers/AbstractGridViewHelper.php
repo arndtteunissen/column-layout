@@ -10,6 +10,7 @@ namespace Arndtteunissen\ColumnLayout\ViewHelpers;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
@@ -43,6 +44,29 @@ abstract class AbstractGridViewHelper extends AbstractViewHelper
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
+    {
+        return static::isGridRenderingEnabled($arguments, $renderingContext)
+            ? static::wrapContent($arguments, $renderChildrenClosure, $renderingContext)
+            : $renderChildrenClosure();
+    }
+
+    /**
+     * Renders the grid system around the view helper's content.
+     * Arguments are passed from the renderStatic method.
+     *
+     * @see AbstractViewHelper::renderStatic
+     *
+     * @param array $arguments
+     * @param \Closure $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
+     * @return string
+     */
+    protected abstract static function wrapContent(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext);
+
+    /**
      * Returns a new ContentObjectRenderer
      * Please note, that the ContentObjectRenderer is not a singleton, so each time this function gets called, a new
      * cObj will be created.
@@ -65,4 +89,13 @@ abstract class AbstractGridViewHelper extends AbstractViewHelper
     {
         return $GLOBALS['TSFE']->tmpl->setup;
     }
+
+    /**
+     * Decide whether grid rendering should be enabled.
+     *
+     * @param array $arguments ViewHelper arguments
+     * @param RenderingContextInterface $context the current rendering context
+     * @return bool TRUE if the view helper should render the grid
+     */
+    protected abstract static function isGridRenderingEnabled(array $arguments, RenderingContextInterface $context): bool;
 }

@@ -30,21 +30,7 @@ class ColumnWrapViewHelper extends AbstractGridViewHelper
     /**
      * {@inheritdoc}
      */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
-    {
-        if (isset($GLOBALS['TX_COLUMN_LAYOUT']['enabled']) && $GLOBALS['TX_COLUMN_LAYOUT']['enabled']) {
-            return self::wrapContent($arguments, $renderChildrenClosure);
-        } else {
-            return $renderChildrenClosure();
-        }
-    }
-
-    /**
-     * @param array $arguments
-     * @param \Closure $renderChildrenClosure
-     * @return string
-     */
-    protected static function wrapContent(array $arguments, \Closure $renderChildrenClosure): string
+    protected static function wrapContent(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): string
     {
         $record = $arguments['record'];
         $typoScript = self::getTypoScript();
@@ -127,5 +113,17 @@ class ColumnWrapViewHelper extends AbstractGridViewHelper
         $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
 
         return $flexFormService->convertFlexFormContentToArray($record['tx_column_layout_column_config']);
+    }
+
+    /**
+     * Decide whether grid rendering should be enabled.
+     *
+     * @param array $arguments ViewHelper arguments
+     * @param RenderingContextInterface $context the current rendering context
+     * @return bool TRUE if the view helper should render the grid
+     */
+    protected static function isGridRenderingEnabled(array $arguments, RenderingContextInterface $context): bool
+    {
+        return isset($GLOBALS['TX_COLUMN_LAYOUT']['enabled']) && $GLOBALS['TX_COLUMN_LAYOUT']['enabled'];
     }
 }

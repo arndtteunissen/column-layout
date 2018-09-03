@@ -29,22 +29,7 @@ class RowWrapViewHelper extends AbstractGridViewHelper
     /**
      * {@inheritdoc}
      */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
-    {
-        $enabled = self::isEnabled($arguments['colPos']);
-
-        if ($enabled) {
-            return self::wrapContent($renderChildrenClosure);
-        } else {
-            return $renderChildrenClosure();
-        }
-    }
-
-    /**
-     * @param \Closure $renderChildrenClosure
-     * @return string
-     */
-    protected static function wrapContent(\Closure $renderChildrenClosure): string
+    protected static function wrapContent(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): string
     {
         $typoScript = self::getTypoScript();
 
@@ -101,13 +86,16 @@ class RowWrapViewHelper extends AbstractGridViewHelper
     }
 
     /**
-     * @param int $colPos
-     * @return bool
+     * Decide whether grid rendering should be enabled based on the backend layout configuration.
+     *
+     * @param array $arguments ViewHelper arguments
+     * @param RenderingContextInterface $context the current rendering context
+     * @return bool TRUE if the view helper should render the grid
      */
-    protected static function isEnabled(int $colPos): bool
+    protected static function isGridRenderingEnabled(array $arguments, RenderingContextInterface $context): bool
     {
         $emConfig = EmConfigurationUtility::getSettings();
 
-        return !in_array($colPos, $emConfig->getColPosListForDisable());
+        return !in_array($arguments['colPos'], $emConfig->getColPosListForDisable());
     }
 }
