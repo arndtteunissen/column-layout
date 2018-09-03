@@ -14,12 +14,15 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderableClosure;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
  * ViewHelper which wraps content with a row according to the current gridsystem.
  */
 class RowWrapViewHelper extends AbstractViewHelper
 {
+    use CompileWithContentArgumentAndRenderStatic;
+
     /**
      * This ViewHelper's output is HTML, so it should not be escaped
      *
@@ -35,11 +38,20 @@ class RowWrapViewHelper extends AbstractViewHelper
     protected $escapeChildren = false;
 
     /**
+     * {@inheritdoc}
+     */
+    public function initialize()
+    {
+        $this->contentArgumentName = 'content';
+    }
+
+    /**
      * Initialize arguments.
      */
     public function initializeArguments()
     {
         $this->registerArgument('colPos', 'int', 'Specify the colPos that should be rendered', false, 0);
+        $this->registerArgument('content', 'mixed', 'Content to be wrapped by the column', false, null);
     }
 
     /**
