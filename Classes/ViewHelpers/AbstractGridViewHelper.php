@@ -34,44 +34,4 @@ abstract class AbstractGridViewHelper extends AbstractViewHelper
      * @var bool
      */
     protected $escapeChildren = false;
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
-    {
-        return static::isGridRenderingEnabled($arguments, $renderingContext)
-            ? static::wrapContent($arguments, $renderChildrenClosure, $renderingContext)
-            : $renderChildrenClosure();
-    }
-
-    /**
-     * Renders the grid system around the view helper's content.
-     * Arguments are passed from the renderStatic method.
-     *
-     * @see AbstractViewHelper::renderStatic
-     *
-     * @param array $arguments
-     * @param \Closure $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     * @return string
-     */
-    abstract protected static function wrapContent(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext);
-
-    /**
-     * @return GridSystemTemplateService
-     */
-    protected static function getTemplateService(): GridSystemTemplateService
-    {
-        return GeneralUtility::makeInstance(GridSystemTemplateService::class);
-    }
-
-    /**
-     * Decide whether grid rendering should be enabled.
-     *
-     * @param array $arguments ViewHelper arguments
-     * @param RenderingContextInterface $context the current rendering context
-     * @return bool TRUE if the view helper should render the grid
-     */
-    abstract protected static function isGridRenderingEnabled(array $arguments, RenderingContextInterface $context): bool;
 }
