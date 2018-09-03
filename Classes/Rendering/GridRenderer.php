@@ -140,7 +140,7 @@ class GridRenderer implements SingletonInterface
         // Inject current record
         $variables = [
             'data' => $contentRecord,
-            'current' => $contentRecord
+            'current' => null
         ];
 
         // Set settings
