@@ -18,6 +18,11 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 class RowWrapViewHelper extends AbstractGridViewHelper
 {
     /**
+     * @var string
+     */
+    protected $contentArgumentName = 'content';
+
+    /**
      * Initialize arguments.
      */
     public function initializeArguments()

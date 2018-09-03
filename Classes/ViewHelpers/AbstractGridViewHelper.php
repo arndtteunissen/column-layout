@@ -38,14 +38,6 @@ abstract class AbstractGridViewHelper extends AbstractViewHelper
     /**
      * {@inheritdoc}
      */
-    public function initialize()
-    {
-        $this->contentArgumentName = 'content';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
         return static::isGridRenderingEnabled($arguments, $renderingContext)

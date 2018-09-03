@@ -19,6 +19,11 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 class ColumnWrapViewHelper extends AbstractGridViewHelper
 {
     /**
+     * @var string
+     */
+    protected $contentArgumentName = 'content';
+
+    /**
      * {@inheritdoc}
      */
     public function initializeArguments()
