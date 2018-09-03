@@ -9,42 +9,14 @@ namespace Arndtteunissen\ColumnLayout\ViewHelpers;
  */
 
 use Arndtteunissen\ColumnLayout\Utility\EmConfigurationUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderableClosure;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
-use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
  * ViewHelper which wraps content with a row according to the current gridsystem.
  */
-class RowWrapViewHelper extends AbstractViewHelper
+class RowWrapViewHelper extends AbstractGridViewHelper
 {
-    use CompileWithContentArgumentAndRenderStatic;
-
-    /**
-     * This ViewHelper's output is HTML, so it should not be escaped
-     *
-     * @var bool
-     */
-    protected $escapeOutput = false;
-
-    /**
-     * Prevent the children output from being escaped
-     *
-     * @var bool
-     */
-    protected $escapeChildren = false;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function initialize()
-    {
-        $this->contentArgumentName = 'content';
-    }
-
     /**
      * Initialize arguments.
      */
@@ -137,29 +109,5 @@ class RowWrapViewHelper extends AbstractViewHelper
         $emConfig = EmConfigurationUtility::getSettings();
 
         return !in_array($colPos, $emConfig->getColPosListForDisable());
-    }
-
-    /**
-     * Returns a new ContentObjectRenderer
-     * Please note, that the ContentObjectRenderer is not a singleton, so each time this function gets called, a new
-     * cObj will be created.
-     *
-     * @return ContentObjectRenderer
-     */
-    protected static function getCObj(): ContentObjectRenderer
-    {
-        return GeneralUtility::makeInstance(ContentObjectRenderer::class);
-    }
-
-    /**
-     * Return the TypoScript setup of the current page template.
-     *
-     * @see FrontendConfigurationManager::getTypoScriptSetup()
-     *
-     * @return array
-     */
-    protected static function getTypoScript(): array
-    {
-        return $GLOBALS['TSFE']->tmpl->setup;
     }
 }

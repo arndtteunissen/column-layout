@@ -10,41 +10,14 @@ namespace Arndtteunissen\ColumnLayout\ViewHelpers;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Service\FlexFormService;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderableClosure;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
  * Class NewColumnWrapViewHelper
  */
-class ColumnWrapViewHelper extends AbstractViewHelper
+class ColumnWrapViewHelper extends AbstractGridViewHelper
 {
-    use CompileWithContentArgumentAndRenderStatic;
-
-    /**
-     * Prevent the children output from being escaped
-     *
-     * @var bool
-     */
-    protected $escapeChildren = false;
-
-    /**
-     * This ViewHelper's output is HTML, so it should not be escaped
-     *
-     * @var bool
-     */
-    protected $escapeOutput = false;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function initialize()
-    {
-        $this->contentArgumentName = 'content';
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -141,30 +114,6 @@ class ColumnWrapViewHelper extends AbstractViewHelper
         $GLOBALS['TX_COLUMN_LAYOUT']['contentElementIndex']++;
 
         return $output;
-    }
-
-    /**
-     * Returns a new ContentObjectRenderer
-     * Please note, that the ContentObjectRenderer is not a singleton, so each time this function gets called, a new
-     * cObj will be created.
-     *
-     * @return ContentObjectRenderer
-     */
-    protected static function getCObj(): ContentObjectRenderer
-    {
-        return GeneralUtility::makeInstance(ContentObjectRenderer::class);
-    }
-
-    /**
-     * Return the TypoScript setup of the current page template.
-     *
-     * @see FrontendConfigurationManager::getTypoScriptSetup()
-     *
-     * @return array
-     */
-    protected static function getTypoScript(): array
-    {
-        return $GLOBALS['TSFE']->tmpl->setup;
     }
 
     /**
