@@ -36,8 +36,6 @@ class RowWrapViewHelper extends AbstractGridViewHelper
      */
     protected static function wrapContent(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): string
     {
-        $typoScript = self::getTypoScript();
-
         // Setup row context
         $GLOBALS['TX_COLUMN_LAYOUT'] = [
             'enabled' => true,
@@ -45,45 +43,36 @@ class RowWrapViewHelper extends AbstractGridViewHelper
             'isFullwidthElement' => false
         ];
 
-        // Prepare rendering
-        $cObj = self::getCObj();
+        // Get grid system template service
+        $templateService = static::getTemplateService();
 
-        $template = $typoScript['lib.']['tx_column_layout.']['rendering'];
-        $templateConfig = $typoScript['lib.']['tx_column_layout.']['rendering.'];
-
-        $templateConfig['settings.']['rendering_target'] = 'Row';
-
-        // Apply rendering specific DataProcessing configuration to current cObj config
-        if (isset($templateConfig['row.']) && isset($templateConfig['row.']['dataProcessing.'])) {
-            $templateConfig['dataProcessing.'] = $templateConfig['row.']['dataProcessing.'];
-            unset($templateConfig['row.']['dataProcessing.']);
-        }
-
+        // Prepare child content rendering
+        $endRow = false;
         $content = new RenderableClosure();
         $content
             ->setName('row-content')
-            ->setClosure(function () use ($renderChildrenClosure, &$templateConfig) {
+            ->setClosure(function () use ($renderChildrenClosure, &$endRow) {
                 $output = $renderChildrenClosure();
                 /*
                  * After content is rendered check for whether to close the row.
                  * Changes the value of a variable passed by reference to the rendering variable container.
                  */
-                $templateConfig['settings.']['row_end'] = $GLOBALS['TX_COLUMN_LAYOUT']['contentElementIndex'] > 0;
+                $endRow = $GLOBALS['TX_COLUMN_LAYOUT']['contentElementIndex'] > 0;
 
                 return $output;
             });
 
-
-
-        // Add additional data
-        $templateConfig['settings.']['content'] = $content;
-        $templateConfig['settings.']['fullscreen'] = $GLOBALS['TX_COLUMN_LAYOUT']['isFullscreenElement'];
+        // Setup rendering settings
+        $settings = [
+            'content' => $content,
+            'fullscreen' => $GLOBALS['TX_COLUMN_LAYOUT']['isFullscreenElement'],
+            'row_end' => &$endRow
+        ];
 
         // Render template
-        $output = $cObj->cObjGetSingle(
-            $template,
-            $templateConfig
-        );
+        $output = $templateService->renderRowHtml([
+            'settings' => $settings
+        ]);
 
         unset($GLOBALS['TX_COLUMN_LAYOUT']);
 

@@ -38,68 +38,63 @@ class ColumnWrapViewHelper extends AbstractGridViewHelper
     protected static function wrapContent(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): string
     {
         $record = $arguments['record'];
-        $typoScript = self::getTypoScript();
         $currentLayoutConfig = self::getColumnLayoutConfig($record);
 
-        // Get the typoscript config to render the template.
-        $template = $typoScript['lib.']['tx_column_layout.']['rendering'];
-        $templateConfig = $typoScript['lib.']['tx_column_layout.']['rendering.'];
+        // Get grid system template service
+        $templateService = static::getTemplateService();
 
-        // Prepare rendering
-        $cObj = self::getCObj();
-        $cObj->start($record);
-        $templateConfig['settings.']['rendering_target'] = 'Column';
-
-        // Apply rendering specific DataProcessing configuration to current cObj config
-        if (isset($templateConfig['column.']) && isset($templateConfig['column.']['dataProcessing.'])) {
-            $templateConfig['dataProcessing.'] = $templateConfig['column.']['dataProcessing.'];
-            unset($templateConfig['column.']['dataProcessing.']);
-        }
-
-        // Reset the row states variables.
-        $templateConfig['settings.']['row_begin'] = false;
-        $templateConfig['settings.']['row_end'] = false;
+        // Setup rendering settings
+        $settings = [
+            'row_begin' => false,
+            'row_end' => false,
+            'fullwidth' => $GLOBALS['TX_COLUMN_LAYOUT']['isFullwidthElement']
+        ];
 
         // Check if the last element was a fullwidth element. We have to close the column for the new element in that case.
         if ($GLOBALS['TX_COLUMN_LAYOUT']['isFullwidthElement'] === true) {
-            $templateConfig['settings.']['row_begin'] = true;
-            $templateConfig['settings.']['row_end'] = true;
+            $settings['row_begin'] = true;
+            $settings['row_end'] = true;
             $GLOBALS['TX_COLUMN_LAYOUT']['isFullwidthElement']  = false;
         }
 
         // Determine, if there should be a new row for this column.
         if ($GLOBALS['TX_COLUMN_LAYOUT']['contentElementIndex'] === 0) {
             // If is the first element. Force opening a new row - regardless of the configuration.
-            $templateConfig['settings.']['row_begin'] = true;
+            $settings['row_begin'] = true;
 
             if ((int)$currentLayoutConfig['row_fullwidth'] === 1) {
                 $GLOBALS['TX_COLUMN_LAYOUT']['isFullwidthElement'] = true;
             }
         } elseif ((int)$currentLayoutConfig['row_fullwidth'] === 1) {
             // When the element is full with, there has to a be new row.
-            $templateConfig['settings.']['row_begin'] = true;
-            $templateConfig['settings.']['row_end'] = true;
+            $settings['row_begin'] = true;
+            $settings['row_end'] = true;
             $GLOBALS['TX_COLUMN_LAYOUT']['isFullwidthElement'] = true;
         } elseif ((int)$currentLayoutConfig['row_behaviour'] === 1) {
             // Force closing the current row and opening a new one, if configured in element.
-            $templateConfig['settings.']['row_begin'] = true;
-            $templateConfig['settings.']['row_end'] = true;
+            $settings['row_begin'] = true;
+            $settings['row_end'] = true;
         }
 
+        // Prepare child content rendering
         $content = new RenderableClosure();
         $content
             ->setName('column-content')
             ->setClosure($renderChildrenClosure);
 
-        // Add the content to render to the template.
-        $templateConfig['settings.']['content'] = $content;
-        $templateConfig['settings.']['fullwidth'] = $GLOBALS['TX_COLUMN_LAYOUT']['isFullwidthElement'];
+        $settings['content'] = $content;
+
+        // Inject current record
+        $variables = [
+            'data' => $record,
+            'current' => $record
+        ];
+
+        // Set settings
+        $variables['settings'] = $settings;
 
         // Render template
-        $output = $cObj->cObjGetSingle(
-            $template,
-            $templateConfig
-        );
+        $output = $templateService->renderColumnHtml($variables);
 
         // Raise index of content elements.
         $GLOBALS['TX_COLUMN_LAYOUT']['contentElementIndex']++;

@@ -1,4 +1,3 @@
-lib.tx_column_layout.rendering = FLUIDTEMPLATE
 lib.tx_column_layout.rendering {
     templateName = Default
 

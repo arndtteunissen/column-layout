@@ -8,8 +8,8 @@ namespace Arndtteunissen\ColumnLayout\ViewHelpers;
  * LICENSE file that was distributed with this source code.
  */
 
+use Arndtteunissen\ColumnLayout\Service\GridSystemTemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
@@ -59,27 +59,11 @@ abstract class AbstractGridViewHelper extends AbstractViewHelper
     protected abstract static function wrapContent(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext);
 
     /**
-     * Returns a new ContentObjectRenderer
-     * Please note, that the ContentObjectRenderer is not a singleton, so each time this function gets called, a new
-     * cObj will be created.
-     *
-     * @return ContentObjectRenderer
+     * @return GridSystemTemplateService
      */
-    protected static function getCObj(): ContentObjectRenderer
+    protected static function getTemplateService(): GridSystemTemplateService
     {
-        return GeneralUtility::makeInstance(ContentObjectRenderer::class);
-    }
-
-    /**
-     * Return the TypoScript setup of the current page template.
-     *
-     * @see FrontendConfigurationManager::getTypoScriptSetup()
-     *
-     * @return array
-     */
-    protected static function getTypoScript(): array
-    {
-        return $GLOBALS['TSFE']->tmpl->setup;
+        return GeneralUtility::makeInstance(GridSystemTemplateService::class);
     }
 
     /**
