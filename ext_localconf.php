@@ -24,4 +24,7 @@ call_user_func(function ($extKey) {
         ]
     ];
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord'][\TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexPrepare::class]['depends'][] = \Arndtteunissen\ColumnLayout\Form\FormDataProvider\SaveEffectivePidInDatabaseRow::class;
+
+    // Register Fluid parser interceptors
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['interceptors']['ViewHelperClosingTagPostParseEventEmitter'] = \Arndtteunissen\ColumnLayout\Fluid\Core\Parser\ViewHelperClosingTagPostParseEventEmitter::class;
 }, $_EXTKEY);
