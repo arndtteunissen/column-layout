@@ -38,8 +38,6 @@ class RowWrapViewHelper extends AbstractGridViewHelper
     {
         $renderer = GeneralUtility::makeInstance(GridRenderer::class);
 
-        return $renderer->shouldRenderRow($arguments['colPos'])
-            ? $renderer->renderRow($renderChildrenClosure)
-            : '';
+        return $renderer->renderRow($arguments['colPos'], $renderChildrenClosure);
     }
 }

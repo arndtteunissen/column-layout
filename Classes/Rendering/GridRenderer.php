@@ -38,119 +38,54 @@ class GridRenderer implements SingletonInterface
     }
 
     /**
-     * Renders a grid row
+     * Renders a grid row.
+     * Initializes a new grid state for this row.
+     * After its content has been rendered it automatically closes the row after the last content element.
      *
-     * @param \Closure $contentClosure content inside the row
+     * @param int $colPos backend layout colPos
+     * @param \Closure $renderContentClosure content inside the row
      * @return string row HTML
      */
-    public function renderRow(\Closure $contentClosure)
+    public function renderRow(int $colPos, \Closure $renderContentClosure)
     {
-        // Setup row context
-        $this->state = [
-            'enabled' => true,
-            'contentElementIndex' => 0,
-            'isFullwidthElement' => false
-        ];
-
-        // Prepare child content rendering
-        $endRow = false;
-        $content = new RenderableClosure();
-        $content
-            ->setName('row-content')
-            ->setClosure(function () use ($contentClosure, &$endRow) {
-                $output = $contentClosure();
-                /*
-                 * After content is rendered check for whether to close the row.
-                 * Changes the value of a variable passed by reference to the rendering variable container.
-                 */
-                $endRow = $this->state['contentElementIndex'] > 0;
-
-                return $output;
-            });
-
-        // Setup rendering settings
-        $settings = [
-            'content' => $content,
-            'fullscreen' => $this->state['isFullscreenElement'],
-            'row_end' => &$endRow
-        ];
-
-        // Render template
-        $output = $this->templateService->renderRowHtml([
-            'settings' => $settings
-        ]);
-
-        $this->state = [];
-
-        return $output;
-    }
-
-    /**
-     * Renders a grid column
-     *
-     * @param \Closure $contentClosure content inside the column
-     * @param array $contentRecord tt_content record of the content to be rendered
-     * @return string column HTML
-     */
-    public function renderColumn(\Closure $contentClosure, array $contentRecord)
-    {
-        $currentLayoutConfig = $this->getColumnLayoutConfig($contentRecord);
-
-        // Setup rendering settings
-        $settings = [
-            'row_begin' => false,
-            'row_end' => false,
-            'fullwidth' => $this->state['isFullwidthElement']
-        ];
-
-        // Check if the last element was a fullwidth element. We have to close the column for the new element in that case.
-        if ($this->state['isFullwidthElement'] === true) {
-            $settings['row_begin'] = true;
-            $settings['row_end'] = true;
-            $this->state['isFullwidthElement']  = false;
+        if (!$this->shouldRenderRow($colPos)) {
+            return $renderContentClosure();
         }
 
-        // Determine, if there should be a new row for this column.
-        if ($this->state['contentElementIndex'] === 0) {
-            // If is the first element. Force opening a new row - regardless of the configuration.
-            $settings['row_begin'] = true;
+        $output = '';
 
-            if ((int)$currentLayoutConfig['row_fullwidth'] === 1) {
-                $this->state['isFullwidthElement'] = true;
-            }
-        } elseif ((int)$currentLayoutConfig['row_fullwidth'] === 1) {
-            // When the element is full with, there has to a be new row.
-            $settings['row_begin'] = true;
-            $settings['row_end'] = true;
-            $this->state['isFullwidthElement'] = true;
-        } elseif ((int)$currentLayoutConfig['row_behaviour'] === 1) {
-            // Force closing the current row and opening a new one, if configured in element.
-            $settings['row_begin'] = true;
-            $settings['row_end'] = true;
+        // Initialize state
+        if (!isset($this->state[$colPos])) {
+            $this->state[$colPos] = [
+                'enabled' => true,
+                'has_row_began' => false,
+                'has_row_end' => false
+            ];
         }
 
-        // Prepare child content rendering
-        $content = new RenderableClosure();
-        $content
-            ->setName('column-content')
-            ->setClosure($contentClosure);
+        $state = &$this->state[$colPos];
 
-        $settings['content'] = $content;
-
-        // Inject current record
         $variables = [
-            'data' => $contentRecord,
-            'current' => null
+            'state' => &$state
         ];
 
-        // Set settings
-        $variables['settings'] = $settings;
+        // Render child content
+        $output .= $renderContentClosure();
 
-        // Render template
-        $output = $this->templateService->renderColumnHtml($variables);
+        /*
+         * IV) Render closing row html, if
+         * 1. content has been rendered
+         * 2. row has been opened before
+         * 3. row has not been closed before
+         */
+        if ($output
+            && $state['has_row_began']
+            && !$state['has_row_end']) {
+            $output .= $this->templateService->renderRowEndHtml($variables);
+        }
 
-        // Raise index of content elements.
-        $this->state['contentElementIndex']++;
+        // Reset state
+        $this->state[$colPos] = [];
 
         return $output;
     }
@@ -169,13 +104,90 @@ class GridRenderer implements SingletonInterface
     }
 
     /**
+     * Renders a grid column.
+     * Renders row closing and opening html before the given content element based on the state.
+     * As this method heavily depends on the grid state it is crucial to call this only if the
+     * GridRenderer::renderRow method has been called before!
+     *
+     * @param array $record tt_content record of the content to be rendered
+     * @param \Closure $renderContentClosure content inside the column
+     * @return string column HTML
+     */
+    public function renderColumn(array $record, \Closure $renderContentClosure)
+    {
+        if (!$this->shouldRenderColumn($record)) {
+            return $renderContentClosure();
+        }
+
+        $output = '';
+
+        // Get state
+        $colPos = $record['colPos'];
+        $state = &$this->state[$colPos];
+
+        // Fetch config for column
+        $currentLayoutConfig = $this->getColumnLayoutConfig($record);
+
+        $variables = [
+            'settings' => $currentLayoutConfig,
+            'state' => &$state,
+            'data' => $record
+        ];
+
+        /*
+         * I) Render the closing row html, if
+         * 1. a row has been opened before,
+         * 2. a row has not been closed before
+         * 3. this element requires a new row (including fullwidth)
+         */
+        if ($state['has_row_began']
+            && !$state['has_row_end']
+            && ((int)$currentLayoutConfig['row_fullwidth'] === 1
+                || (int)$currentLayoutConfig['row_behaviour'] === 1)) {
+            $output .= $this->templateService->renderRowEndHtml($variables);
+            $state['has_row_began'] = false;
+            $state['has_row_end'] = true;
+        }
+
+        /*
+         * II) Render the opening row html, if
+         * 1. this is the first element, or
+         * 2. this element requires a new row
+         *      1. a row has been closed before
+         */
+        if (!$state['has_row_began']
+            || ($state['has_row_end']
+                && ((int)$currentLayoutConfig['row_fullwidth'] === 1
+                    || (int)$currentLayoutConfig['row_behaviour'] === 1))) {
+            $output .= $this->templateService->renderRowBeginHtml($variables);
+            $state['has_row_began'] = true;
+            $state['has_row_end'] = false;
+        }
+
+        // III) Render column wrap
+        $content = new RenderableClosure();
+        $content
+            ->setName('column-content')
+            ->setClosure($renderContentClosure);
+
+        $variables['column_content'] = $content;
+
+        $output .= $this->templateService->renderColumnHtml($variables);
+
+        return $output;
+    }
+
+    /**
      * Decides whether a column should be rendered based on the grid rendering state.
      *
+     * @param array $record
      * @return bool
      */
-    public function shouldRenderColumn(): bool
+    public function shouldRenderColumn(array $record): bool
     {
-        return !empty($this->state['enabled']);
+        $colPos = $record['colPos'];
+
+        return !empty($this->state[$colPos]['enabled']);
     }
 
     /**
@@ -186,6 +198,7 @@ class GridRenderer implements SingletonInterface
      */
     protected function getColumnLayoutConfig(array $record): array
     {
+        // TODO: implement caching
         $flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
 
         return $flexFormService->convertFlexFormContentToArray($record['tx_column_layout_column_config']);

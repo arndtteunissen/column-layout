@@ -38,8 +38,6 @@ class ColumnWrapViewHelper extends AbstractGridViewHelper
     {
         $renderer = GeneralUtility::makeInstance(GridRenderer::class);
 
-        return $renderer->shouldRenderColumn()
-            ? $renderer->renderColumn($renderChildrenClosure, $arguments['record'])
-            : '';
+        return $renderer->renderColumn($arguments['record'], $renderChildrenClosure);
     }
 }
