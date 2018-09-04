@@ -108,17 +108,6 @@ class GridSystemTemplateService implements SingletonInterface
     }
 
     /**
-     * Renders the whole row html
-     *
-     * @param array $variables passed to rendering
-     * @return string
-     */
-    public function renderRowHtml(array $variables = [])
-    {
-        return $this->renderSection(self::SECTION_NAME_ROW, $variables);
-    }
-
-    /**
      * Renders the whole column html
      *
      * @param array $variables passed to rendering
@@ -126,22 +115,9 @@ class GridSystemTemplateService implements SingletonInterface
      */
     public function renderColumnHtml(array $variables = [])
     {
-        return $this->renderSection(self::SECTION_NAME_COLUMN, $variables);
-    }
+        $variables = $this->applyDataProcessors('column', $variables);
 
-    /**
-     * Renders a section with variables
-     *
-     * @param string $sectionName
-     * @param array $variables
-     * @return string
-     */
-    protected function renderSection(string $sectionName, array $variables)
-    {
-        $context = strpos($sectionName, 'Row') !== false ? 'row' : 'column';
-        $variables = $this->applyDataProcessors($context, $variables);
-
-        return $this->view->renderSection($sectionName, $variables);
+        return $this->view->renderSection(self::SECTION_NAME_COLUMN, $variables);
     }
 
     /**
