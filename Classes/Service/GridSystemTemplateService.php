@@ -13,7 +13,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Frontend\ContentObject\ContentDataProcessor;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderableClosure;
 
 /**
  * A templating service for rendering the grid system templates which render row and column html.
@@ -28,7 +27,6 @@ class GridSystemTemplateService implements SingletonInterface
 
     const SECTION_NAME_ROW_BEGIN = 'tx_column_layout_Row/Begin';
     const SECTION_NAME_ROW_END = 'tx_column_layout_Row/End';
-    const ROW_SPLIT_MARKER = '<!-- tx_column_layout_ROW_SPLIT -->';
 
     /**
      * @var ContentObjectRenderer
@@ -65,7 +63,9 @@ class GridSystemTemplateService implements SingletonInterface
      */
     public function renderRowBeginHtml(array $variables = [])
     {
-        return $this->renderRowParts($variables)[0];
+        $variables = $this->applyDataProcessors('row', $variables);
+
+        return $this->view->renderSection(self::SECTION_NAME_ROW_BEGIN, $variables);
     }
 
     /**
@@ -76,35 +76,9 @@ class GridSystemTemplateService implements SingletonInterface
      */
     public function renderRowEndHtml(array $variables = [])
     {
-        return $this->renderRowParts($variables)[1];
-    }
-
-    /**
-     * Renders the row section which is the row wrap and split them by row beginning and closing tags.
-     *
-     * @param array $variables
-     * @return array
-     */
-    protected function renderRowParts(array $variables)
-    {
         $variables = $this->applyDataProcessors('row', $variables);
 
-        $marker = new RenderableClosure();
-        $marker->setName('marker')
-            ->setClosure(function () {
-                return self::ROW_SPLIT_MARKER;
-            });
-
-        $variables['row_content'] = $marker;
-
-        // TODO: implement caching
-        $row = $this->view->renderSection('Row', $variables);
-        $rowParts = explode(self::ROW_SPLIT_MARKER, $row);
-
-        // TODO: Handle no row template
-        // TODO: Handle error
-
-        return $rowParts;
+        return $this->view->renderSection(self::SECTION_NAME_ROW_END, $variables);
     }
 
     /**
