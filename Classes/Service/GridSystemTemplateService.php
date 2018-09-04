@@ -23,11 +23,11 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderableClosure;
  */
 class GridSystemTemplateService implements SingletonInterface
 {
-    const SECTION_NAME_ROW_BEGIN = 'RowBegin';
-    const SECTION_NAME_ROW_END = 'RowEnd';
     const SECTION_NAME_ROW = 'Row';
     const SECTION_NAME_COLUMN = 'Column';
 
+    const SECTION_NAME_ROW_BEGIN = 'tx_column_layout_Row/Begin';
+    const SECTION_NAME_ROW_END = 'tx_column_layout_Row/End';
     const ROW_SPLIT_MARKER = '<!-- tx_column_layout_ROW_SPLIT -->';
 
     /**

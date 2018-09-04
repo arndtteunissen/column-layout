@@ -1,18 +1,21 @@
 <template data-namespace-typo3-fluid="true"
-          xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
+          xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+          xmlns:layout="http://typo3.org/ns/Arndtteunissen/ColumnLayout/ViewHelpers">
 
-<f:section name="Row">
+<layout:template name="Row">
     <div class="{f:if(condition:settings.row_fullwidth,then:'container-fluid',else:'container')}">
         <div class="row">
-            <f:render renderable="{row_content}"/>
+            <layout:template.content>
+                <f:render renderable="{row_content}"/>
+            </layout:template.content>
         </div>
     </div>
-</f:section>
+</layout:template>
 
-<f:section name="Column">
+<layout:template name="Column">
     <div class="{column_classes}">
         <f:render renderable="{column_content}"/>
     </div>
-</f:section>
+</layout:template>
 
 </template>
