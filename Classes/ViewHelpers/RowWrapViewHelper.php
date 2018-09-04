@@ -36,7 +36,7 @@ class RowWrapViewHelper extends AbstractGridViewHelper
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
-         $renderer = GeneralUtility::makeInstance(GridRenderer::class);
+        $renderer = GeneralUtility::makeInstance(GridRenderer::class);
 
         return $renderer->shouldRenderRow($arguments['colPos'])
             ? $renderer->renderRow($renderChildrenClosure)
