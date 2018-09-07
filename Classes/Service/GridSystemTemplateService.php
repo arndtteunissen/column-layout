@@ -33,9 +33,6 @@ class GridSystemTemplateService implements SingletonInterface
     const SECTION_NAME_ROW = 'Row';
     const SECTION_NAME_COLUMN = 'Column';
 
-    const SECTION_NAME_ROW_BEGIN = 'tx_column_layout_Row/Begin';
-    const SECTION_NAME_ROW_END = 'tx_column_layout_Row/End';
-
     const NAME_ROW_BEGIN = 'RowBegin';
     const NAME_ROW_END = 'RowEnd';
 
