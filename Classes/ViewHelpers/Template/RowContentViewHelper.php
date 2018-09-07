@@ -13,25 +13,19 @@ use TYPO3Fluid\Fluid\Core\Compiler\TemplateCompiler;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
 
 /**
- * This ViewHelper is used to mark content inside the grid templates.
- * It just renders its children.
+ * This ViewHelper is used to mark the content area inside a grid row.
+ * It does nothing because the row wrap is applied in column rendering.
  */
-class ContentViewHelper extends AbstractViewHelper
+class RowContentViewHelper extends AbstractViewHelper
 {
     /**
-     * @var bool
-     */
-    protected $escapeOutput = false;
-
-    /**
-     * Default render method - simply calls renderStatic() with a
-     * prepared set of arguments.
+     * Empty render method
      *
-     * @return string Rendered string
+     * @return string empty
      */
     public function render()
     {
-        return $this->renderChildren();
+        return '';
     }
 
     /**
@@ -39,6 +33,6 @@ class ContentViewHelper extends AbstractViewHelper
      */
     public function compile($argumentsName, $closureName, &$initializationPhpCode, ViewHelperNode $node, TemplateCompiler $compiler)
     {
-        return sprintf('%s()', $closureName);
+        return "''; /* The \Arndtteunissen\ColumnLayout\ViewHelpers\Template\RowContentViewHelper does not render anything! */";
     }
 }

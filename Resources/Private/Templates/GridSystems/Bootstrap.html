@@ -5,9 +5,7 @@
 <layout:template name="Row">
     <div class="{f:if(condition:settings.row_fullwidth,then:'container-fluid',else:'container')}">
         <div class="row">
-            <layout:template.content>
-                <f:render renderable="{row_content}"/>
-            </layout:template.content>
+            <layout:template.rowContent/>
         </div>
     </div>
 </layout:template>

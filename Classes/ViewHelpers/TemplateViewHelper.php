@@ -11,7 +11,7 @@ namespace Arndtteunissen\ColumnLayout\ViewHelpers;
 use Arndtteunissen\ColumnLayout\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
 use Arndtteunissen\ColumnLayout\Fluid\Core\Parser\ViewHelperClosingTagPostParseEventEmitter;
 use Arndtteunissen\ColumnLayout\Service\GridSystemTemplateService;
-use Arndtteunissen\ColumnLayout\ViewHelpers\Template\ContentViewHelper;
+use Arndtteunissen\ColumnLayout\ViewHelpers\Template\RowContentViewHelper;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\NodeInterface;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\TextNode;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode as FluidViewHelperNode;
@@ -53,7 +53,7 @@ class TemplateViewHelper extends SectionViewHelper
             $addToStack = 'rowOpeningNodeStack';
             foreach ($content as $childNode) {
                 if ($childNode instanceof FluidViewHelperNode
-                    && $childNode->getViewHelperClassName() == ContentViewHelper::class) {
+                    && $childNode->getViewHelperClassName() == RowContentViewHelper::class) {
                     // Found content marker. The following nodes are part of the row closing html.
                     $addToStack = 'rowClosingNodeStack';
                     continue;
