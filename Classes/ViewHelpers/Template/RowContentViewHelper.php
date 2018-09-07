@@ -33,6 +33,6 @@ class RowContentViewHelper extends AbstractViewHelper
      */
     public function compile($argumentsName, $closureName, &$initializationPhpCode, ViewHelperNode $node, TemplateCompiler $compiler)
     {
-        return "''; /* The \Arndtteunissen\ColumnLayout\ViewHelpers\Template\RowContentViewHelper does not render anything! */";
+        return "'' /* The \Arndtteunissen\ColumnLayout\ViewHelpers\Template\RowContentViewHelper does not render anything! */";
     }
 }
