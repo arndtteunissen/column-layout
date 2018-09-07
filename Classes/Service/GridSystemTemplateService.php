@@ -28,12 +28,18 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 class GridSystemTemplateService implements SingletonInterface
 {
     const TEMPLATES_CACHE_NAME = 'column_layout_grid_templates';
+    const CACHE_ROW_SECTION_FORMAT = 'RowSection_%s_%s';
 
     const SECTION_NAME_ROW = 'Row';
     const SECTION_NAME_COLUMN = 'Column';
 
     const SECTION_NAME_ROW_BEGIN = 'tx_column_layout_Row/Begin';
     const SECTION_NAME_ROW_END = 'tx_column_layout_Row/End';
+
+    const NAME_ROW_BEGIN = 'RowBegin';
+    const NAME_ROW_END = 'RowEnd';
+
+    const ROW_SPLIT_MARKER = '<!-- tx_column_layout_ROW_SPLIT -->';
 
     /**
      * @var ContentObjectRenderer
@@ -82,27 +88,76 @@ class GridSystemTemplateService implements SingletonInterface
     /**
      * Renders the row beginning html.
      *
+     * @param string $identifier row identifier, used also as cache identifier
      * @param array $variables passed to rendering
      * @return string HTML
      */
-    public function renderRowBeginHtml(array $variables = [])
+    public function renderRowBeginHtml(string $identifier, array $variables = [])
     {
-        $variables = $this->applyDataProcessors('row', $variables);
-
-        return $this->view->renderSection(self::SECTION_NAME_ROW_BEGIN, $variables);
+        return $this->getOrRenderAndStoreRowSection(self::NAME_ROW_BEGIN, $identifier, $variables);
     }
 
     /**
      * Renders the row closing html
      *
+     * @param string $identifier row identifier, used also as cache identifier
      * @param array $variables passed to rendering
      * @return string
      */
-    public function renderRowEndHtml(array $variables = [])
+    public function renderRowEndHtml(string $identifier, array $variables = [])
+    {
+        return $this->getOrRenderAndStoreRowSection(self::NAME_ROW_END, $identifier, $variables);
+    }
+
+    /**
+     * Renders or retrieves the row section from cache
+     *
+     * @param string $sectionName
+     * @param string $identifier identifier of the current row. This will also be used as cache identifier
+     * @param array $variables passed to rendering and bound to identifier
+     * @return string HTML of the row section
+     */
+    protected function getOrRenderAndStoreRowSection(string $sectionName, string $identifier, array $variables = [])
+    {
+        $cacheIdentifier = sprintf(self::CACHE_ROW_SECTION_FORMAT, $sectionName, $identifier);
+        if ($this->cache->has($cacheIdentifier)) {
+            return $this->cache->get($cacheIdentifier);
+        }
+
+        $sections = $this->renderRowSections($variables);
+
+        foreach ($sections as $section => $sectionHTML) {
+            try {
+                $this->cache->set(
+                    sprintf(self::CACHE_ROW_SECTION_FORMAT, $section, $identifier),
+                    $sectionHTML
+                );
+            } catch (InvalidDataException $e) {
+                // Do not store cache if it cannot be stored
+                // TODO: log invalid cache?
+            }
+        }
+
+        return $sections[$sectionName];
+    }
+
+    /**
+     * Renders the actual row sections (begin, end)
+     *
+     * @param array $variables template variables passed to rendering
+     * @return array keys are the begin and end section names
+     */
+    protected function renderRowSections(array $variables)
     {
         $variables = $this->applyDataProcessors('row', $variables);
 
-        return $this->view->renderSection(self::SECTION_NAME_ROW_END, $variables);
+        $rowHTML = $this->view->renderSection(self::SECTION_NAME_ROW, $variables);
+        $rowSections = explode(self::ROW_SPLIT_MARKER, $rowHTML, 2);
+
+        return [
+            self::NAME_ROW_BEGIN => $rowSections[0],
+            self::NAME_ROW_END => $rowSections[1]
+        ];
     }
 
     /**

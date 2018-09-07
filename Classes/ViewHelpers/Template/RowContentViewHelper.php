@@ -8,6 +8,7 @@ namespace Arndtteunissen\ColumnLayout\ViewHelpers\Template;
  * LICENSE file that was distributed with this source code.
  */
 
+use Arndtteunissen\ColumnLayout\Service\GridSystemTemplateService;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\Compiler\TemplateCompiler;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
@@ -19,13 +20,18 @@ use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
 class RowContentViewHelper extends AbstractViewHelper
 {
     /**
+     * @var bool
+     */
+    protected $escapeOutput = false;
+
+    /**
      * Empty render method
      *
      * @return string empty
      */
     public function render()
     {
-        return '';
+        return GridSystemTemplateService::ROW_SPLIT_MARKER;
     }
 
     /**
@@ -33,6 +39,6 @@ class RowContentViewHelper extends AbstractViewHelper
      */
     public function compile($argumentsName, $closureName, &$initializationPhpCode, ViewHelperNode $node, TemplateCompiler $compiler)
     {
-        return "'' /* The \Arndtteunissen\ColumnLayout\ViewHelpers\Template\RowContentViewHelper does not render anything! */";
+        return sprintf('\'%s\'', GridSystemTemplateService::ROW_SPLIT_MARKER);
     }
 }

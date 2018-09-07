@@ -81,7 +81,7 @@ class GridRenderer implements SingletonInterface
         if ($output
             && $state['has_row_began']
             && !$state['has_row_end']) {
-            $output .= $this->templateService->renderRowEndHtml($variables);
+            $output .= $this->templateService->renderRowEndHtml($colPos, $variables);
         }
 
         // Reset state
@@ -144,7 +144,7 @@ class GridRenderer implements SingletonInterface
             && !$state['has_row_end']
             && ((int)$currentLayoutConfig['row_fullwidth'] === 1
                 || (int)$currentLayoutConfig['row_behaviour'] === 1)) {
-            $output .= $this->templateService->renderRowEndHtml($variables);
+            $output .= $this->templateService->renderRowEndHtml($colPos, $variables);
             $state['has_row_began'] = false;
             $state['has_row_end'] = true;
         }
@@ -159,7 +159,7 @@ class GridRenderer implements SingletonInterface
             || ($state['has_row_end']
                 && ((int)$currentLayoutConfig['row_fullwidth'] === 1
                     || (int)$currentLayoutConfig['row_behaviour'] === 1))) {
-            $output .= $this->templateService->renderRowBeginHtml($variables);
+            $output .= $this->templateService->renderRowBeginHtml($colPos, $variables);
             $state['has_row_began'] = true;
             $state['has_row_end'] = false;
         }
