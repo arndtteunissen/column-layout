@@ -27,4 +27,22 @@ call_user_func(function ($extKey) {
 
     // Register Fluid parser interceptors
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['interceptors']['ViewHelperClosingTagPostParseEventEmitter'] = \Arndtteunissen\ColumnLayout\Fluid\Core\Parser\ViewHelperClosingTagPostParseEventEmitter::class;
+
+    // Cache Configuration
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][\Arndtteunissen\ColumnLayout\Service\GridSystemTemplateService::TEMPLATES_CACHE_NAME] = array_replace_recursive(
+        // Default configuration
+        [
+            'frontend' => \TYPO3\CMS\Core\Cache\Frontend\StringFrontend::class,
+            'backend' => \TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend::class,
+            'options' => [
+                'defaultLifetime' => 0,
+            ],
+            'groups' => [
+                'all',
+                'pages'
+            ]
+        ],
+        // Administrator configuration or empty
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][\Arndtteunissen\ColumnLayout\Service\GridSystemTemplateService::TEMPLATES_CACHE_NAME] ?? []
+    );
 }, $_EXTKEY);

@@ -8,8 +8,13 @@ namespace Arndtteunissen\ColumnLayout\Service;
  * LICENSE file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Cache\Exception\InvalidCacheException;
+use TYPO3\CMS\Core\Cache\Exception\InvalidDataException;
+use TYPO3\CMS\Core\Cache\Frontend\StringFrontend;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Frontend\ContentObject\ContentDataProcessor;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
@@ -22,6 +27,8 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  */
 class GridSystemTemplateService implements SingletonInterface
 {
+    const TEMPLATES_CACHE_NAME = 'column_layout_grid_templates';
+
     const SECTION_NAME_ROW = 'Row';
     const SECTION_NAME_COLUMN = 'Column';
 
@@ -47,12 +54,29 @@ class GridSystemTemplateService implements SingletonInterface
     protected $contentDataProcessor;
 
     /**
+     * Templates cache (stores compiled HTML)
+     *
+     * @var StringFrontend
+     */
+    protected $cache;
+
+    /**
      * GridSystemTemplatingService constructor.
+     * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
+     * @throws InvalidCacheException
      */
     public function __construct()
     {
         $this->contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
         $this->view = $this->initializeViewInstance();
+
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $cacheManager = $objectManager->get(CacheManager::class);
+
+        $this->cache  = $cacheManager->getCache(self::TEMPLATES_CACHE_NAME);
+        if (!$this->cache  instanceof StringFrontend) {
+            throw new InvalidCacheException(sprintf('Cache \'%s\' requires a \TYPO3\CMS\Core\Cache\Frontend\StringFrontend', self::TEMPLATES_CACHE_NAME), 1536339417);
+        }
     }
 
     /**
