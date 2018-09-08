@@ -44,9 +44,10 @@ class GridRenderer implements SingletonInterface
      *
      * @param int $colPos backend layout colPos
      * @param \Closure $renderContentClosure content inside the row
+     * @param array $additionalArguments passed to template rendering
      * @return string row HTML
      */
-    public function renderRow(int $colPos, \Closure $renderContentClosure)
+    public function renderRow(int $colPos, \Closure $renderContentClosure, array $additionalArguments = [])
     {
         if (!$this->shouldRenderRow($colPos)) {
             return $renderContentClosure();
@@ -66,7 +67,8 @@ class GridRenderer implements SingletonInterface
         $state = &$this->state[$colPos];
 
         $variables = [
-            'state' => &$state
+            'state' => &$state,
+            'arguments' => $additionalArguments
         ];
 
         // Render child content
@@ -111,9 +113,10 @@ class GridRenderer implements SingletonInterface
      *
      * @param array $record tt_content record of the content to be rendered
      * @param \Closure $renderContentClosure content inside the column
+     * @param array $additionalArguments passed to template rendering
      * @return string column HTML
      */
-    public function renderColumn(array $record, \Closure $renderContentClosure)
+    public function renderColumn(array $record, \Closure $renderContentClosure, array $additionalArguments = [])
     {
         if (!$this->shouldRenderColumn($record)) {
             return $renderContentClosure();
@@ -131,7 +134,8 @@ class GridRenderer implements SingletonInterface
         $variables = [
             'settings' => $currentLayoutConfig,
             'state' => &$state,
-            'data' => $record
+            'data' => $record,
+            'arguments' => $additionalArguments
         ];
 
         /*

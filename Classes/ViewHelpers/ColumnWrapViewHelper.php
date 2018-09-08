@@ -29,6 +29,7 @@ class ColumnWrapViewHelper extends AbstractGridViewHelper
     {
         $this->registerArgument('record', 'array', 'Content Element Data', true);
         $this->registerArgument('content', 'mixed', 'Content to be wrapped by the column', false, null);
+        $this->registerArgument('additionalArguments', 'array', 'Will pe passed to rendering of grid templates', false, []);
     }
 
     /**
@@ -38,6 +39,6 @@ class ColumnWrapViewHelper extends AbstractGridViewHelper
     {
         $renderer = GeneralUtility::makeInstance(GridRenderer::class);
 
-        return $renderer->renderColumn($arguments['record'], $renderChildrenClosure);
+        return $renderer->renderColumn($arguments['record'], $renderChildrenClosure, $arguments['additionalArguments'] ?? []);
     }
 }
