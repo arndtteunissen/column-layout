@@ -21,14 +21,4 @@ lib.tx_column_layout.rendering {
         row_end = # whether to end a previous row
         fullscreen = # is the current element a fullscreen element
     }
-
-    column {
-        dataProcessing {
-            5 = Arndtteunissen\ColumnLayout\DataProcessing\HydrateFlexFormConfig
-            5 {
-                field = tx_column_layout_column_config
-                as = column_layout
-            }
-        }
-    }
 }
