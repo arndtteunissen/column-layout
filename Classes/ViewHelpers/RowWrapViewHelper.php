@@ -9,7 +9,6 @@ namespace Arndtteunissen\ColumnLayout\ViewHelpers;
  */
 
 use Arndtteunissen\ColumnLayout\Rendering\GridRenderer;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
 /**
@@ -36,7 +35,7 @@ class RowWrapViewHelper extends AbstractGridViewHelper
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
-        $renderer = GeneralUtility::makeInstance(GridRenderer::class);
+        $renderer = GridRenderer::getInstance();
 
         return $renderer->renderRow($arguments['colPos'], $renderChildrenClosure, $arguments['additionalArguments'] ?? []);
     }

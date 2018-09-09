@@ -12,6 +12,7 @@ use Arndtteunissen\ColumnLayout\Service\GridSystemTemplateService;
 use Arndtteunissen\ColumnLayout\Utility\EmConfigurationUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Service\FlexFormService;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderableClosure;
 
@@ -32,9 +33,22 @@ class GridRenderer implements SingletonInterface
      */
     protected $state;
 
-    public function __construct()
+    /**
+     * @return GridRenderer
+     */
+    public static function getInstance()
     {
-        $this->templateService = GeneralUtility::makeInstance(GridSystemTemplateService::class);
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+
+        return $objectManager->get(static::class);
+    }
+
+    /**
+     * @param GridSystemTemplateService $templateService
+     */
+    public function injectTemplateService(GridSystemTemplateService $templateService)
+    {
+        $this->templateService = $templateService;
     }
 
     /**

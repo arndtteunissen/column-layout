@@ -14,7 +14,6 @@ use TYPO3\CMS\Core\Cache\Exception\InvalidDataException;
 use TYPO3\CMS\Core\Cache\Frontend\StringFrontend;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Frontend\ContentObject\ContentDataProcessor;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
@@ -64,22 +63,32 @@ class GridSystemTemplateService implements SingletonInterface
     protected $cache;
 
     /**
-     * GridSystemTemplatingService constructor.
-     * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
-     * @throws InvalidCacheException
+     * @param ContentObjectRenderer $cObj
      */
-    public function __construct()
+    public function injectContentObjectRenderer(ContentObjectRenderer $cObj)
     {
-        $this->contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-        $this->view = $this->initializeViewInstance();
+        $this->contentObject = $cObj;
+    }
 
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $cacheManager = $objectManager->get(CacheManager::class);
-
-        $this->cache  = $cacheManager->getCache(self::TEMPLATES_CACHE_NAME);
+    /**
+     * @param CacheManager $cacheManager
+     * @throws InvalidCacheException
+     * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
+     */
+    public function injectCacheManager(CacheManager $cacheManager)
+    {
+        $this->cache = $cacheManager->getCache(self::TEMPLATES_CACHE_NAME);
         if (!$this->cache  instanceof StringFrontend) {
             throw new InvalidCacheException(sprintf('Cache \'%s\' requires a \TYPO3\CMS\Core\Cache\Frontend\StringFrontend', self::TEMPLATES_CACHE_NAME), 1536339417);
         }
+    }
+
+    /**
+     * GridSystemTemplatingService constructor.
+     */
+    public function __construct()
+    {
+        $this->view = $this->initializeViewInstance();
     }
 
     /**
