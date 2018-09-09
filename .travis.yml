@@ -36,3 +36,10 @@ before_script:
 script:
   - find . -name \*.php ! -path "./.Build/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
   - .Build/bin/php-cs-fixer fix --dry-run --verbose --diff-format=udiff
+  - .Build/bin/phpunit -c .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml Tests/Unit/
+  - >
+    export typo3DatabaseName="typo3";
+    export typo3DatabaseHost="localhost";
+    export typo3DatabaseUsername="root";
+    export typo3DatabasePassword="";
+    .Build/bin/phpunit -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml Tests/Functional/
