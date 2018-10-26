@@ -10,11 +10,19 @@ define(['jquery','TYPO3/CMS/Backend/PageActions'], function($, PageActions) {
         },
         identifier: {
             pageColumns: '.t3js-page-columns'
+        },
+        hiddenElementCheckbox: function(  ) {
+            if(!PageActions.elements){
+                return PageActions.$showHiddenElementsCheckbox;
+            }else{
+                return PageActions.elements.$showHiddenElementsCheckbox;
+            }
         }
     };
 
     ColumnLayout.initializeEvents = function() {
-        PageActions.elements.$showHiddenElementsCheckbox.on('change', ColumnLayout.toggleFloatingLayout);
+
+        this.hiddenElementCheckbox().on('change', ColumnLayout.toggleFloatingLayout);
     };
 
     ColumnLayout.toggleFloatingLayout = function() {
@@ -38,8 +46,9 @@ define(['jquery','TYPO3/CMS/Backend/PageActions'], function($, PageActions) {
     };
 
     ColumnLayout.isElementFloatingEnabled = function() {
-        var $hiddenElements = $(PageActions.identifier.hiddenElements),
-            showHiddenRecords = PageActions.elements.$showHiddenElementsCheckbox.prop('checked'),
+
+        var $hiddenElements = 't3js-hidden-record',
+            showHiddenRecords = this.hiddenElementCheckbox().prop('checked'),
             translationViewNotActive = !ColumnLayout.settings.isTranslationView;
 
         return !($hiddenElements.length > 0 && showHiddenRecords) && translationViewNotActive;
