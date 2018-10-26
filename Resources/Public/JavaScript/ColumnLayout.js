@@ -21,7 +21,6 @@ define(['jquery','TYPO3/CMS/Backend/PageActions'], function($, PageActions) {
     };
 
     ColumnLayout.initializeEvents = function() {
-
         this.hiddenElementCheckbox().on('change', ColumnLayout.toggleFloatingLayout);
     };
 
@@ -46,7 +45,6 @@ define(['jquery','TYPO3/CMS/Backend/PageActions'], function($, PageActions) {
     };
 
     ColumnLayout.isElementFloatingEnabled = function() {
-
         var $hiddenElements = 't3js-hidden-record',
             showHiddenRecords = this.hiddenElementCheckbox().prop('checked'),
             translationViewNotActive = !ColumnLayout.settings.isTranslationView;
