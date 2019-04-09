@@ -25,8 +25,8 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "typo3/cms-backend": "^8.7 || >= 9.0 < 9.5.0",
-        "typo3/cms-core": "^8.7 || >= 9.0 < 9.5.0"
+        "typo3/cms-backend": "^8.7 || ^9.5",
+        "typo3/cms-core": "^8.7 || ^9.5"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.10"
