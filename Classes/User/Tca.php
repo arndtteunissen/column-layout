@@ -10,7 +10,7 @@ namespace Arndtteunissen\ColumnLayout\User;
 
 use Arndtteunissen\ColumnLayout\Utility\ColumnLayoutUtility;
 use TYPO3\CMS\Core\Exception;
-use TYPO3\CMS\Lang\LanguageService;
+use TYPO3\CMS\Core\Localization\LanguageService;
 
 /**
  * TCA helper/user functions for field items generation

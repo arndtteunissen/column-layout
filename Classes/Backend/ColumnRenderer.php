@@ -10,7 +10,7 @@ namespace Arndtteunissen\ColumnLayout\Backend;
 
 use Arndtteunissen\ColumnLayout\Utility\ColumnLayoutUtility;
 use Arndtteunissen\ColumnLayout\Utility\EmConfigurationUtility;
-use TYPO3\CMS\Lang\LanguageService;
+use TYPO3\CMS\Core\Localization\LanguageService;
 
 class ColumnRenderer
 {
