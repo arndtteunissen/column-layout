@@ -46,9 +46,10 @@ class LayoutPreviewHook implements PageLayoutViewDrawFooterHookInterface, Single
             }';
         }
 
-        $ref->getModuleTemplate()->getPageRenderer()->loadRequireJsModule('TYPO3/CMS/ColumnLayout/ColumnLayout', $jsCallbackFunction);
-        $ref->getModuleTemplate()->getPageRenderer()->addCssFile('EXT:column_layout/Resources/Public/Css/column_layout.css');
-        $ref->getModuleTemplate()->getPageRenderer()->addCssInlineBlock('column-layout', implode(LF, $this->inlineStyles), true);
+        $pageRenderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
+        $pageRenderer->loadRequireJsModule('TYPO3/CMS/ColumnLayout/ColumnLayout', $jsCallbackFunction);
+        $pageRenderer->addCssFile('EXT:column_layout/Resources/Public/Css/column_layout.css');
+        $pageRenderer->addCssInlineBlock('column-layout', implode(LF, $this->inlineStyles), true );
 
         return '';
     }
