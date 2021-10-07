@@ -9,8 +9,8 @@ namespace Arndtteunissen\ColumnLayout\ViewHelpers;
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Service\FlexFormService;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Core\Service\FlexFormService;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderableClosure;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
@@ -19,7 +19,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderS
 /**
  * Class NewColumnWrapViewHelper
  */
-class ColumnWrapViewHelper extends AbstractViewHelper
+class ColumnWrapViewHelper extends AbstractTagBasedViewHelper
 {
     use CompileWithContentArgumentAndRenderStatic;
 
